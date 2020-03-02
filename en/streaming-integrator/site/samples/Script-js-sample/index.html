@@ -1,0 +1,3398 @@
+<!--
+ * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+-->
+
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="Documentation for WSO2 Enterprise Integrator">
+      
+      
+        <link rel="canonical" href="https://ei.docs.wso2.com/en/latest/samples/Script-js-sample/">
+      
+      
+        <meta name="author" content="WSO2">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.1.1">
+    
+    
+      
+        <title>Using Javascript Functions in Siddhi Applications - WSO2 Enterprise Integrator Documentation</title>
+      
+    
+    
+
+      <link rel="stylesheet" href="../../assets/stylesheets/application.3020aac5.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.224b79ff.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ff7043">
+      
+    
+<link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
+
+    
+      <script src="../../assets/javascripts/modernizr.01ccdecf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../assets/lib/highlightjs/default.min.css">
+    
+      <link rel="stylesheet" href="../../assets/css/theme.css">
+    
+    
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-103065-9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'UA-103065-9');
+</script>
+
+<!-- Google Tag Manager -->
+<script>(function (w, d, s, l, i) {
+  w[l] = w[l] || []; w[l].push({
+    'gtm.start':
+      new Date().getTime(), event: 'gtm.js'
+  }); var f = d.getElementsByTagName(s)[0],
+    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+      'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+  })(window, document, 'script', 'dataLayer', 'GTM-TSWTP6');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Hotjar Tracking Code for https://ei.docs.wso2.com/ -->
+<script>
+  (function (h, o, t, j, a, r) {
+    h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments) };
+    h._hjSettings = { hjid: 1000689, hjsv: 6 };
+    a = o.getElementsByTagName('head')[0];
+    r = o.createElement('script'); r.async = 1;
+    r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+    a.appendChild(r);
+  })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+</script>
+<!-- End Google Tag Manager (noscript) -->
+
+
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#purpose" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <!--
+ * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+-->
+
+<header class="md-header" data-md-component="header" id="page-header" data-url="" data-lang="en">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://ei.docs.wso2.com/en/latest/" title="WSO2 Enterprise Integrator Documentation" class="md-header-nav__button md-logo">
+          
+            <img src="../../images/logo.svg" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+               Enterprise Integrator Documentation
+            </span>
+            <span class="md-header-nav__topic">
+              Using Javascript Functions in Siddhi Applications
+            </span>
+          
+        </div>
+
+        <div class="md-flex__ellipsis md-header__version-select">
+          <div class="mb-tabs__dropdown version-select">
+            <a class="md-tabs__link md-tabs__dropdown-link" href="#!" data-target="version-select-dropdown">7.0.0</a>
+            <ul id="version-select-dropdown" class="mb-tabs__dropdown-content" tabindex="0">
+              <!-- Versions will added here dynamically -->
+              <li class="md-tabs__item mb-tabs__dropdown">
+                <a href="#" id="show-all-versions-link">Show all</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="md-flex__ellipsis md-header__distribution-select">
+          <div class="mb-tabs__dropdown version-select">
+            <a class="md-tabs__link md-tabs__dropdown-link" href="#!" data-target="distribution-select-dropdown">
+            Streaming Integrator</a>
+            <ul id="distribution-select-dropdown" class="mb-tabs__dropdown-content" tabindex="0">
+            </ul>
+          </div>
+        </div>
+        
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item home_icon">
+    
+      <a href="../.." title="Home" class="md-tabs__link">
+          <i class="fa fa-home"></i>
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../overview/overview/" title="Get Started" class="md-tabs__link">
+          Get Started
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    
+    
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../guides/consuming-messages/" title="Learn" class="md-tabs__link">
+          Learn
+        </a>
+      
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+    
+    
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../setup/installing-si-in-vm/" title="Setup and Install" class="md-tabs__link">
+          Setup and Install
+        </a>
+      
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../develop/developing-streaming-integration-solutions/" title="Develop" class="md-tabs__link">
+          Develop
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../admin/monitoring-the-streaming-integrator/" title="Observability" class="md-tabs__link">
+          Observability
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../ref/si-rest-api-guide/" title="References" class="md-tabs__link">
+          References
+        </a>
+      
+    </li>
+  
+
+      
+        
+      
+    </ul>
+    <div class="quick_links">
+        
+        <a href="https://github.com/wso2/docs-ei/edit/7.0.0/en/streaming-integrator/docs/samples/Script-js-sample.md" target="blank" id="editIcon" title="Edit this page"
+           title="Edit this page" class="md-icon md-content__icon nav_link edit_link"></a>
+        
+    </div>
+    <a href="#" title="Report Issues" class="feedbackBtn" 
+        onclick=window.open("https://github.com/"+"wso2/docs-ei"+"/issues/new?title=Doc%20Feedback:&body=Location%20:%20"+window.location.href); >
+        Report Issues</a>
+  </div>
+</nav>
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+    <label class="md-nav__title md-nav__title--site" for="__drawer">
+      <a href="https://ei.docs.wso2.com/en/latest/" title="WSO2 Enterprise Integrator Documentation"
+         class="md-nav__button md-logo">
+        
+          <img src="../../images/logo.svg" width="48" height="48">
+        
+      </a>
+      WSO2 Enterprise Integrator Documentation
+    </label>
+    
+      <div class="md-nav__source">
+        
+
+
+  
+
+<a href="https://github.com/wso2/docs-ei/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    wso2/docs-ei
+  </div>
+</a>
+      </div>
+    
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        
+        
+        
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+        
+        
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Get Started
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Get Started
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../overview/overview/" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quick-start-guide/getting-started-with-si/" title="Quick Start Guide" class="md-nav__link">
+      Quick Start Guide
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quick-start-guide/quick-start-guide-101/" title="Streaming Integrator 101" class="md-nav__link">
+      Streaming Integrator 101
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quick-start-guide/hello-world-with-mi/" title="Running the Streaming Integrator with Micro Integrator" class="md-nav__link">
+      Running the Streaming Integrator with Micro Integrator
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../overview/architecture/" title="Architecture" class="md-nav__link">
+      Architecture
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../concepts/concepts/" title="Key Concepts" class="md-nav__link">
+      Key Concepts
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+      
+        
+        
+        
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      Learn
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Learn
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-1" type="checkbox" id="nav-3-1">
+    
+    <label class="md-nav__link" for="nav-3-1">
+      Use Cases
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-1">
+        Use Cases
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/consuming-messages/" title="Consuming Data" class="md-nav__link">
+      Consuming Data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/transforming-data/" title="Transforming Data" class="md-nav__link">
+      Transforming Data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/enriching-data/" title="Enriching Data" class="md-nav__link">
+      Enriching Data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/cleansing-data/" title="Cleansing Data" class="md-nav__link">
+      Cleansing Data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/correlating-events/" title="Correlating Data" class="md-nav__link">
+      Correlating Data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/summarizing-data/" title="Summarizing Data" class="md-nav__link">
+      Summarizing Data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/storage-Integration/" title="Integrating Stores" class="md-nav__link">
+      Integrating Stores
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/publishing-data/" title="Publishing Data" class="md-nav__link">
+      Publishing Data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/triggering-integration-flows/" title="Triggering Integration Flows" class="md-nav__link">
+      Triggering Integration Flows
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-2" type="checkbox" id="nav-3-2">
+    
+    <label class="md-nav__link" for="nav-3-2">
+      Tutorials
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-2">
+        Tutorials
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../examples/tutorials-overview/" title="Tutorials Overview" class="md-nav__link">
+      Tutorials Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../examples/performing-real-time-etl-with-mysql/" title="Performing Real-time ETL with MySQL" class="md-nav__link">
+      Performing Real-time ETL with MySQL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../examples/performing-real-time-etl-with-files/" title="Performing Real-time ETL with Files" class="md-nav__link">
+      Performing Real-time ETL with Files
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../examples/working-with-kafka/" title="Working with Kafka" class="md-nav__link">
+      Working with Kafka
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../examples/exposing-processed-data-as-api/" title="Exposing Processed Data as API" class="md-nav__link">
+      Exposing Processed Data as API
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../examples/triggering-integrations-via-micro-integrator/" title="Triggering Integrations via MI" class="md-nav__link">
+      Triggering Integrations via MI
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../examples/running-si-with-docker-and-kubernetes/" title="Running SI with Docker and Kubernetes" class="md-nav__link">
+      Running SI with Docker and Kubernetes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3" type="checkbox" id="nav-3-3" checked>
+    
+    <label class="md-nav__link" for="nav-3-3">
+      Examples
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-3">
+        Examples
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3-1" type="checkbox" id="nav-3-3-1">
+    
+    <label class="md-nav__link" for="nav-3-3-1">
+      Consuming Data
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-3-3-1">
+        Consuming Data
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ReceiveTCPinJSONFormat/" title="Receiving JSON Events via TCP" class="md-nav__link">
+      Receiving JSON Events via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishGooglePubSubMessagesInTextFormat/" title="Publishing Events to a Google Pub/Sub Topic" class="md-nav__link">
+      Publishing Events to a Google Pub/Sub Topic
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../CSVDefaultMapping/" title="Publishing and Receiving CSV Events via Files" class="md-nav__link">
+      Publishing and Receiving CSV Events via Files
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../CDCWithListeningMode/" title="Capturing MySQL Inserts via CDC" class="md-nav__link">
+      Capturing MySQL Inserts via CDC
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ReceiveGooglePubSubMessagesInTextFormat/" title="Receiving Messages from a Google Pub/Sub Topic" class="md-nav__link">
+      Receiving Messages from a Google Pub/Sub Topic
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ReceiveMQTTInXMLFormat/" title="Receiving XML events via MQTT" class="md-nav__link">
+      Receiving XML events via MQTT
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ReceiveTCPinBinaryFormat/" title="Receiving Binary Events via TCP" class="md-nav__link">
+      Receiving Binary Events via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ReceiveKafkaInBinaryFormat/" title="Receiving Binary Events via Kafka" class="md-nav__link">
+      Receiving Binary Events via Kafka
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ReceiveHTTPInXMLFormatWithDefaultMapping/" title="Receiving XML Events via HTTP" class="md-nav__link">
+      Receiving XML Events via HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../store-influxdb/" title="Working with an influxDB Store" class="md-nav__link">
+      Working with an influxDB Store
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../CDCWithPollingMode/" title="Capturing MySQL Inserts and Updates via CDC Polling Mode" class="md-nav__link">
+      Capturing MySQL Inserts and Updates via CDC Polling Mode
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../TwitterPolling-sample/" title="Retrieving Historical Tweets for a Given Time Period" class="md-nav__link">
+      Retrieving Historical Tweets for a Given Time Period
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishHttpOAuthRequestWithRefreshToken/" title="Publishing HTTP Events to an OAuth-protected Endpoint while Using a Refresh Token Grant Type" class="md-nav__link">
+      Publishing HTTP Events to an OAuth-protected Endpoint while Using a Refresh Token Grant Type
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishHttpOAuthRequestResponse/" title="Publishing HTTP Events via an OAuth-protected Endpoint" class="md-nav__link">
+      Publishing HTTP Events via an OAuth-protected Endpoint
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Store-solr/" title="Receiving Events via Simulator and Persisting in SOLR Store" class="md-nav__link">
+      Receiving Events via Simulator and Persisting in SOLR Store
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ReceiveAndCount/" title="Receiving Events via HTTP Transport" class="md-nav__link">
+      Receiving Events via HTTP Transport
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ReceiveEventsFromFile/" title="Receiving Events via File" class="md-nav__link">
+      Receiving Events via File
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ReceiveEmailInXmlFormat/" title="Receiving XML Events via Email" class="md-nav__link">
+      Receiving XML Events via Email
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ReceiveRabbitmqInJSONFormat/" title="Receiving JSON Events via RabbitMQ" class="md-nav__link">
+      Receiving JSON Events via RabbitMQ
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Store-cassandra/" title="Receive Events via Simulator and Persist in Cassandra Store" class="md-nav__link">
+      Receive Events via Simulator and Persist in Cassandra Store
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3-2" type="checkbox" id="nav-3-3-2">
+    
+    <label class="md-nav__link" for="nav-3-3-2">
+      Transforming Data
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-3-3-2">
+        Transforming Data
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishHttpOAuthRequest/" title="Publishing HTTP Events to to an OAuth-protected Endpoint" class="md-nav__link">
+      Publishing HTTP Events to to an OAuth-protected Endpoint
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishHttpOAuthRequestWithoutAccessToken/" title="Publishing HTTP Events to to an OAuth-protected Endpoint without an Access Token" class="md-nav__link">
+      Publishing HTTP Events to to an OAuth-protected Endpoint without an Access Token
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ReceiveHl7InER7Format/" title="Receiving ER7 Events via HL7" class="md-nav__link">
+      Receiving ER7 Events via HL7
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../DataPreprocessing/" title="Preprocessing Data Received via TCP" class="md-nav__link">
+      Preprocessing Data Received via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishHl7InER7Format/" title="Publishing ER7 Events via HL7" class="md-nav__link">
+      Publishing ER7 Events via HL7
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../SweetProductionDataPreprocessing/" title="Receiving Data via TCP and Preprocessing" class="md-nav__link">
+      Receiving Data via TCP and Preprocessing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../CSVCustomMapping/" title="Receiving and Publishing Events in Custom CSV Format" class="md-nav__link">
+      Receiving and Publishing Events in Custom CSV Format
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishHTTPInJsonFormatWithCustomMapping/" title="Sending Custom JSON Events via HTTP" class="md-nav__link">
+      Sending Custom JSON Events via HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishEmailInTextFormat/" title="Publishing Text Events via Email" class="md-nav__link">
+      Publishing Text Events via Email
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ReceiveKafkaInTextFormatWithCustomMapping/" title="Receiving Custom Text Events via Kafka" class="md-nav__link">
+      Receiving Custom Text Events via Kafka
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Using Javascript Functions in Siddhi Applications
+      </label>
+    
+    <a href="./" title="Using Javascript Functions in Siddhi Applications" class="md-nav__link md-nav__link--active">
+      Using Javascript Functions in Siddhi Applications
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+    
+    
+    
+    <a href="#" title="On this page" class="nav_link md-icon md-content__icon toc_icon"
+       id="tocToggleBtn">keyboard_arrow_right</a>
+    <label class="md-nav__title" for="__toc">On this page</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+        
+        <li class="md-nav__item">
+  <a href="#purpose" title="Purpose:" class="md-nav__link">
+    Purpose:
+  </a>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#prerequisites" title="Prerequisites:" class="md-nav__link">
+    Prerequisites:
+  </a>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#executing-the-sample" title="Executing the Sample:" class="md-nav__link">
+    Executing the Sample:
+  </a>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#testing-the-sample" title="Testing the Sample:" class="md-nav__link">
+    Testing the Sample:
+  </a>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#viewing-the-results" title="Viewing the Results:" class="md-nav__link">
+    Viewing the Results:
+  </a>
+  
+</li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishKafkaInCustomAvroFormat/" title="Publishing Custom Avro Events via Kafka" class="md-nav__link">
+      Publishing Custom Avro Events via Kafka
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ReceiveHl7InXmlFormat/" title="Receiving Custom XML Messages via HL7" class="md-nav__link">
+      Receiving Custom XML Messages via HL7
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ReceiveTCPInTextFormatWithCustomMapping/" title="Receiving Custom Text Events via TCP" class="md-nav__link">
+      Receiving Custom Text Events via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../RegexExecutionSample/" title="Identifying Sub-sequences in Input Sequences" class="md-nav__link">
+      Identifying Sub-sequences in Input Sequences
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishHl7InXmlFormat/" title="Publishing XML messages via HL7" class="md-nav__link">
+      Publishing XML messages via HL7
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishKafkaInJsonFormat/" title="Publishing JSON Events via Kafka" class="md-nav__link">
+      Publishing JSON Events via Kafka
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishEventsToFile/" title="Publishing JSON Events to Files" class="md-nav__link">
+      Publishing JSON Events to Files
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ReceiveHTTPinXMLFormatWithCustomMapping/" title="Receiving Custom XML Events via HTTP" class="md-nav__link">
+      Receiving Custom XML Events via HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishRabbitmqInXmlFormat/" title="Publishing XML Events via RabbitMQ" class="md-nav__link">
+      Publishing XML Events via RabbitMQ
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../MathExtensionSample/" title="Rounding up Amounts via the Math Function" class="md-nav__link">
+      Rounding up Amounts via the Math Function
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ReceiveTCPinTextFormat/" title="Receiving Text Events via TCP" class="md-nav__link">
+      Receiving Text Events via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishEmailInXmlFormat/" title="Publishing Emails in XML Format" class="md-nav__link">
+      Publishing Emails in XML Format
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../TimeSeriesExtensionSample/" title="Processing data via the Timeseries Extension with the Regress Function" class="md-nav__link">
+      Processing data via the Timeseries Extension with the Regress Function
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../TwitterStreaming-sample/" title="Retrieving Real-time Tweets" class="md-nav__link">
+      Retrieving Real-time Tweets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../StringExtensionSample/" title="Converting String Values to Lowercase" class="md-nav__link">
+      Converting String Values to Lowercase
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../TextMappingWithInmemoryTransport/" title="Text Mapping with In-memory Transport" class="md-nav__link">
+      Text Mapping with In-memory Transport
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ReceiveHTTPInJsonFormatWithDefaultMapping/" title="Receiving JSON Events via HTTP" class="md-nav__link">
+      Receiving JSON Events via HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../HelloKafka/" title="Consuming Events from a Kafka Topic and Publishing to Another Kafka Topic" class="md-nav__link">
+      Consuming Events from a Kafka Topic and Publishing to Another Kafka Topic
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishHttpInXmlFormatWithCustomMapping/" title="Publishing Custom XML Events via HTTP" class="md-nav__link">
+      Publishing Custom XML Events via HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../SNMPSetRequestApp/" title="Sending Custom Keyvalue Events via SNMP" class="md-nav__link">
+      Sending Custom Keyvalue Events via SNMP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishTcpInJsonFormat/" title="Publishing JSON Events via TCP" class="md-nav__link">
+      Publishing JSON Events via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishHttpOAuthRequestWithOAuthUser/" title="Publishing HTTP Events to an OAuth-protected Endpoint" class="md-nav__link">
+      Publishing HTTP Events to an OAuth-protected Endpoint
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../MapExtensionSample/" title="Inserting and Accessing Data in a Map" class="md-nav__link">
+      Inserting and Accessing Data in a Map
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishJmsInXmlFormat/" title="Publishing XML Events via JMS" class="md-nav__link">
+      Publishing XML Events via JMS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ReceiveJMSInJsonFormat/" title="Receiving JSON Events via JMS" class="md-nav__link">
+      Receiving JSON Events via JMS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ReceiveHTTPInJsonFormatWithCustomMapping/" title="Receiving Custom JSON Events via HTTP" class="md-nav__link">
+      Receiving Custom JSON Events via HTTP
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3-3" type="checkbox" id="nav-3-3-3" checked>
+    
+    <label class="md-nav__link" for="nav-3-3-3">
+      Enriching Data
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-3-3-3">
+        Enriching Data
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ExtremaBottomK/" title="Counting the Frequency of Values with BottomK" class="md-nav__link">
+      Counting the Frequency of Values with BottomK
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../GplNLPFindNameEntityType/" title="Extracting Values from a String" class="md-nav__link">
+      Extracting Values from a String
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../JoinWithStoredData/" title="Joining Streaming Data with Stored Data in RDBMS" class="md-nav__link">
+      Joining Streaming Data with Stored Data in RDBMS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Using Javascript Functions in Siddhi Applications
+      </label>
+    
+    <a href="./" title="Using Javascript Functions in Siddhi Applications" class="md-nav__link md-nav__link--active">
+      Using Javascript Functions in Siddhi Applications
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+    
+    
+    
+    <a href="#" title="On this page" class="nav_link md-icon md-content__icon toc_icon"
+       id="tocToggleBtn">keyboard_arrow_right</a>
+    <label class="md-nav__title" for="__toc">On this page</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+        
+        <li class="md-nav__item">
+  <a href="#purpose" title="Purpose:" class="md-nav__link">
+    Purpose:
+  </a>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#prerequisites" title="Prerequisites:" class="md-nav__link">
+    Prerequisites:
+  </a>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#executing-the-sample" title="Executing the Sample:" class="md-nav__link">
+    Executing the Sample:
+  </a>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#testing-the-sample" title="Testing the Sample:" class="md-nav__link">
+    Testing the Sample:
+  </a>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#viewing-the-results" title="Viewing the Results:" class="md-nav__link">
+    Viewing the Results:
+  </a>
+  
+</li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../store-hbase/" title="Receiving Events via Simulator and Persisting in a Store" class="md-nav__link">
+      Receiving Events via Simulator and Persisting in a Store
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../HttpRequestResponseSample/" title="Publishing HTTP Requests, Receiving Responses, and Processing Them" class="md-nav__link">
+      Publishing HTTP Requests, Receiving Responses, and Processing Them
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../UnitConversionExtentionSample/" title="Converting Units" class="md-nav__link">
+      Converting Units
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../sentimentExtensionSample/" title="Calculating the Sentiment Value for a Given String" class="md-nav__link">
+      Calculating the Sentiment Value for a Given String
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../KalmanFilterExecutionSample/" title="Estimating Values Using Kalman Algorithms" class="md-nav__link">
+      Estimating Values Using Kalman Algorithms
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../execution-geo-sample/" title="Processing Geo Data" class="md-nav__link">
+      Processing Geo Data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ClusTreeTestApp/" title="Performing Streaming Learning Using a Clustree Model" class="md-nav__link">
+      Performing Streaming Learning Using a Clustree Model
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ReceiveWebSocketInXMLFormat/" title="Receiving XML Events via Websocket" class="md-nav__link">
+      Receiving XML Events via Websocket
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3-4" type="checkbox" id="nav-3-3-4">
+    
+    <label class="md-nav__link" for="nav-3-3-4">
+      Aggregating Data
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-3-3-4">
+        Aggregating Data
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../DataPreprocessing/" title="Preprocessing Data Received via TCP" class="md-nav__link">
+      Preprocessing Data Received via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../SweetProductionDataPreprocessing/" title="Receiving Data via TCP and Preprocessing" class="md-nav__link">
+      Receiving Data via TCP and Preprocessing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishEmailInTextFormat/" title="Publishing Text Events via Email" class="md-nav__link">
+      Publishing Text Events via Email
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../AggregateOverTime/" title="Calculating Aggregations Over Time" class="md-nav__link">
+      Calculating Aggregations Over Time
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../approximate-distinctCountEver-sample/" title="Calculating the Number of Distinct Events without a Siddhi Window" class="md-nav__link">
+      Calculating the Number of Distinct Events without a Siddhi Window
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../approximate-distinctCount-sample/" title="Calculating the Number of Distinct Events within a Siddhi Window" class="md-nav__link">
+      Calculating the Number of Distinct Events within a Siddhi Window
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ReceiveAndCount/" title="Receiving Events via HTTP Transport" class="md-nav__link">
+      Receiving Events via HTTP Transport
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../AggregateDataIncrementally/" title="Aggregating Data Incrementally" class="md-nav__link">
+      Aggregating Data Incrementally
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Store-redis/" title="Receiving Events and Persisting Them in Redis Store" class="md-nav__link">
+      Receiving Events and Persisting Them in Redis Store
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../approximate-count-sample/" title="Calculating the Approximate Count of Events within a Siddhi Window" class="md-nav__link">
+      Calculating the Approximate Count of Events within a Siddhi Window
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../store-mongodb/" title="Receiving Events and Persisting in MongoDB Store" class="md-nav__link">
+      Receiving Events and Persisting in MongoDB Store
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3-5" type="checkbox" id="nav-3-3-5">
+    
+    <label class="md-nav__link" for="nav-3-3-5">
+      Correlating Data
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-3-3-5">
+        Correlating Data
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PmmlModelProcessor/" title="Making Predictions via PMML Model" class="md-nav__link">
+      Making Predictions via PMML Model
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../StreamingRegressor/" title="Making Predictions via a Regressor Model" class="md-nav__link">
+      Making Predictions via a Regressor Model
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../GplNLPFindNameEntityType/" title="Extracting Values from a String" class="md-nav__link">
+      Extracting Values from a String
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../TensorFlowTestApp/" title="Performing Regression Tasks via an Imported Tensorflow Model" class="md-nav__link">
+      Performing Regression Tasks via an Imported Tensorflow Model
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../MarkovChainSample/" title="Identifying Abnormal Patterns via a Markov Matrix" class="md-nav__link">
+      Identifying Abnormal Patterns via a Markov Matrix
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PriorityExtensionSample/" title="Observing the Priority of Events in a Stream" class="md-nav__link">
+      Observing the Priority of Events in a Stream
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../approximate-distinctCountEver-sample/" title="Calculating the Number of Distinct Events without a Siddhi Window" class="md-nav__link">
+      Calculating the Number of Distinct Events without a Siddhi Window
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../approximate-distinctCount-sample/" title="Calculating the Number of Distinct Events within a Siddhi Window" class="md-nav__link">
+      Calculating the Number of Distinct Events within a Siddhi Window
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../sentimentExtensionSample/" title="Calculating the Sentiment Value for a Given String" class="md-nav__link">
+      Calculating the Sentiment Value for a Given String
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishMqttInXmlFormat/" title="Publishing XML Events via MQTT" class="md-nav__link">
+      Publishing XML Events via MQTT
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PatternMatching/" title="Identifying Event Patterns Based On Order of Event Arrival" class="md-nav__link">
+      Identifying Event Patterns Based On Order of Event Arrival
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../StreamingKMeansSample/" title="Using StreamingML Kmeans for Clustering" class="md-nav__link">
+      Using StreamingML Kmeans for Clustering
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../KalmanFilterExecutionSample/" title="Estimating Values Using Kalman Algorithms" class="md-nav__link">
+      Estimating Values Using Kalman Algorithms
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../RScriptSample/" title="Processing Events and Producing Aggregated Outputs Using R Script" class="md-nav__link">
+      Processing Events and Producing Aggregated Outputs Using R Script
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ReceivePrometheusMetrics/" title="Receiving Prometheus Metrics" class="md-nav__link">
+      Receiving Prometheus Metrics
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../hoeffding-adaptive-tree-sample/" title="Making Predictions via Hoeffding Classifier Model" class="md-nav__link">
+      Making Predictions via Hoeffding Classifier Model
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../SNMPGetRequestApp/" title="Receiving Custom Key Value Events via SNMP" class="md-nav__link">
+      Receiving Custom Key Value Events via SNMP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ReceiveJMSInKeyvalueFormat/" title="Receiving Key Value Events via JMS" class="md-nav__link">
+      Receiving Key Value Events via JMS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../IBMMessageQueue/" title="Consuming Messages from IBM Message Queues" class="md-nav__link">
+      Consuming Messages from IBM Message Queues
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../AlertsAndThresholds/" title="Receiving Email Alerts" class="md-nav__link">
+      Receiving Email Alerts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../streaming-perceptron-sample/" title="Making Predictions via a Streaming Perceptron Model" class="md-nav__link">
+      Making Predictions via a Streaming Perceptron Model
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../GeoDistanceCalculation/" title="Calculating the Distance Between Two Locations" class="md-nav__link">
+      Calculating the Distance Between Two Locations
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3-6" type="checkbox" id="nav-3-3-6">
+    
+    <label class="md-nav__link" for="nav-3-3-6">
+      Publishing Data
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-3-3-6">
+        Publishing Data
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishTcpInTextFormat/" title="Publishing Text Events via TCP" class="md-nav__link">
+      Publishing Text Events via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ReceiveHl7InER7Format/" title="Receiving ER7 Events via HL7" class="md-nav__link">
+      Receiving ER7 Events via HL7
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishGooglePubSubMessagesInTextFormat/" title="Publishing Events to a Google Pub/Sub Topic" class="md-nav__link">
+      Publishing Events to a Google Pub/Sub Topic
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishTcpInBinaryFormat/" title="Publishing Binary Events via TCP" class="md-nav__link">
+      Publishing Binary Events via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishWebSocketInXmlFormat/" title="Publishing XML Events via WebSocket" class="md-nav__link">
+      Publishing XML Events via WebSocket
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishPrometheusMetricsHTTPServer/" title="Publishing Consumed Events to Prometheus Metrics and Exposing then via HTTP" class="md-nav__link">
+      Publishing Consumed Events to Prometheus Metrics and Exposing then via HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../store-influxdb/" title="Working with an influxDB Store" class="md-nav__link">
+      Working with an influxDB Store
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishKafkaInBinaryFormat/" title="Publishing Binary Events via Kafka" class="md-nav__link">
+      Publishing Binary Events via Kafka
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishJmsInKeyvalueFormat/" title="Publishing Key-value events via JMS" class="md-nav__link">
+      Publishing Key-value events via JMS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishHttpInXmlFormat/" title="Publishing XML Events via HTTP" class="md-nav__link">
+      Publishing XML Events via HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishHttpOAuthRequestWithRefreshToken/" title="Publishing HTTP Events to an OAuth-protected Endpoint while Using a Refresh Token Grant Type" class="md-nav__link">
+      Publishing HTTP Events to an OAuth-protected Endpoint while Using a Refresh Token Grant Type
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishHttpOAuthRequestResponse/" title="Publishing HTTP Events via an OAuth-protected Endpoint" class="md-nav__link">
+      Publishing HTTP Events via an OAuth-protected Endpoint
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Store-solr/" title="Receiving Events via Simulator and Persisting in SOLR Store" class="md-nav__link">
+      Receiving Events via Simulator and Persisting in SOLR Store
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishHttpInJsonFormat/" title="Publishing JSON Events via HTTP" class="md-nav__link">
+      Publishing JSON Events via HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Store-rdbms/" title="Receiving Events via Simulator and Persisting in RDBMS Store" class="md-nav__link">
+      Receiving Events via Simulator and Persisting in RDBMS Store
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Store-cassandra/" title="Receive Events via Simulator and Persist in Cassandra Store" class="md-nav__link">
+      Receive Events via Simulator and Persist in Cassandra Store
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PublishKafkaInAvroFormatUsingSchemaRegistry/" title="Publishing Avro Events via Kafka" class="md-nav__link">
+      Publishing Avro Events via Kafka
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../AmazonS3SinkSample/" title="Publishing Aggregated Events to the Amazon AWS S3 Bucket" class="md-nav__link">
+      Publishing Aggregated Events to the Amazon AWS S3 Bucket
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../GCSSinkSample/" title="Publishing Events to a GCS Bucket" class="md-nav__link">
+      Publishing Events to a GCS Bucket
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+      
+        
+        
+        
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Setup and Install
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Setup and Install
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-1" type="checkbox" id="nav-4-1">
+    
+    <label class="md-nav__link" for="nav-4-1">
+      Installing the Product
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-1">
+        Installing the Product
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/installing-si-in-vm/" title="Install in a VM" class="md-nav__link">
+      Install in a VM
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/installing-si-using-docker/" title="Installing in Docker" class="md-nav__link">
+      Installing in Docker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/installing-si-using-kubernetes/" title="Installing in Kubernetes" class="md-nav__link">
+      Installing in Kubernetes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/migrating-from-stream-processor/" title="Migrating from WSO2 SP" class="md-nav__link">
+      Migrating from WSO2 SP
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2">
+    
+    <label class="md-nav__link" for="nav-4-2">
+      Deploying Streaming Integrator
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-2">
+        Deploying Streaming Integrator
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/deploying-si-as-a-single-deployment/" title="Single Deployment" class="md-nav__link">
+      Single Deployment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/deploying-si-as-minimum-ha-cluster/" title="Minimum HA Cluster" class="md-nav__link">
+      Minimum HA Cluster
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/deploying-si-as-an-active-active-cluster.md" title="Active-Active Cluster" class="md-nav__link">
+      Active-Active Cluster
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/deploying-si-as-a-scalable-cluster/" title="Scalable Cluster" class="md-nav__link">
+      Scalable Cluster
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-3" type="checkbox" id="nav-4-3">
+    
+    <label class="md-nav__link" for="nav-4-3">
+      Setting up Databases
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-3">
+        Setting up Databases
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/configuring-data-sources/" title="Configuring Datasources" class="md-nav__link">
+      Configuring Datasources
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-4" type="checkbox" id="nav-4-4">
+    
+    <label class="md-nav__link" for="nav-4-4">
+      Working with Siddhi Connectors
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-4">
+        Working with Siddhi Connectors
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../admin/downloading-and-Installing-Siddhi-Extensions/" title="Downloading and Installing Siddhi Connectors" class="md-nav__link">
+      Downloading and Installing Siddhi Connectors
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../admin/writing-Custom-Siddhi-Extensions/" title="Writing Custom Siddhi Extensions" class="md-nav__link">
+      Writing Custom Siddhi Extensions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../admin/configuring-System-Parameters-for-Siddhi-Extensions/" title="Configuring System Parameters for Siddhi Extensions" class="md-nav__link">
+      Configuring System Parameters for Siddhi Extensions
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../admin/creating-business-rules-templates/" title="Working with Business Rules" class="md-nav__link">
+      Working with Business Rules
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../admin/general-data-protection-regulations/" title="General Data Protection Regulations" class="md-nav__link">
+      General Data Protection Regulations
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../admin/working-with-Keystores/" title="Working with Keystores" class="md-nav__link">
+      Working with Keystores
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../admin/supporting-different-transports/" title="Supporting Different Transports" class="md-nav__link">
+      Supporting Different Transports
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../admin/user-management/" title="User Management" class="md-nav__link">
+      User Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../admin/configuring-Database-and-File-System-State-Persistence" title="Configuring State Persistence" class="md-nav__link">
+      Configuring State Persistence
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../admin/protecting-sensitive-data-via-the-secure-vault/" title="Protecting Sensitive Data via the Secure Vault" class="md-nav__link">
+      Protecting Sensitive Data via the Secure Vault
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../admin/adding-third-party-non-osgi-libraries/" title="Adding Third Party Non OSGi Library" class="md-nav__link">
+      Adding Third Party Non OSGi Library
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ref/configuring-default-ports/" title="Configuring Default Ports" class="md-nav__link">
+      Configuring Default Ports
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+      
+        
+        
+        
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Develop
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Develop
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/developing-streaming-integration-solutions/" title="Developing Streaming Integrator Solutions" class="md-nav__link">
+      Developing Streaming Integrator Solutions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5-2" type="checkbox" id="nav-5-2">
+    
+    <label class="md-nav__link" for="nav-5-2">
+      Streaming Integrator Tooling
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-5-2">
+        Streaming Integrator Tooling
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/streaming-integrator-studio-overview/" title="Streaming Integrator Tooling Overview" class="md-nav__link">
+      Streaming Integrator Tooling Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/working-with-the-Design-View/" title="Working with the Design View" class="md-nav__link">
+      Working with the Design View
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/creating-a-Siddhi-Application/" title="Creating Siddhi Applications" class="md-nav__link">
+      Creating Siddhi Applications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/installing-siddhi-extensions/" title="Installing Siddhi Extensions" class="md-nav__link">
+      Installing Siddhi Extensions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/testing-a-Siddhi-Application/" title="Testing Siddhi Applications" class="md-nav__link">
+      Testing Siddhi Applications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/debugging_siddhi_applications/" title="Debugging Siddhi Applications" class="md-nav__link">
+      Debugging Siddhi Applications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/deploying-Streaming-Applications/" title="Deploying Siddhi Applications" class="md-nav__link">
+      Deploying Siddhi Applications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/exporting-Siddhi-Applications/" title="Exporting Siddhi Applications" class="md-nav__link">
+      Exporting Siddhi Applications
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+      
+        
+        
+        
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Observability
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Observability
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../admin/monitoring-the-streaming-integrator/" title="Monitoring the Streaming Integrator" class="md-nav__link">
+      Monitoring the Streaming Integrator
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+      
+        
+        
+        
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      References
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        References
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ref/si-rest-api-guide/" title="Streaming Integration REST API Guide" class="md-nav__link">
+      Streaming Integration REST API Guide
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ref/performance-analysis-results/" title="Performance Analysis Results" class="md-nav__link">
+      Performance Analysis Results
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+      
+        
+        
+        
+
+
+  <li class="md-nav__item">
+    <a href="../../page-not-found/" title="" class="md-nav__link">
+      
+    </a>
+  </li>
+
+      
+    </ul>
+  </nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+    
+    
+    
+    <a href="#" title="On this page" class="nav_link md-icon md-content__icon toc_icon"
+       id="tocToggleBtn">keyboard_arrow_right</a>
+    <label class="md-nav__title" for="__toc">On this page</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+        
+        <li class="md-nav__item">
+  <a href="#purpose" title="Purpose:" class="md-nav__link">
+    Purpose:
+  </a>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#prerequisites" title="Prerequisites:" class="md-nav__link">
+    Prerequisites:
+  </a>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#executing-the-sample" title="Executing the Sample:" class="md-nav__link">
+    Executing the Sample:
+  </a>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#testing-the-sample" title="Testing the Sample:" class="md-nav__link">
+    Testing the Sample:
+  </a>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#viewing-the-results" title="Viewing the Results:" class="md-nav__link">
+    Viewing the Results:
+  </a>
+  
+</li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+
+                
+                  <a href="https://github.com/wso2/docs-ei/edit/7.0.0/en/streaming-integrator/docs/samples/Script-js-sample.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                  <h1>Using Javascript Functions in Siddhi Applications</h1>
+                
+                <h2 id="purpose">Purpose:<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
+<p>This sample demonstrate how javascript functions can be used in Siddhi Applications.</p>
+<h2 id="prerequisites">Prerequisites:<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Save this sample.</li>
+</ol>
+<h2 id="executing-the-sample">Executing the Sample:<a class="headerlink" href="#executing-the-sample" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Start the Siddhi application by clicking on 'Run'.</li>
+<li>If the Siddhi application starts successfully, the following messages would be shown on the console.
+     <pre class="codehilite"><code class="linenums">* Script-js-sample.siddhi - Started Successfully!</code></pre></li>
+</ol>
+<h2 id="testing-the-sample">Testing the Sample:<a class="headerlink" href="#testing-the-sample" title="Permanent link">&para;</a></h2>
+<ol>
+<li>To open event simulator by clicking on the second icon or press Ctrl+Shift+I.</li>
+<li>In the Single Simulation tab of the panel, select values as follows:<ul>
+<li>Siddhi App Name: Script-js-sample</li>
+<li>Stream Name: SweetProductiontream</li>
+</ul>
+</li>
+<li>In the name field and amount fields, enter 'toffee', '45.25' respectively and then click Send to send the event.</li>
+<li>Send some more events.</li>
+</ol>
+<h2 id="viewing-the-results">Viewing the Results:<a class="headerlink" href="#viewing-the-results" title="Permanent link">&para;</a></h2>
+<p>See the output on the console. Description of the raw material with the passed details are shown in the logger.You will get the output as follows:
+<pre class="codehilite"><code class="linenums">[2017-12-20_14-26-03_120] INFO {io.siddhi.core.stream.output.sink.LogSink} - Script-js-sample : logStream : Event{timestamp=1513760163112, data=[toffee, 45.25, There are 45.25kg of toffee in the store], isExpired=false}</code></pre></p>
+<p><strong>Notes: If you need to edit this application while it is running, then Save -&gt; Start.</strong></p>
+<pre class="codehilite"><code class="language-sql linenums">@App:name('Script-js-sample')
+@App:Description('Demonstrate how javascript functions can be used in Siddhi Applications.')
+
+
+define stream sweetProductionStream (name string, amount double);
+
+@sink(type='log')
+define stream logStream (name string, amount double, itemDescription string);
+
+define function detailedMaterial[JavaScript] return string {
+     var name = data[0];
+     var amount = data[1];
+     var res = "There are "+amount+"kg of "+name+ " in the store";
+     return res;
+};
+
+from sweetProductionStream select name , amount, detailedMaterial(name,amount) as itemDescription
+insert into detailedProductionstream;
+
+from detailedProductionstream
+select *
+insert into logStream;</code></pre>
+                
+                  
+                
+              
+<a href="#" class="cd-top text--replace js-cd-top">Top</a>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TSWTP6" height="0" width="0"
+    style="display:none;visibility:hidden"></iframe></noscript>
+
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../JoinWithStoredData/" title="Joining Streaming Data with Stored Data in RDBMS" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Joining Streaming Data with Stored Data in RDBMS
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../store-hbase/" title="Receiving Events via Simulator and Persisting in a Store" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Receiving Events via Simulator and Persisting in a Store
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            WSO2 Enterprise Integrator - Documentation
+          </div>
+        
+        &copy;2019 <a href="https://wso2.com/">WSO2</a>
+      </div>
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.dc02f8ce.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../assets/lib/highlightjs/highlight.min.js"></script>
+      
+        <script src="../../assets/js/theme.js"></script>
+      
+        <script src="../../assets/lib/backtotop/js/util.js"></script>
+      
+        <script src="../../assets/lib/backtotop/js/main.js"></script>
+      
+    
+  </body>
+</html>
