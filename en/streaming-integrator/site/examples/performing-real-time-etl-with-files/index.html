@@ -1,0 +1,4040 @@
+<!--
+ * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+-->
+
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="Documentation for WSO2 Enterprise Integrator">
+      
+      
+        <link rel="canonical" href="https://ei.docs.wso2.com/en/latest/examples/performing-real-time-etl-with-files/">
+      
+      
+        <meta name="author" content="WSO2">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.1.1">
+    
+    
+      
+        <title>Performing Real-time ETL with Files - WSO2 Enterprise Integrator Documentation</title>
+      
+    
+    
+
+      <link rel="stylesheet" href="../../assets/stylesheets/application.3020aac5.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.224b79ff.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ff7043">
+      
+    
+<link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
+
+    
+      <script src="../../assets/javascripts/modernizr.01ccdecf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../assets/lib/highlightjs/default.min.css">
+    
+      <link rel="stylesheet" href="../../assets/css/theme.css">
+    
+    
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-103065-9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'UA-103065-9');
+</script>
+
+<!-- Google Tag Manager -->
+<script>(function (w, d, s, l, i) {
+  w[l] = w[l] || []; w[l].push({
+    'gtm.start':
+      new Date().getTime(), event: 'gtm.js'
+  }); var f = d.getElementsByTagName(s)[0],
+    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+      'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+  })(window, document, 'script', 'dataLayer', 'GTM-TSWTP6');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Hotjar Tracking Code for https://ei.docs.wso2.com/ -->
+<script>
+  (function (h, o, t, j, a, r) {
+    h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments) };
+    h._hjSettings = { hjid: 1000689, hjsv: 6 };
+    a = o.getElementsByTagName('head')[0];
+    r = o.createElement('script'); r.async = 1;
+    r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+    a.appendChild(r);
+  })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+</script>
+<!-- End Google Tag Manager (noscript) -->
+
+
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#performing-real-time-etl-with-files" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <!--
+ * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+-->
+
+<header class="md-header" data-md-component="header" id="page-header" data-url="" data-lang="en">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://ei.docs.wso2.com/en/latest/" title="WSO2 Enterprise Integrator Documentation" class="md-header-nav__button md-logo">
+          
+            <img src="../../images/logo.svg" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+               Enterprise Integrator Documentation
+            </span>
+            <span class="md-header-nav__topic">
+              Performing Real-time ETL with Files
+            </span>
+          
+        </div>
+
+        <div class="md-flex__ellipsis md-header__version-select">
+          <div class="mb-tabs__dropdown version-select">
+            <a class="md-tabs__link md-tabs__dropdown-link" href="#!" data-target="version-select-dropdown">7.0.0</a>
+            <ul id="version-select-dropdown" class="mb-tabs__dropdown-content" tabindex="0">
+              <!-- Versions will added here dynamically -->
+              <li class="md-tabs__item mb-tabs__dropdown">
+                <a href="#" id="show-all-versions-link">Show all</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="md-flex__ellipsis md-header__distribution-select">
+          <div class="mb-tabs__dropdown version-select">
+            <a class="md-tabs__link md-tabs__dropdown-link" href="#!" data-target="distribution-select-dropdown">
+            Streaming Integrator</a>
+            <ul id="distribution-select-dropdown" class="mb-tabs__dropdown-content" tabindex="0">
+            </ul>
+          </div>
+        </div>
+        
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item home_icon">
+    
+      <a href="../.." title="Home" class="md-tabs__link">
+          <i class="fa fa-home"></i>
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../overview/overview/" title="Get Started" class="md-tabs__link">
+          Get Started
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    
+    
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../guides/consuming-messages/" title="Learn" class="md-tabs__link">
+          Learn
+        </a>
+      
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+    
+    
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../setup/installing-si-in-vm/" title="Setup and Install" class="md-tabs__link">
+          Setup and Install
+        </a>
+      
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../develop/developing-streaming-integration-solutions/" title="Develop" class="md-tabs__link">
+          Develop
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../admin/monitoring-the-streaming-integrator/" title="Observability" class="md-tabs__link">
+          Observability
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../ref/si-rest-api-guide/" title="References" class="md-tabs__link">
+          References
+        </a>
+      
+    </li>
+  
+
+      
+        
+      
+    </ul>
+    <div class="quick_links">
+        
+        <a href="https://github.com/wso2/docs-ei/edit/7.0.0/en/streaming-integrator/docs/examples/performing-real-time-etl-with-files.md" target="blank" id="editIcon" title="Edit this page"
+           title="Edit this page" class="md-icon md-content__icon nav_link edit_link"></a>
+        
+    </div>
+    <a href="#" title="Report Issues" class="feedbackBtn" 
+        onclick=window.open("https://github.com/"+"wso2/docs-ei"+"/issues/new?title=Doc%20Feedback:&body=Location%20:%20"+window.location.href); >
+        Report Issues</a>
+  </div>
+</nav>
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+    <label class="md-nav__title md-nav__title--site" for="__drawer">
+      <a href="https://ei.docs.wso2.com/en/latest/" title="WSO2 Enterprise Integrator Documentation"
+         class="md-nav__button md-logo">
+        
+          <img src="../../images/logo.svg" width="48" height="48">
+        
+      </a>
+      WSO2 Enterprise Integrator Documentation
+    </label>
+    
+      <div class="md-nav__source">
+        
+
+
+  
+
+<a href="https://github.com/wso2/docs-ei/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    wso2/docs-ei
+  </div>
+</a>
+      </div>
+    
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        
+        
+        
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+        
+        
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Get Started
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Get Started
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../overview/overview/" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quick-start-guide/getting-started-with-si/" title="Quick Start Guide" class="md-nav__link">
+      Quick Start Guide
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quick-start-guide/quick-start-guide-101/" title="Streaming Integrator 101" class="md-nav__link">
+      Streaming Integrator 101
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quick-start-guide/hello-world-with-mi/" title="Running the Streaming Integrator with Micro Integrator" class="md-nav__link">
+      Running the Streaming Integrator with Micro Integrator
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../overview/architecture/" title="Architecture" class="md-nav__link">
+      Architecture
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../concepts/concepts/" title="Key Concepts" class="md-nav__link">
+      Key Concepts
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+      
+        
+        
+        
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      Learn
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Learn
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-1" type="checkbox" id="nav-3-1">
+    
+    <label class="md-nav__link" for="nav-3-1">
+      Use Cases
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-1">
+        Use Cases
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/consuming-messages/" title="Consuming Data" class="md-nav__link">
+      Consuming Data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/transforming-data/" title="Transforming Data" class="md-nav__link">
+      Transforming Data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/enriching-data/" title="Enriching Data" class="md-nav__link">
+      Enriching Data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/cleansing-data/" title="Cleansing Data" class="md-nav__link">
+      Cleansing Data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/correlating-events/" title="Correlating Data" class="md-nav__link">
+      Correlating Data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/summarizing-data/" title="Summarizing Data" class="md-nav__link">
+      Summarizing Data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/storage-Integration/" title="Integrating Stores" class="md-nav__link">
+      Integrating Stores
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/publishing-data/" title="Publishing Data" class="md-nav__link">
+      Publishing Data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/triggering-integration-flows/" title="Triggering Integration Flows" class="md-nav__link">
+      Triggering Integration Flows
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-2" type="checkbox" id="nav-3-2" checked>
+    
+    <label class="md-nav__link" for="nav-3-2">
+      Tutorials
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-2">
+        Tutorials
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorials-overview/" title="Tutorials Overview" class="md-nav__link">
+      Tutorials Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../performing-real-time-etl-with-mysql/" title="Performing Real-time ETL with MySQL" class="md-nav__link">
+      Performing Real-time ETL with MySQL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Performing Real-time ETL with Files
+      </label>
+    
+    <a href="./" title="Performing Real-time ETL with Files" class="md-nav__link md-nav__link--active">
+      Performing Real-time ETL with Files
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+    
+    
+    
+    
+    
+    <a href="#" title="On this page" class="nav_link md-icon md-content__icon toc_icon"
+       id="tocToggleBtn">keyboard_arrow_right</a>
+    <label class="md-nav__title" for="__toc">On this page</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+        
+        <li class="md-nav__item">
+  <a href="#introduction" title="Introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#tutorial-steps" title="Tutorial steps" class="md-nav__link">
+    Tutorial steps
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extracting-data-from-a-file" title="Extracting data from a file" class="md-nav__link">
+    Extracting data from a file
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tailing-a-text-file-line-by-line" title="Tailing a text file line by line" class="md-nav__link">
+    Tailing a text file line by line
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tailing-a-text-file-using-a-regular-expression" title="Tailing a text file using a regular expression" class="md-nav__link">
+    Tailing a text file using a regular expression
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-a-remote-text-file-and-moving-it-after-processing" title="Reading a remote text file and moving it after processing" class="md-nav__link">
+    Reading a remote text file and moving it after processing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-a-binary-file-and-moving-it-after-processing" title="Reading a binary file and moving it after processing" class="md-nav__link">
+    Reading a binary file and moving it after processing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-a-file-line-by-line-and-delete-it-after-processing" title="Reading a file line by line and delete it after processing" class="md-nav__link">
+    Reading a file line by line and delete it after processing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-a-file-using-a-regular-expression-and-deleting-it-after-processing" title="Reading a file using a regular expression and deleting it after processing" class="md-nav__link">
+    Reading a file using a regular expression and deleting it after processing
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extracting-data-from-a-folder" title="Extracting data from a folder" class="md-nav__link">
+    Extracting data from a folder
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#processing-all-files-in-the-folder" title="Processing all files in the folder" class="md-nav__link">
+    Processing all files in the folder
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loading-data-into-a-file" title="Loading data into a file" class="md-nav__link">
+    Loading data into a file
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#appending-or-over-writing-events-to-a-file" title="Appending or over-writing events to a file" class="md-nav__link">
+    Appending or over-writing events to a file
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preserving-the-state-of-the-application-through-a-system-failure" title="Preserving the state of the application through a system failure" class="md-nav__link">
+    Preserving the state of the application through a system failure
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../working-with-kafka/" title="Working with Kafka" class="md-nav__link">
+      Working with Kafka
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../exposing-processed-data-as-api/" title="Exposing Processed Data as API" class="md-nav__link">
+      Exposing Processed Data as API
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../triggering-integrations-via-micro-integrator/" title="Triggering Integrations via MI" class="md-nav__link">
+      Triggering Integrations via MI
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../running-si-with-docker-and-kubernetes/" title="Running SI with Docker and Kubernetes" class="md-nav__link">
+      Running SI with Docker and Kubernetes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3" type="checkbox" id="nav-3-3">
+    
+    <label class="md-nav__link" for="nav-3-3">
+      Examples
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-3">
+        Examples
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3-1" type="checkbox" id="nav-3-3-1">
+    
+    <label class="md-nav__link" for="nav-3-3-1">
+      Consuming Data
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-3-3-1">
+        Consuming Data
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveTCPinJSONFormat/" title="Receiving JSON Events via TCP" class="md-nav__link">
+      Receiving JSON Events via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishGooglePubSubMessagesInTextFormat/" title="Publishing Events to a Google Pub/Sub Topic" class="md-nav__link">
+      Publishing Events to a Google Pub/Sub Topic
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/CSVDefaultMapping/" title="Publishing and Receiving CSV Events via Files" class="md-nav__link">
+      Publishing and Receiving CSV Events via Files
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/CDCWithListeningMode/" title="Capturing MySQL Inserts via CDC" class="md-nav__link">
+      Capturing MySQL Inserts via CDC
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveGooglePubSubMessagesInTextFormat/" title="Receiving Messages from a Google Pub/Sub Topic" class="md-nav__link">
+      Receiving Messages from a Google Pub/Sub Topic
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveMQTTInXMLFormat/" title="Receiving XML events via MQTT" class="md-nav__link">
+      Receiving XML events via MQTT
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveTCPinBinaryFormat/" title="Receiving Binary Events via TCP" class="md-nav__link">
+      Receiving Binary Events via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveKafkaInBinaryFormat/" title="Receiving Binary Events via Kafka" class="md-nav__link">
+      Receiving Binary Events via Kafka
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveHTTPInXMLFormatWithDefaultMapping/" title="Receiving XML Events via HTTP" class="md-nav__link">
+      Receiving XML Events via HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/store-influxdb/" title="Working with an influxDB Store" class="md-nav__link">
+      Working with an influxDB Store
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/CDCWithPollingMode/" title="Capturing MySQL Inserts and Updates via CDC Polling Mode" class="md-nav__link">
+      Capturing MySQL Inserts and Updates via CDC Polling Mode
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/TwitterPolling-sample/" title="Retrieving Historical Tweets for a Given Time Period" class="md-nav__link">
+      Retrieving Historical Tweets for a Given Time Period
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHttpOAuthRequestWithRefreshToken/" title="Publishing HTTP Events to an OAuth-protected Endpoint while Using a Refresh Token Grant Type" class="md-nav__link">
+      Publishing HTTP Events to an OAuth-protected Endpoint while Using a Refresh Token Grant Type
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHttpOAuthRequestResponse/" title="Publishing HTTP Events via an OAuth-protected Endpoint" class="md-nav__link">
+      Publishing HTTP Events via an OAuth-protected Endpoint
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/Store-solr/" title="Receiving Events via Simulator and Persisting in SOLR Store" class="md-nav__link">
+      Receiving Events via Simulator and Persisting in SOLR Store
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveAndCount/" title="Receiving Events via HTTP Transport" class="md-nav__link">
+      Receiving Events via HTTP Transport
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveEventsFromFile/" title="Receiving Events via File" class="md-nav__link">
+      Receiving Events via File
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveEmailInXmlFormat/" title="Receiving XML Events via Email" class="md-nav__link">
+      Receiving XML Events via Email
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveRabbitmqInJSONFormat/" title="Receiving JSON Events via RabbitMQ" class="md-nav__link">
+      Receiving JSON Events via RabbitMQ
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/Store-cassandra/" title="Receive Events via Simulator and Persist in Cassandra Store" class="md-nav__link">
+      Receive Events via Simulator and Persist in Cassandra Store
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3-2" type="checkbox" id="nav-3-3-2">
+    
+    <label class="md-nav__link" for="nav-3-3-2">
+      Transforming Data
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-3-3-2">
+        Transforming Data
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHttpOAuthRequest/" title="Publishing HTTP Events to to an OAuth-protected Endpoint" class="md-nav__link">
+      Publishing HTTP Events to to an OAuth-protected Endpoint
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHttpOAuthRequestWithoutAccessToken/" title="Publishing HTTP Events to to an OAuth-protected Endpoint without an Access Token" class="md-nav__link">
+      Publishing HTTP Events to to an OAuth-protected Endpoint without an Access Token
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveHl7InER7Format/" title="Receiving ER7 Events via HL7" class="md-nav__link">
+      Receiving ER7 Events via HL7
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/DataPreprocessing/" title="Preprocessing Data Received via TCP" class="md-nav__link">
+      Preprocessing Data Received via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHl7InER7Format/" title="Publishing ER7 Events via HL7" class="md-nav__link">
+      Publishing ER7 Events via HL7
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/SweetProductionDataPreprocessing/" title="Receiving Data via TCP and Preprocessing" class="md-nav__link">
+      Receiving Data via TCP and Preprocessing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/CSVCustomMapping/" title="Receiving and Publishing Events in Custom CSV Format" class="md-nav__link">
+      Receiving and Publishing Events in Custom CSV Format
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHTTPInJsonFormatWithCustomMapping/" title="Sending Custom JSON Events via HTTP" class="md-nav__link">
+      Sending Custom JSON Events via HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishEmailInTextFormat/" title="Publishing Text Events via Email" class="md-nav__link">
+      Publishing Text Events via Email
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveKafkaInTextFormatWithCustomMapping/" title="Receiving Custom Text Events via Kafka" class="md-nav__link">
+      Receiving Custom Text Events via Kafka
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/Script-js-sample/" title="Using Javascript Functions in Siddhi Applications" class="md-nav__link">
+      Using Javascript Functions in Siddhi Applications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishKafkaInCustomAvroFormat/" title="Publishing Custom Avro Events via Kafka" class="md-nav__link">
+      Publishing Custom Avro Events via Kafka
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveHl7InXmlFormat/" title="Receiving Custom XML Messages via HL7" class="md-nav__link">
+      Receiving Custom XML Messages via HL7
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveTCPInTextFormatWithCustomMapping/" title="Receiving Custom Text Events via TCP" class="md-nav__link">
+      Receiving Custom Text Events via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/RegexExecutionSample/" title="Identifying Sub-sequences in Input Sequences" class="md-nav__link">
+      Identifying Sub-sequences in Input Sequences
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHl7InXmlFormat/" title="Publishing XML messages via HL7" class="md-nav__link">
+      Publishing XML messages via HL7
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishKafkaInJsonFormat/" title="Publishing JSON Events via Kafka" class="md-nav__link">
+      Publishing JSON Events via Kafka
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishEventsToFile/" title="Publishing JSON Events to Files" class="md-nav__link">
+      Publishing JSON Events to Files
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveHTTPinXMLFormatWithCustomMapping/" title="Receiving Custom XML Events via HTTP" class="md-nav__link">
+      Receiving Custom XML Events via HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishRabbitmqInXmlFormat/" title="Publishing XML Events via RabbitMQ" class="md-nav__link">
+      Publishing XML Events via RabbitMQ
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/MathExtensionSample/" title="Rounding up Amounts via the Math Function" class="md-nav__link">
+      Rounding up Amounts via the Math Function
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveTCPinTextFormat/" title="Receiving Text Events via TCP" class="md-nav__link">
+      Receiving Text Events via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishEmailInXmlFormat/" title="Publishing Emails in XML Format" class="md-nav__link">
+      Publishing Emails in XML Format
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/TimeSeriesExtensionSample/" title="Processing data via the Timeseries Extension with the Regress Function" class="md-nav__link">
+      Processing data via the Timeseries Extension with the Regress Function
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/TwitterStreaming-sample/" title="Retrieving Real-time Tweets" class="md-nav__link">
+      Retrieving Real-time Tweets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/StringExtensionSample/" title="Converting String Values to Lowercase" class="md-nav__link">
+      Converting String Values to Lowercase
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/TextMappingWithInmemoryTransport/" title="Text Mapping with In-memory Transport" class="md-nav__link">
+      Text Mapping with In-memory Transport
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveHTTPInJsonFormatWithDefaultMapping/" title="Receiving JSON Events via HTTP" class="md-nav__link">
+      Receiving JSON Events via HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/HelloKafka/" title="Consuming Events from a Kafka Topic and Publishing to Another Kafka Topic" class="md-nav__link">
+      Consuming Events from a Kafka Topic and Publishing to Another Kafka Topic
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHttpInXmlFormatWithCustomMapping/" title="Publishing Custom XML Events via HTTP" class="md-nav__link">
+      Publishing Custom XML Events via HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/SNMPSetRequestApp/" title="Sending Custom Keyvalue Events via SNMP" class="md-nav__link">
+      Sending Custom Keyvalue Events via SNMP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishTcpInJsonFormat/" title="Publishing JSON Events via TCP" class="md-nav__link">
+      Publishing JSON Events via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHttpOAuthRequestWithOAuthUser/" title="Publishing HTTP Events to an OAuth-protected Endpoint" class="md-nav__link">
+      Publishing HTTP Events to an OAuth-protected Endpoint
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/MapExtensionSample/" title="Inserting and Accessing Data in a Map" class="md-nav__link">
+      Inserting and Accessing Data in a Map
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishJmsInXmlFormat/" title="Publishing XML Events via JMS" class="md-nav__link">
+      Publishing XML Events via JMS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveJMSInJsonFormat/" title="Receiving JSON Events via JMS" class="md-nav__link">
+      Receiving JSON Events via JMS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveHTTPInJsonFormatWithCustomMapping/" title="Receiving Custom JSON Events via HTTP" class="md-nav__link">
+      Receiving Custom JSON Events via HTTP
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3-3" type="checkbox" id="nav-3-3-3">
+    
+    <label class="md-nav__link" for="nav-3-3-3">
+      Enriching Data
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-3-3-3">
+        Enriching Data
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ExtremaBottomK/" title="Counting the Frequency of Values with BottomK" class="md-nav__link">
+      Counting the Frequency of Values with BottomK
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/GplNLPFindNameEntityType/" title="Extracting Values from a String" class="md-nav__link">
+      Extracting Values from a String
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/JoinWithStoredData/" title="Joining Streaming Data with Stored Data in RDBMS" class="md-nav__link">
+      Joining Streaming Data with Stored Data in RDBMS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/Script-js-sample/" title="Using Javascript Functions in Siddhi Applications" class="md-nav__link">
+      Using Javascript Functions in Siddhi Applications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/store-hbase/" title="Receiving Events via Simulator and Persisting in a Store" class="md-nav__link">
+      Receiving Events via Simulator and Persisting in a Store
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/HttpRequestResponseSample/" title="Publishing HTTP Requests, Receiving Responses, and Processing Them" class="md-nav__link">
+      Publishing HTTP Requests, Receiving Responses, and Processing Them
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/UnitConversionExtentionSample/" title="Converting Units" class="md-nav__link">
+      Converting Units
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/sentimentExtensionSample/" title="Calculating the Sentiment Value for a Given String" class="md-nav__link">
+      Calculating the Sentiment Value for a Given String
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/KalmanFilterExecutionSample/" title="Estimating Values Using Kalman Algorithms" class="md-nav__link">
+      Estimating Values Using Kalman Algorithms
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/execution-geo-sample/" title="Processing Geo Data" class="md-nav__link">
+      Processing Geo Data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ClusTreeTestApp/" title="Performing Streaming Learning Using a Clustree Model" class="md-nav__link">
+      Performing Streaming Learning Using a Clustree Model
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveWebSocketInXMLFormat/" title="Receiving XML Events via Websocket" class="md-nav__link">
+      Receiving XML Events via Websocket
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3-4" type="checkbox" id="nav-3-3-4">
+    
+    <label class="md-nav__link" for="nav-3-3-4">
+      Aggregating Data
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-3-3-4">
+        Aggregating Data
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/DataPreprocessing/" title="Preprocessing Data Received via TCP" class="md-nav__link">
+      Preprocessing Data Received via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/SweetProductionDataPreprocessing/" title="Receiving Data via TCP and Preprocessing" class="md-nav__link">
+      Receiving Data via TCP and Preprocessing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishEmailInTextFormat/" title="Publishing Text Events via Email" class="md-nav__link">
+      Publishing Text Events via Email
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/AggregateOverTime/" title="Calculating Aggregations Over Time" class="md-nav__link">
+      Calculating Aggregations Over Time
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/approximate-distinctCountEver-sample/" title="Calculating the Number of Distinct Events without a Siddhi Window" class="md-nav__link">
+      Calculating the Number of Distinct Events without a Siddhi Window
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/approximate-distinctCount-sample/" title="Calculating the Number of Distinct Events within a Siddhi Window" class="md-nav__link">
+      Calculating the Number of Distinct Events within a Siddhi Window
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveAndCount/" title="Receiving Events via HTTP Transport" class="md-nav__link">
+      Receiving Events via HTTP Transport
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/AggregateDataIncrementally/" title="Aggregating Data Incrementally" class="md-nav__link">
+      Aggregating Data Incrementally
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/Store-redis/" title="Receiving Events and Persisting Them in Redis Store" class="md-nav__link">
+      Receiving Events and Persisting Them in Redis Store
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/approximate-count-sample/" title="Calculating the Approximate Count of Events within a Siddhi Window" class="md-nav__link">
+      Calculating the Approximate Count of Events within a Siddhi Window
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/store-mongodb/" title="Receiving Events and Persisting in MongoDB Store" class="md-nav__link">
+      Receiving Events and Persisting in MongoDB Store
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3-5" type="checkbox" id="nav-3-3-5">
+    
+    <label class="md-nav__link" for="nav-3-3-5">
+      Correlating Data
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-3-3-5">
+        Correlating Data
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PmmlModelProcessor/" title="Making Predictions via PMML Model" class="md-nav__link">
+      Making Predictions via PMML Model
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/StreamingRegressor/" title="Making Predictions via a Regressor Model" class="md-nav__link">
+      Making Predictions via a Regressor Model
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/GplNLPFindNameEntityType/" title="Extracting Values from a String" class="md-nav__link">
+      Extracting Values from a String
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/TensorFlowTestApp/" title="Performing Regression Tasks via an Imported Tensorflow Model" class="md-nav__link">
+      Performing Regression Tasks via an Imported Tensorflow Model
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/MarkovChainSample/" title="Identifying Abnormal Patterns via a Markov Matrix" class="md-nav__link">
+      Identifying Abnormal Patterns via a Markov Matrix
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PriorityExtensionSample/" title="Observing the Priority of Events in a Stream" class="md-nav__link">
+      Observing the Priority of Events in a Stream
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/approximate-distinctCountEver-sample/" title="Calculating the Number of Distinct Events without a Siddhi Window" class="md-nav__link">
+      Calculating the Number of Distinct Events without a Siddhi Window
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/approximate-distinctCount-sample/" title="Calculating the Number of Distinct Events within a Siddhi Window" class="md-nav__link">
+      Calculating the Number of Distinct Events within a Siddhi Window
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/sentimentExtensionSample/" title="Calculating the Sentiment Value for a Given String" class="md-nav__link">
+      Calculating the Sentiment Value for a Given String
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishMqttInXmlFormat/" title="Publishing XML Events via MQTT" class="md-nav__link">
+      Publishing XML Events via MQTT
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PatternMatching/" title="Identifying Event Patterns Based On Order of Event Arrival" class="md-nav__link">
+      Identifying Event Patterns Based On Order of Event Arrival
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/StreamingKMeansSample/" title="Using StreamingML Kmeans for Clustering" class="md-nav__link">
+      Using StreamingML Kmeans for Clustering
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/KalmanFilterExecutionSample/" title="Estimating Values Using Kalman Algorithms" class="md-nav__link">
+      Estimating Values Using Kalman Algorithms
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/RScriptSample/" title="Processing Events and Producing Aggregated Outputs Using R Script" class="md-nav__link">
+      Processing Events and Producing Aggregated Outputs Using R Script
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceivePrometheusMetrics/" title="Receiving Prometheus Metrics" class="md-nav__link">
+      Receiving Prometheus Metrics
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/hoeffding-adaptive-tree-sample/" title="Making Predictions via Hoeffding Classifier Model" class="md-nav__link">
+      Making Predictions via Hoeffding Classifier Model
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/SNMPGetRequestApp/" title="Receiving Custom Key Value Events via SNMP" class="md-nav__link">
+      Receiving Custom Key Value Events via SNMP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveJMSInKeyvalueFormat/" title="Receiving Key Value Events via JMS" class="md-nav__link">
+      Receiving Key Value Events via JMS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/IBMMessageQueue/" title="Consuming Messages from IBM Message Queues" class="md-nav__link">
+      Consuming Messages from IBM Message Queues
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/AlertsAndThresholds/" title="Receiving Email Alerts" class="md-nav__link">
+      Receiving Email Alerts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/streaming-perceptron-sample/" title="Making Predictions via a Streaming Perceptron Model" class="md-nav__link">
+      Making Predictions via a Streaming Perceptron Model
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/GeoDistanceCalculation/" title="Calculating the Distance Between Two Locations" class="md-nav__link">
+      Calculating the Distance Between Two Locations
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3-6" type="checkbox" id="nav-3-3-6">
+    
+    <label class="md-nav__link" for="nav-3-3-6">
+      Publishing Data
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-3-3-6">
+        Publishing Data
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishTcpInTextFormat/" title="Publishing Text Events via TCP" class="md-nav__link">
+      Publishing Text Events via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveHl7InER7Format/" title="Receiving ER7 Events via HL7" class="md-nav__link">
+      Receiving ER7 Events via HL7
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishGooglePubSubMessagesInTextFormat/" title="Publishing Events to a Google Pub/Sub Topic" class="md-nav__link">
+      Publishing Events to a Google Pub/Sub Topic
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishTcpInBinaryFormat/" title="Publishing Binary Events via TCP" class="md-nav__link">
+      Publishing Binary Events via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishWebSocketInXmlFormat/" title="Publishing XML Events via WebSocket" class="md-nav__link">
+      Publishing XML Events via WebSocket
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishPrometheusMetricsHTTPServer/" title="Publishing Consumed Events to Prometheus Metrics and Exposing then via HTTP" class="md-nav__link">
+      Publishing Consumed Events to Prometheus Metrics and Exposing then via HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/store-influxdb/" title="Working with an influxDB Store" class="md-nav__link">
+      Working with an influxDB Store
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishKafkaInBinaryFormat/" title="Publishing Binary Events via Kafka" class="md-nav__link">
+      Publishing Binary Events via Kafka
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishJmsInKeyvalueFormat/" title="Publishing Key-value events via JMS" class="md-nav__link">
+      Publishing Key-value events via JMS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHttpInXmlFormat/" title="Publishing XML Events via HTTP" class="md-nav__link">
+      Publishing XML Events via HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHttpOAuthRequestWithRefreshToken/" title="Publishing HTTP Events to an OAuth-protected Endpoint while Using a Refresh Token Grant Type" class="md-nav__link">
+      Publishing HTTP Events to an OAuth-protected Endpoint while Using a Refresh Token Grant Type
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHttpOAuthRequestResponse/" title="Publishing HTTP Events via an OAuth-protected Endpoint" class="md-nav__link">
+      Publishing HTTP Events via an OAuth-protected Endpoint
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/Store-solr/" title="Receiving Events via Simulator and Persisting in SOLR Store" class="md-nav__link">
+      Receiving Events via Simulator and Persisting in SOLR Store
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHttpInJsonFormat/" title="Publishing JSON Events via HTTP" class="md-nav__link">
+      Publishing JSON Events via HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/Store-rdbms/" title="Receiving Events via Simulator and Persisting in RDBMS Store" class="md-nav__link">
+      Receiving Events via Simulator and Persisting in RDBMS Store
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/Store-cassandra/" title="Receive Events via Simulator and Persist in Cassandra Store" class="md-nav__link">
+      Receive Events via Simulator and Persist in Cassandra Store
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishKafkaInAvroFormatUsingSchemaRegistry/" title="Publishing Avro Events via Kafka" class="md-nav__link">
+      Publishing Avro Events via Kafka
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/AmazonS3SinkSample/" title="Publishing Aggregated Events to the Amazon AWS S3 Bucket" class="md-nav__link">
+      Publishing Aggregated Events to the Amazon AWS S3 Bucket
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/GCSSinkSample/" title="Publishing Events to a GCS Bucket" class="md-nav__link">
+      Publishing Events to a GCS Bucket
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+      
+        
+        
+        
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Setup and Install
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Setup and Install
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-1" type="checkbox" id="nav-4-1">
+    
+    <label class="md-nav__link" for="nav-4-1">
+      Installing the Product
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-1">
+        Installing the Product
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/installing-si-in-vm/" title="Install in a VM" class="md-nav__link">
+      Install in a VM
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/installing-si-using-docker/" title="Installing in Docker" class="md-nav__link">
+      Installing in Docker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/installing-si-using-kubernetes/" title="Installing in Kubernetes" class="md-nav__link">
+      Installing in Kubernetes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/migrating-from-stream-processor/" title="Migrating from WSO2 SP" class="md-nav__link">
+      Migrating from WSO2 SP
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2">
+    
+    <label class="md-nav__link" for="nav-4-2">
+      Deploying Streaming Integrator
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-2">
+        Deploying Streaming Integrator
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/deploying-si-as-a-single-deployment/" title="Single Deployment" class="md-nav__link">
+      Single Deployment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/deploying-si-as-minimum-ha-cluster/" title="Minimum HA Cluster" class="md-nav__link">
+      Minimum HA Cluster
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/deploying-si-as-an-active-active-cluster.md" title="Active-Active Cluster" class="md-nav__link">
+      Active-Active Cluster
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/deploying-si-as-a-scalable-cluster/" title="Scalable Cluster" class="md-nav__link">
+      Scalable Cluster
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-3" type="checkbox" id="nav-4-3">
+    
+    <label class="md-nav__link" for="nav-4-3">
+      Setting up Databases
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-3">
+        Setting up Databases
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/configuring-data-sources/" title="Configuring Datasources" class="md-nav__link">
+      Configuring Datasources
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-4" type="checkbox" id="nav-4-4">
+    
+    <label class="md-nav__link" for="nav-4-4">
+      Working with Siddhi Connectors
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-4">
+        Working with Siddhi Connectors
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../admin/downloading-and-Installing-Siddhi-Extensions/" title="Downloading and Installing Siddhi Connectors" class="md-nav__link">
+      Downloading and Installing Siddhi Connectors
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../admin/writing-Custom-Siddhi-Extensions/" title="Writing Custom Siddhi Extensions" class="md-nav__link">
+      Writing Custom Siddhi Extensions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../admin/configuring-System-Parameters-for-Siddhi-Extensions/" title="Configuring System Parameters for Siddhi Extensions" class="md-nav__link">
+      Configuring System Parameters for Siddhi Extensions
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../admin/creating-business-rules-templates/" title="Working with Business Rules" class="md-nav__link">
+      Working with Business Rules
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../admin/general-data-protection-regulations/" title="General Data Protection Regulations" class="md-nav__link">
+      General Data Protection Regulations
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../admin/working-with-Keystores/" title="Working with Keystores" class="md-nav__link">
+      Working with Keystores
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../admin/supporting-different-transports/" title="Supporting Different Transports" class="md-nav__link">
+      Supporting Different Transports
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../admin/user-management/" title="User Management" class="md-nav__link">
+      User Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../admin/configuring-Database-and-File-System-State-Persistence" title="Configuring State Persistence" class="md-nav__link">
+      Configuring State Persistence
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../admin/protecting-sensitive-data-via-the-secure-vault/" title="Protecting Sensitive Data via the Secure Vault" class="md-nav__link">
+      Protecting Sensitive Data via the Secure Vault
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../admin/adding-third-party-non-osgi-libraries/" title="Adding Third Party Non OSGi Library" class="md-nav__link">
+      Adding Third Party Non OSGi Library
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ref/configuring-default-ports/" title="Configuring Default Ports" class="md-nav__link">
+      Configuring Default Ports
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+      
+        
+        
+        
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Develop
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Develop
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/developing-streaming-integration-solutions/" title="Developing Streaming Integrator Solutions" class="md-nav__link">
+      Developing Streaming Integrator Solutions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5-2" type="checkbox" id="nav-5-2">
+    
+    <label class="md-nav__link" for="nav-5-2">
+      Streaming Integrator Tooling
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-5-2">
+        Streaming Integrator Tooling
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/streaming-integrator-studio-overview/" title="Streaming Integrator Tooling Overview" class="md-nav__link">
+      Streaming Integrator Tooling Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/working-with-the-Design-View/" title="Working with the Design View" class="md-nav__link">
+      Working with the Design View
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/creating-a-Siddhi-Application/" title="Creating Siddhi Applications" class="md-nav__link">
+      Creating Siddhi Applications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/installing-siddhi-extensions/" title="Installing Siddhi Extensions" class="md-nav__link">
+      Installing Siddhi Extensions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/testing-a-Siddhi-Application/" title="Testing Siddhi Applications" class="md-nav__link">
+      Testing Siddhi Applications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/debugging_siddhi_applications/" title="Debugging Siddhi Applications" class="md-nav__link">
+      Debugging Siddhi Applications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/deploying-Streaming-Applications/" title="Deploying Siddhi Applications" class="md-nav__link">
+      Deploying Siddhi Applications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/exporting-Siddhi-Applications/" title="Exporting Siddhi Applications" class="md-nav__link">
+      Exporting Siddhi Applications
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+      
+        
+        
+        
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Observability
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Observability
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../admin/monitoring-the-streaming-integrator/" title="Monitoring the Streaming Integrator" class="md-nav__link">
+      Monitoring the Streaming Integrator
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+      
+        
+        
+        
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      References
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        References
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ref/si-rest-api-guide/" title="Streaming Integration REST API Guide" class="md-nav__link">
+      Streaming Integration REST API Guide
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ref/performance-analysis-results/" title="Performance Analysis Results" class="md-nav__link">
+      Performance Analysis Results
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+      
+        
+        
+        
+
+
+  <li class="md-nav__item">
+    <a href="../../page-not-found/" title="" class="md-nav__link">
+      
+    </a>
+  </li>
+
+      
+    </ul>
+  </nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+    
+    
+    
+    
+    
+    <a href="#" title="On this page" class="nav_link md-icon md-content__icon toc_icon"
+       id="tocToggleBtn">keyboard_arrow_right</a>
+    <label class="md-nav__title" for="__toc">On this page</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+        
+        <li class="md-nav__item">
+  <a href="#introduction" title="Introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#tutorial-steps" title="Tutorial steps" class="md-nav__link">
+    Tutorial steps
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extracting-data-from-a-file" title="Extracting data from a file" class="md-nav__link">
+    Extracting data from a file
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tailing-a-text-file-line-by-line" title="Tailing a text file line by line" class="md-nav__link">
+    Tailing a text file line by line
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tailing-a-text-file-using-a-regular-expression" title="Tailing a text file using a regular expression" class="md-nav__link">
+    Tailing a text file using a regular expression
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-a-remote-text-file-and-moving-it-after-processing" title="Reading a remote text file and moving it after processing" class="md-nav__link">
+    Reading a remote text file and moving it after processing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-a-binary-file-and-moving-it-after-processing" title="Reading a binary file and moving it after processing" class="md-nav__link">
+    Reading a binary file and moving it after processing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-a-file-line-by-line-and-delete-it-after-processing" title="Reading a file line by line and delete it after processing" class="md-nav__link">
+    Reading a file line by line and delete it after processing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-a-file-using-a-regular-expression-and-deleting-it-after-processing" title="Reading a file using a regular expression and deleting it after processing" class="md-nav__link">
+    Reading a file using a regular expression and deleting it after processing
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extracting-data-from-a-folder" title="Extracting data from a folder" class="md-nav__link">
+    Extracting data from a folder
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#processing-all-files-in-the-folder" title="Processing all files in the folder" class="md-nav__link">
+    Processing all files in the folder
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loading-data-into-a-file" title="Loading data into a file" class="md-nav__link">
+    Loading data into a file
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#appending-or-over-writing-events-to-a-file" title="Appending or over-writing events to a file" class="md-nav__link">
+    Appending or over-writing events to a file
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preserving-the-state-of-the-application-through-a-system-failure" title="Preserving the state of the application through a system failure" class="md-nav__link">
+    Preserving the state of the application through a system failure
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+
+                
+                  <a href="https://github.com/wso2/docs-ei/edit/7.0.0/en/streaming-integrator/docs/examples/performing-real-time-etl-with-files.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="performing-real-time-etl-with-files">Performing Real-time ETL with Files<a class="headerlink" href="#performing-real-time-etl-with-files" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>The Streaming Integrator (SI) allows you to perform real-time ETL with data that is stored in files.</p>
+<p>This tutorial takes you through the different modes and options you could use, in order to perform real-time ETL with files using the SI.</p>
+<div class="admonition info">
+<p class="admonition-title">Before you begin:</p>
+<p>Start the SI server by navigating to the <code class="codehilite">&lt;SI_HOME&gt;/bin</code> directory and issuing one of the following commands:<br/>
+<br/>
+- For Windows: <code class="codehilite">streaming-integrator.bat</code><br/>
+<br/>
+- For Linux:  <code class="codehilite">sh server.sh</code><br/>
+<br/>
+The following log appears in the Streaming Integrator console once the server is successfully started. <br/>
+<br/>
+<code class="codehilite">INFO {org.wso2.carbon.kernel.internal.CarbonStartupHandler} - WSO2 Streaming Integrator started in 4.240 sec</code></p>
+</div>
+<h2 id="tutorial-steps">Tutorial steps<a class="headerlink" href="#tutorial-steps" title="Permanent link">&para;</a></h2>
+<h3 id="extracting-data-from-a-file">Extracting data from a file<a class="headerlink" href="#extracting-data-from-a-file" title="Permanent link">&para;</a></h3>
+<p>In this section of the tutorial, you are exploring the different ways in which you could extract data from a specific file.</p>
+<h4 id="tailing-a-text-file-line-by-line">Tailing a text file line by line<a class="headerlink" href="#tailing-a-text-file-line-by-line" title="Permanent link">&para;</a></h4>
+<p>In this scenario, you are tailing a text file, line by line, in order to extract data from it. Each line is extracted as an event that undergoes a simple transformation thereafter. Let's write a simple Siddhi application to do this.</p>
+<ol>
+<li>
+<p>Download <code class="codehilite">productions.csv</code> file from <a href="https://github.com/wso2/docs-ei/tree/master/en/streaming-integrator/docs/examples/resources/productions.csv">here</a> and save it in a location of your choice.</p>
+</li>
+<li>
+<p>Open a text file and copy-paste following Siddhi application to it.</p>
+<pre class="codehilite"><code class="linenums">@App:name('TailFileLineByLine')
+
+@App:description('Tails a file line by line and does a simple transformation.')
+
+@source(type='file', mode='LINE',
+    file.uri='file:/Users/foo/productions.csv',
+    tailing='true',
+    @map(type='csv'))
+define stream SweetProductionStream (name string, amount double);
+
+@sink(type = 'log')
+define stream LogStream (name string, amount double);
+
+from SweetProductionStream
+select str:upper(name) as name, amount
+insert into LogStream;</code></pre>
+
+<p>Change the  value of the <code class="codehilite">file.uri</code> parameter in the above Siddhi application to the file path to which you downloaded <code class="codehilite">productions.csv</code> file in step 1.</p>
+</li>
+<li>
+<p>Save this file as <code class="codehilite">TailFileLineByLine.siddhi</code> in the <code class="codehilite">&lt;SI_HOME&gt;/wso2/server/deployment/siddhi-files</code> directory.   </p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>This Siddhi application tails the file <code class="codehilite">productions.csv</code> line by line. Each line is converted to an event in the <code class="codehilite">SweetProductionStream</code> stream. After that, a simple transformation is carried out for the sweet production runs. The transformation involves converting the value for the <code class="codehilite">name</code> attribute to upper case. Finally, the output is logged in the Streaming Integrator console.</p>
+</div>
+<p>Upon successful deployment, following log appears in the SI console:</p>
+<pre class="codehilite"><code class="linenums">INFO {org.wso2.carbon.streaming.integrator.core.internal.StreamProcessorService} - Siddhi App TailFileLineByLine deployed successfully</code></pre>
+
+</li>
+<li>
+<p>Now the Siddhi application starts to process the <code class="codehilite">productions.csv</code> file. The file contains the following entries.</p>
+<pre class="codehilite"><code class="linenums">Almond cookie,100.0
+Baked alaska,20.0</code></pre>
+
+<p>As a result, the following log appears in the SI console:</p>
+<pre class="codehilite"><code class="linenums">INFO {io.siddhi.core.stream.output.sink.LogSink} - ReceiveEventsFromFile : LogStream : Event{timestamp=1564490830652, data=[ALMOND COOKIE, 100.0], isExpired=false}
+INFO {io.siddhi.core.stream.output.sink.LogSink} - ReceiveEventsFromFile : LogStream : Event{timestamp=1564490830657, data=[BAKED ALASKA, 20.0], isExpired=false}</code></pre>
+
+</li>
+<li>
+<p>Now append the following line to <code class="codehilite">productions.csv</code> file and save the file.</p>
+<pre class="codehilite"><code class="linenums">Cup cake,300.0</code></pre>
+
+</li>
+<li>
+<p>The following log appears in the SI console:</p>
+<pre class="codehilite"><code class="linenums">INFO {io.siddhi.core.stream.output.sink.LogSink} - ReceiveEventsFromFile : LogStream : Event{timestamp=1564490869579, data=[CUP CAKE, 300.0], isExpired=false}</code></pre>
+
+</li>
+</ol>
+<h4 id="tailing-a-text-file-using-a-regular-expression">Tailing a text file using a regular expression<a class="headerlink" href="#tailing-a-text-file-using-a-regular-expression" title="Permanent link">&para;</a></h4>
+<p>In this scenario, you are using a regular expression to extract data from the file. After data is extracted, a simple transformation is performed on them. Finally, the transformed event is logged in the SI console. Let's write a simple Siddhi application to do this.</p>
+<ol>
+<li>
+<p>Download <code class="codehilite">noisy_data.txt</code> file from <a href="https://github.com/wso2/docs-ei/tree/master/en/streaming-integrator/docs/examples/resources/noisy_data.txt">here</a> and save it in a location of your choice.</p>
+</li>
+<li>
+<p>Open a text file and copy-paste following Siddhi application to it.</p>
+<pre class="codehilite"><code class="linenums">@App:name('TailFileRegex')
+
+@App:description('Tails a file using a regex and does a simple transformation.')
+
+@source(type='file', mode='REGEX',
+    file.uri='file:/Users/foo/noisy_data.txt',
+    begin.regex='\&lt;', end.regex='\&gt;',
+    tailing='true',
+    @map(type='text', fail.on.missing.attribute = 'false', regex.A='(\w+)\s([-0-9]+)',regex.B='volume\s([-0-9]+)', @attributes(symbol = 'A[1]',price = 'A[2]',volume = 'B')))
+define stream StockStream (symbol string, price float, volume long);
+
+@sink(type = 'log')
+define stream LogStream (symbol string, price float, volume long);
+
+from StockStream[NOT(symbol is null)]
+select str:upper(symbol) as symbol, price, volume  
+insert into LogStream;</code></pre>
+
+<p>Change the  value of the <code class="codehilite">file.uri</code> parameter in the above Siddhi application to the file path to which you downloaded <code class="codehilite">noisy_data.txt</code> file in step 1.</p>
+</li>
+<li>
+<p>Save this file as <code class="codehilite">TailFileRegex.siddhi</code> in the <code class="codehilite">&lt;SI_HOME&gt;/wso2/server/deployment/siddhi-files</code> directory.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>This Siddhi application tails the <code class="codehilite">noisy_data.txt</code> file to find matches according to the regular expressions given: <code class="codehilite">begin.regex</code> and <code class="codehilite">end.regex</code>. Each match is converted to an event in the <code class="codehilite">StockStream</code> stream. After that, a simple transformation is carried out on the <code class="codehilite">StockStream</code> stream where the value for the <code class="codehilite">symbol</code> attribute from the event is converted to upper case. Finally, the output is logged in the SI console.</p>
+</div>
+<p>Once the Siddhi application is successfully deployed, the following log appears in the SI console.</p>
+<pre class="codehilite"><code class="linenums">INFO {org.wso2.carbon.streaming.integrator.core.internal.StreamProcessorService} - Siddhi App TailFileRegex deployed successfully</code></pre>
+
+</li>
+<li>
+<p>Now the Siddhi application starts to process the <code class="codehilite">noisy_data.txt</code> file. </p>
+<p>As a result, the following log appears in the SI console:</p>
+<pre class="codehilite"><code class="linenums">INFO {io.siddhi.core.stream.output.sink.LogSink} - TailFileRegex : LogStream : Event{timestamp=1564583307974, data=[WSO2, 75.0, 100], isExpired=false}
+INFO {io.siddhi.core.stream.output.sink.LogSink} - TailFileRegex : LogStream : Event{timestamp=1564583307975, data=[ORCL, 95.0, 200], isExpired=false}</code></pre>
+
+</li>
+<li>
+<p>Now append the following text to <code class="codehilite">noisy_data.txt</code> file and save the file.</p>
+<pre class="codehilite"><code class="linenums">IBM &lt;ibm 88 volume 150&gt; 1 New Orchard Rd  Armonk, NY 10504 
+Phone Number: (914) 499-1900
+Fax Number: (914) 765-6021</code></pre>
+
+</li>
+<li>
+<p>The following log appears in the SI console:</p>
+<pre class="codehilite"><code class="linenums">INFO {io.siddhi.core.stream.output.sink.LogSink} - TailFileRegex : LogStream : Event{timestamp=1564588585214, data=[IBM, 88.0, 150], isExpired=false}</code></pre>
+
+</li>
+</ol>
+<h4 id="reading-a-remote-text-file-and-moving-it-after-processing">Reading a remote text file and moving it after processing<a class="headerlink" href="#reading-a-remote-text-file-and-moving-it-after-processing" title="Permanent link">&para;</a></h4>
+<p>In the previous scenarios, you tailed a file and each file generated multiple events. In this scenario, you are reading the complete file to build a single event.</p>
+<p>Furthermore, to try out the capability of processing remote files, you are processing a remote file instead of a file located in the local file system.</p>
+<ol>
+<li>
+<p>Download <code class="codehilite">portfolio.txt</code> file from <a href="https://github.com/wso2/docs-ei/tree/master/en/streaming-integrator/docs/examples/resources/portfolio.txt">here</a> and upload it into an FTP server.</p>
+</li>
+<li>
+<p>Create a directory on the FTP server.  The <code class="codehilite">portfolio.txt</code> file is moved to this folder after the processing is complete.</p>
+</li>
+<li>
+<p>Open a text file and copy-paste following Siddhi application to it.</p>
+<pre class="codehilite"><code class="linenums">@App:name('TextFullFileProcessing')
+
+@App:description('Reads a text file and moves it after processing.')
+
+@source(type='file', mode='TEXT.FULL',
+    file.uri="ftp://&lt;username&gt;:&lt;password&gt;@&lt;ftp_hostname&gt;:&lt;ftp_port&gt;/Users/foo/portfolio.txt",
+    action.after.process='MOVE', move.after.process="ftp://&lt;username&gt;:&lt;password&gt;@&lt;ftp_hostname&gt;:&lt;ftp_port&gt;/Users/foo/move.after.process", 
+    @map(type='json', enclosing.element="$.portfolio", @attributes(symbol = "stock.company.symbol", price = "stock.price", volume = "stock.volume")))
+define stream StockStream (symbol string, price float, volume long);
+
+@sink(type = 'log')
+define stream LogStream (symbol string, price float, volume long);
+
+from StockStream
+select str:upper(symbol) as symbol, price, volume   
+insert into LogStream;</code></pre>
+
+<p>Change the value of the <code class="codehilite">file.uri</code> parameter in the above Siddhi application to the remote file path to which you uploaded the <code class="codehilite">portfolio.txt</code> file in step 1.
+In addition to that, change <code class="codehilite">move.after.process</code> so that it points to the remote folder you created in step 2.
+When configuring both of the above parameters, change the values for <code class="codehilite">&lt;username&gt;</code>, <code class="codehilite">&lt;password&gt;</code>, <code class="codehilite">&lt;ftp_hostname&gt;</code>, and <code class="codehilite">&lt;ftp_port&gt;</code> parameters accordingly.</p>
+</li>
+<li>
+<p>Save this file as <code class="codehilite">TextFullFileProcessing.siddhi</code> in the <code class="codehilite">&lt;SI_HOME&gt;/wso2/server/deployment/siddhi-files</code> directory.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>This Siddhi application reads the complete <code class="codehilite">portfolio.txt</code> remote file to create a <code class="codehilite">StockStream</code> event. After that, a simple transformation is carried out on the <code class="codehilite">StockStream</code> stream where the value for the <code class="codehilite">symbol</code> attribute in each event is converted ito upper case. Finally, the output is logged in the SI console.</p>
+</div>
+<p>Once the Siddhi application is successfully deployed, following log appears in the SI console:</p>
+<pre class="codehilite"><code class="linenums">INFO {org.wso2.carbon.streaming.integrator.core.internal.StreamProcessorService} - Siddhi App TextFullFileProcessing deployed successfully</code></pre>
+
+</li>
+<li>
+<p>Now the Siddhi application starts to process the <code class="codehilite">portfolio.txt</code> file. </p>
+<p>As a result, the following log appears in the SI console:</p>
+<pre class="codehilite"><code class="linenums">INFO {io.siddhi.core.stream.output.sink.LogSink} - TextFullFileProcessing :  LogStream : Event{timestamp=1564660443519, data=[WSO2, 55.6, 100], isExpired=false} </code></pre>
+
+</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>In this scenario, you moved the file after processing. To delete a file after processing, remove the <code class="codehilite">action.after.process</code> and <code class="codehilite">move.after.process</code> parameters from the Siddhi application. For other configuration options, see <a href="https://siddhi-io.github.io/siddhi-io-file/api/latest/#file-source">Siddhi File Source documentation</a>.</p>
+</div>
+<h4 id="reading-a-binary-file-and-moving-it-after-processing">Reading a binary file and moving it after processing<a class="headerlink" href="#reading-a-binary-file-and-moving-it-after-processing" title="Permanent link">&para;</a></h4>
+<p>In the previous scenarios, you processed text files in order to extract data. In this scenario, you are reading a binary file. The content of the file generates a single event.</p>
+<ol>
+<li>
+<p>Download <code class="codehilite">wso2.bin</code> file from <a href="https://github.com/wso2/docs-ei/tree/master/en/streaming-integrator/docs/examples/resources/wso2.bin">here</a> and save it in a location of your choice.</p>
+</li>
+<li>
+<p>Open a text file and copy-paste following Siddhi application to it.</p>
+<pre class="codehilite"><code class="linenums">@App:name('BinaryFullFileProcessing')
+
+@App:description('Reads a binary file and moves it after processing.')
+
+@source(type='file', mode='TEXT.FULL',
+    file.uri='file:/Users/foo/wso2.bin',
+    action.after.process='MOVE', move.after.process='file:/Users/foo/move.after.process', 
+    @map(type='json', enclosing.element="$.portfolio", @attributes(symbol = "stock.company.symbol", price = "stock.price", volume = "stock.volume")))
+define stream StockStream (symbol string, price float, volume long);
+
+@sink(type = 'log')
+define stream LogStream (symbol string, price float, volume long);
+
+from StockStream
+select str:upper(symbol) as symbol, price, volume   
+insert into LogStream;</code></pre>
+
+<p>In the above Siddhi application, change the value for the <code class="codehilite">file.uri</code> parameter to the file path to which you downloaded the <code class="codehilite">wso2.bin</code> file in step 1.</p>
+</li>
+<li>
+<p>Save this file as <code class="codehilite">BinaryFullFileProcessing.siddhi</code> in the <code class="codehilite">&lt;SI_HOME&gt;/wso2/server/deployment/siddhi-files</code> directory.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>This Siddhi application reads the file <code class="codehilite">wso2.bin</code> fully to create a <code class="codehilite">StockStream</code> event. After that, a simple transformation is carried out for the <code class="codehilite">StockStream</code> stream where the value for the <code class="codehilite">symbol</code> attribute is converted to upper case. Finally, the output is logged in the SI console.</p>
+</div>
+<p>Once the Siddhi application is successfully deployed, following log appears in the SI console.</p>
+<pre class="codehilite"><code class="linenums">INFO {org.wso2.carbon.streaming.integrator.core.internal.StreamProcessorService} - Siddhi App BinaryFullFileProcessing deployed successfully</code></pre>
+
+</li>
+<li>
+<p>Now the Siddhi application starts to process the <code class="codehilite">wso2.bin</code> file.</p>
+<p>As a result, the following log appears in the SI console:</p>
+<pre class="codehilite"><code class="linenums">INFO {io.siddhi.core.stream.output.sink.LogSink} - BinaryFullFileProcessing :  LogStream : Event{timestamp=1564660553623, data=[WSO2, 55.6, 100], isExpired=false} </code></pre>
+
+</li>
+</ol>
+<h4 id="reading-a-file-line-by-line-and-delete-it-after-processing">Reading a file line by line and delete it after processing<a class="headerlink" href="#reading-a-file-line-by-line-and-delete-it-after-processing" title="Permanent link">&para;</a></h4>
+<p>In this scenario, you are reading a text file completely, and then deleting it after  processing. In other words, the file is not tailed. You read the file line by line where each line generates an event.</p>
+<ol>
+<li>
+<p>Download <code class="codehilite">productions.csv</code> file from <a href="https://github.com/wso2/docs-ei/tree/master/en/streaming-integrator/docs/examples/resources/productions.csv">here</a> and save it in a location of your choice.</p>
+</li>
+<li>
+<p>Open a text file and copy-paste following Siddhi application to it.</p>
+<pre class="codehilite"><code class="linenums">@App:name('ReadFileLineByLine')
+
+@App:description('Reads a file line by line and does a simple transformation.')
+
+@source(type='file', mode='LINE',
+    file.uri='file:/Users/foo/productions.csv',
+    tailing='false',
+    @map(type='csv'))
+define stream SweetProductionStream (name string, amount double);
+
+@sink(type = 'log')
+define stream LogStream (name string, amount double);
+
+from SweetProductionStream
+select str:upper(name) as name, amount
+insert into LogStream;</code></pre>
+
+<p>In the above Siddhi application, change the value for the <code class="codehilite">file.uri</code> parameter to the file path to which you downloaded the <code class="codehilite">productions.csv</code> file in step 1.</p>
+</li>
+<li>
+<p>Save this file as <code class="codehilite">ReadFileLineByLine.siddhi</code> in the <code class="codehilite">&lt;SI_HOME&gt;/wso2/server/deployment/siddhi-files</code> directory.   </p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>This Siddhi application tails the <code class="codehilite">productions.csv</code> file line by line. Each line is converted to an event in the <code class="codehilite">SweetProductionStream</code> stream. After that, a simple transformation is carried out for the sweet production runs where the value for the <code class="codehilite">name</code> attribute from the event is converted into upper case. Finally, the output is logged in the SI console.</p>
+</div>
+<p>Once the Siddhi application is successfully deployed, the following log appears in the SI console:</p>
+<pre class="codehilite"><code class="linenums">INFO {org.wso2.carbon.streaming.integrator.core.internal.StreamProcessorService} - Siddhi App ReadFileLineByLine deployed successfully</code></pre>
+
+</li>
+<li>
+<p>Now the Siddhi application starts to process the <code class="codehilite">productions.csv</code> file. The file has below two entries:</p>
+<pre class="codehilite"><code class="linenums">Almond cookie,100.0
+Baked alaska,20.0</code></pre>
+
+<p>As a result, the following log appears in the SI console:</p>
+<pre class="codehilite"><code class="linenums">INFO {io.siddhi.core.stream.output.sink.LogSink} - ReadFileLineByLine : LogStream : Event{timestamp=1564490867341, data=[ALMOND COOKIE, 100.0], isExpired=false}
+INFO {io.siddhi.core.stream.output.sink.LogSink} - ReadFileLineByLine : LogStream : Event{timestamp=1564490867341, data=[BAKED ALASKA, 20.0], isExpired=false}</code></pre>
+
+</li>
+<li>
+<p>Note that <code class="codehilite">productions.csv</code> file is not present in the <code class="codehilite">file.uri</code> location.</p>
+</li>
+<li>
+<p>Next, create a new <code class="codehilite">productions.csv</code> file in the <code class="codehilite">file.uri</code> location that includes the latest set of productions. Download <code class="codehilite">productions.csv</code> file from <a href="https://github.com/wso2/docs-ei/tree/master/en/streaming-integrator/docs/examples/resources/productions.csv">here</a> and save it in the <code class="codehilite">file.uri</code> location.</p>
+</li>
+<li>
+<p>Now the Siddhi application starts to process the new set of production runs in the <code class="codehilite">productions.csv</code> file. The file has the following two entries.</p>
+<pre class="codehilite"><code class="linenums">Cup cake,300.0
+Doughnut,500.0</code></pre>
+
+<p>As a result, the following log appears in the SI console:</p>
+<pre class="codehilite"><code class="linenums">INFO {io.siddhi.core.stream.output.sink.LogSink} - ReadFileLineByLine : LogStream : Event{timestamp=1564902130543, data=[CUP CAKE, 300.0], isExpired=false}
+INFO {io.siddhi.core.stream.output.sink.LogSink} - ReadFileLineByLine : LogStream : Event{timestamp=1564902130543, data=[DOUGHNUT, 500.0], isExpired=false}</code></pre>
+
+</li>
+</ol>
+<h4 id="reading-a-file-using-a-regular-expression-and-deleting-it-after-processing">Reading a file using a regular expression and deleting it after processing<a class="headerlink" href="#reading-a-file-using-a-regular-expression-and-deleting-it-after-processing" title="Permanent link">&para;</a></h4>
+<p>In this scenario, you are using a regular expression to extract data from the content of the file. Here, you do not tail the file.  Instead, you read the full content of the file and generate a single event. After this is done, the file is deleted. To generate an event stream, you can keep re-creating the file with new data.</p>
+<ol>
+<li>
+<p>Download <code class="codehilite">noisy_data.txt</code> file from <a href="https://github.com/wso2/docs-ei/tree/master/en/streaming-integrator/docs/examples/resources/noisy_data.txt">here</a> and save it in a location of your choice.</p>
+</li>
+<li>
+<p>Open a text file and copy-paste following Siddhi application to it.</p>
+<pre class="codehilite"><code class="linenums">@App:name('ReadFileRegex')
+
+@App:description('Reads a file using a regex and does a simple transformation.')
+
+@source(type='file', mode='REGEX',
+    file.uri='file:/Users/foo/noisy_data.txt',
+    begin.regex='\&lt;', end.regex='\&gt;',
+    tailing='false',
+    @map(type='text', fail.on.missing.attribute = 'false', regex.A='(\w+)\s([-0-9]+)',regex.B='volume\s([-0-9]+)', @attributes(symbol = 'A[1]',price = 'A[2]',volume = 'B')))
+define stream StockStream (symbol string, price float, volume long);
+
+@sink(type = 'log')
+define stream LogStream (symbol string, price float, volume long);
+
+from StockStream[NOT(symbol is null)]
+select str:upper(symbol) as symbol, price, volume  
+insert into LogStream;</code></pre>
+
+<p>In the above Siddhi application, change the value of the <code class="codehilite">file.uri</code> parameter to the file path to which you downloaded the <code class="codehilite">noisy_data.txt</code> file in step 1.</p>
+</li>
+<li>
+<p>Save this file as <code class="codehilite">ReadFileRegex.siddhi</code> in the <code class="codehilite">&lt;SI_HOME&gt;/wso2/server/deployment/siddhi-files</code> directory.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>This Siddhi application tails the <code class="codehilite">noisy_data.txt</code> file to find matches based on the <code class="codehilite">begin.regex</code> and <code class="codehilite">end.regex</code> regular expressions. Each match is converted to an event in the <code class="codehilite">StockStream</code> stream. After that, a simple transformation is carried out for the <code class="codehilite">StockStream</code> stream where value for the <code class="codehilite">symbol</code> attribute converted to upper case. Finally, the output is logged in the SI console.</p>
+</div>
+<p>Once the Siddhi application is successfully deployed, following log appears in the SI console:</p>
+<pre class="codehilite"><code class="linenums">INFO {org.wso2.carbon.streaming.integrator.core.internal.StreamProcessorService} - Siddhi App ReadFileRegex deployed successfully</code></pre>
+
+</li>
+<li>
+<p>Now the Siddhi application starts to process the <code class="codehilite">noisy_data.txt</code> file. </p>
+<p>As a result, the following log appears in the SI console.</p>
+<pre class="codehilite"><code class="linenums">INFO {io.siddhi.core.stream.output.sink.LogSink} - ReadFileRegex : LogStream : Event{timestamp=1564906475623, data=[WSO2, 75.0, 100], isExpired=false}</code></pre>
+
+<p>Note that <code class="codehilite">noisy_data.txt</code> file is not present in the <code class="codehilite">file.uri</code> location.</p>
+</li>
+<li>
+<p>Next, let's create a new <code class="codehilite">noisy_data.txt</code> file in the <code class="codehilite">file.uri</code> location that includes the latest set of productions. Download <code class="codehilite">noisy_data.txt</code> file from <a href="https://github.com/wso2/docs-ei/tree/master/en/streaming-integrator/docs/examples/resources/noisy_data.txt">here</a> and save it in the <code class="codehilite">file.uri</code> location.</p>
+<p>Now the Siddhi application starts to process the new content in the <code class="codehilite">noisy_data.txt</code> file. The file has the following content.</p>
+<pre class="codehilite"><code class="linenums">Oracle Corporation &lt;orcl 95 volume 200&gt; 500 Oracle Parkway.
+Redwood Shores CA, 94065.
+Corporate Phone: 650.506.7000.
+HQ-Security: 650.506.5555</code></pre>
+
+<p>As a result, the following log appears in the SI console:</p>
+<pre class="codehilite"><code class="linenums">INFO {io.siddhi.core.stream.output.sink.LogSink} - ReadFileRegex : LogStream : Event{timestamp=1564906713176, data=[ORCL, 95.0, 200], isExpired=false}</code></pre>
+
+</li>
+</ol>
+<h3 id="extracting-data-from-a-folder">Extracting data from a folder<a class="headerlink" href="#extracting-data-from-a-folder" title="Permanent link">&para;</a></h3>
+<h4 id="processing-all-files-in-the-folder">Processing all files in the folder<a class="headerlink" href="#processing-all-files-in-the-folder" title="Permanent link">&para;</a></h4>
+<p>In this scenario, you extract data from a specific folder. All of the files are processed sequentially, where each file generates a single event.</p>
+<ol>
+<li>
+<p>Download <code class="codehilite">productions.zip</code> file from <a href="https://github.com/wso2/docs-ei/tree/master/en/streaming-integrator/docs/examples/resources/productions.zip">here</a> and extract it. Now you have a folder named <code class="codehilite">productions</code>. Place it in a location of your choice.</p>
+</li>
+<li>
+<p>Open a text file and copy-paste following Siddhi application to it.</p>
+<pre class="codehilite"><code class="linenums">@App:name('ProcessFolder')
+
+@App:description('Process all files in the folder and delete files after processing.')
+
+@source(type='file', mode='text.full',
+    dir.uri='file:/Users/foo/productions',  
+    @map(type='json', enclosing.element="$.portfolio", @attributes(symbol = "stock.company.symbol", price = "stock.price", volume = "stock.volume")))
+define stream StockStream (symbol string, price float, volume long);
+
+@sink(type = 'log')
+define stream LogStream (symbol string, price float, volume long);
+
+from StockStream
+select str:upper(symbol) as symbol, price, volume    
+insert into LogStream;</code></pre>
+
+<p>In the above Siddhi application, change the value for the <code class="codehilite">dir.uri</code> parameter so that it points to the <code class="codehilite">productions</code> folder you created in step 1.</p>
+</li>
+<li>
+<p>Save this file as <code class="codehilite">ProcessFolder.siddhi</code> in the <code class="codehilite">&lt;SI_HOME&gt;/wso2/server/deployment/siddhi-files</code> directory.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>This Siddhi application processes each file in <code class="codehilite">productions</code> folder. Each file generates an event in the <code class="codehilite">StockStream</code> stream. After that, a simple transformation is carried out for the <code class="codehilite">StockStream</code> stream where the value for the <code class="codehilite">symbol</code> attribute is converted to upper case. Finally, the output is logged in the SI console.</p>
+</div>
+<p>Once the Siddhi application is successfully deployed, following log appears in the SI console:</p>
+<pre class="codehilite"><code class="linenums">INFO {org.wso2.carbon.streaming.integrator.core.internal.StreamProcessorService} - Siddhi App ProcessFolder deployed successfully</code></pre>
+
+<p>Now the Siddhi application starts to process each file in the <code class="codehilite">productions</code> directory.</p>
+<p>As a result, the following logs appear in the SI console:
+<pre class="codehilite"><code class="linenums">INFO {io.siddhi.core.stream.output.sink.LogSink} - ProcessFolder : LogStream : Event{timestamp=1564932255417, data=[WSO2, 75.0, 100], isExpired=false}
+INFO {io.siddhi.core.stream.output.sink.LogSink} - ProcessFolder : LogStream : Event{timestamp=1564932255417, data=[ORCL, 95.0, 200], isExpired=false}
+INFO {io.siddhi.core.stream.output.sink.LogSink} - ProcessFolder : LogStream : Event{timestamp=1564932255417, data=[IBM, 88.0, 150], isExpired=false}</code></pre></p>
+</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>In this scenario, you deleted each file in the folder after processing. You can choose to move the files instead of deleting them. To do this, set the <code class="codehilite">action.after.process</code> parameter to <code class="codehilite">MOVE</code> and specify the directory to which the files should be moved via the <code class="codehilite">move.after.process</code> parameter. For more information about these parameters, see <a href="https://siddhi-io.github.io/siddhi-io-file/api/latest/#file-source">Siddhi File Source documentation</a>.</p>
+</div>
+<h3 id="loading-data-into-a-file">Loading data into a file<a class="headerlink" href="#loading-data-into-a-file" title="Permanent link">&para;</a></h3>
+<p>In this section of the tutorial, you are exploring the different ways in which you could load data into a file.  </p>
+<h4 id="appending-or-over-writing-events-to-a-file">Appending or over-writing events to a file<a class="headerlink" href="#appending-or-over-writing-events-to-a-file" title="Permanent link">&para;</a></h4>
+<p>In this scenario, you are appending a stream of events to the end of a file.</p>
+<ol>
+<li>
+<p>Open a text file and copy-paste following Siddhi application to it.</p>
+<pre class="codehilite"><code class="linenums">@App:name('AppendToFile')
+
+@App:description('Append incoming events in to a file.')
+
+@Source(type = 'http', receiver.url='http://localhost:8006/SweetProductionStream', basic.auth.enabled='false',
+        @map(type='json'))
+define stream SweetProductionStream (name string, amount double);
+
+@sink(type='file', @map(type='json'), file.uri='/Users/foo/low_productions.txt')
+define stream LowProductionStream (name string, amount double);
+
+-- Query to filter productions which have amount &lt; 500.0
+@info(name='query1') 
+from SweetProductionStream[amount &lt; 500.0]
+select *
+insert into LowProductionStream;</code></pre>
+
+<p>Create an empty file and specify the location of the file as the value for the <code class="codehilite">file.uri</code> parameter. If this file does not exist, it is created at runtime.</p>
+</li>
+<li>
+<p>Save this file as <code class="codehilite">AppendToFile.siddhi</code> in the <code class="codehilite">&lt;SI_HOME&gt;/wso2/server/deployment/siddhi-files</code> directory.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>This Siddhi application filters incoming <code class="codehilite">SweetProductionStream</code> events, selects the production runs of which the value for the <code class="codehilite">amount</code> attribute is less than <code class="codehilite">500.0</code>, and inserts the results into the <code class="codehilite">LowProductionStream</code>. Finally, all the events in the <code class="codehilite">LowProductionStream</code> events are appended to the file specified via the <code class="codehilite">file.uri</code> parameter in the Siddhi application.</p>
+</div>
+<p>Once the Siddhi application is successfully deployed, the following log appears in the SI console:</p>
+<pre class="codehilite"><code class="linenums">INFO {org.wso2.carbon.streaming.integrator.core.internal.StreamProcessorService} - Siddhi App AppendToFile deployed successfully</code></pre>
+
+</li>
+<li>
+<p>To insert a few events into <code class="codehilite">SweetProductionStream</code>,  let's issue the following <code class="codehilite">CURL</code> commands:</p>
+<pre class="codehilite"><code class="linenums">curl -X POST -d "{\"event\": {\"name\":\"Almond cookie\",\"amount\": 100.0}}"  http://localhost:8006/SweetProductionStream --header "Content-Type:application/json"</code></pre>
+
+<pre class="codehilite"><code class="linenums">curl -X POST -d "{\"event\": {\"name\":\"Baked alaska\",\"amount\": 20.0}}"  http://localhost:8006/SweetProductionStream --header "Content-Type:application/json"</code></pre>
+
+<pre class="codehilite"><code class="linenums">curl -X POST -d "{\"event\": {\"name\":\"Cup cake\",\"amount\": 300.0}}"  http://localhost:8006/SweetProductionStream --header "Content-Type:application/json"</code></pre>
+
+</li>
+<li>
+<p>Now open the file that you specified via the <code class="codehilite">file.uri</code> parameter. Note that the file has following content.</p>
+<pre class="codehilite"><code class="linenums">{"event":{"name":"Almond cookie","amount":100.0}}
+{"event":{"name":"Baked alaska","amount":20.0}}
+{"event":{"name":"Cup cake","amount":300.0}}</code></pre>
+
+</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Instead of appending each event to the end of the file, you can configure your Siddhi application to over-write the file. To do this, set the <code class="codehilite">append='false'</code> configuration in the Siddhi application as shown in the sample <code class="codehilite">file</code> sink configuration below.</p>
+<pre class="codehilite"><code class="linenums">@sink(type='file', append='false',  @map(type='json'), file.uri='/Users/foo/low_productions.txt')
+   define stream LowProductionAlertStream (name string, amount double);</code></pre>
+
+<p>For other configuration options, see <a href="https://siddhi-io.github.io/siddhi-io-file/api/latest/#file-sink">Siddhi File Sink documentation</a>.</p>
+</div>
+<h4 id="preserving-the-state-of-the-application-through-a-system-failure">Preserving the state of the application through a system failure<a class="headerlink" href="#preserving-the-state-of-the-application-through-a-system-failure" title="Permanent link">&para;</a></h4>
+<p>Let's try out a scenario where you deploy a Siddhi application to count the total number of production runs of a sweet factory.</p>
+<p>The production data is updated in a file and therefore you have to keep tailing this file, in order to get updates on the productions. </p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>In this scenario, the Streaming Integrator server needs to <em>remember</em> the current count through system failures so that when the system is restored, the count is not reset to zero.
+To achieve this, you can use the state persistence capability in the Streaming Integrator.</p>
+</div>
+<ol>
+<li>
+<p>Enable state persistence feature in SI server as follows. Open the <code class="codehilite">&lt;SI_HOME&gt;/conf/server/deployment.yaml</code> file on a text editor and locate the <code class="codehilite">state.persistence</code> section.  </p>
+<pre class="codehilite"><code class="linenums">  # Periodic Persistence Configuration
+state.persistence:
+  enabled: true
+  intervalInMin: 1
+  revisionsToKeep: 2
+  persistenceStore: org.wso2.carbon.streaming.integrator.core.persistence.FileSystemPersistenceStore
+  config:
+    location: siddhi-app-persistence</code></pre>
+
+<p>Set <code class="codehilite">enabled</code> parameter to <code class="codehilite">true</code> and save the file. </p>
+</li>
+<li>
+<p>To enable the state persistence debug logs, open the <code class="codehilite">&lt;SI_HOME&gt;/conf/server/log4j2.xml</code> file on a text editor and locate following line in it.</p>
+<pre class="codehilite"><code class="linenums"> &lt;Logger name="com.zaxxer.hikari" level="error"/&gt;</code></pre>
+
+<p>Then add following <code class="codehilite">&lt;Logger&gt;</code> element below that line.</p>
+<pre class="codehilite"><code class="linenums">&lt;Logger name="org.wso2.carbon.streaming.integrator.core.persistence" level="debug"/&gt;</code></pre>
+
+<p>Save the file.</p>
+</li>
+<li>
+<p>Restart the Streaming Integrator server for above change to be effective.</p>
+</li>
+<li>
+<p>Download <code class="codehilite">productions.csv</code> file from <a href="https://github.com/wso2/docs-ei/tree/master/en/streaming-integrator/docs/examples/resources/productions.csv">here</a> and save it in a location of your choice.</p>
+</li>
+<li>
+<p>Open a text file and copy-paste following Siddhi application to it.</p>
+<pre class="codehilite"><code class="linenums">@App:name('CountProductions')
+
+@App:description('Siddhi application to count the total number of orders.')
+
+@source(type='file', mode='LINE',
+    file.uri='file:/Users/foo/productions.csv',
+    tailing='true',
+    @map(type='csv'))
+define stream SweetProductionStream (name string, amount double);
+
+@sink(type = 'log')
+define stream LogStream (totalProductions double);
+
+-- Following query counts the number of sweet productions.
+@info(name = 'query')
+from SweetProductionStream
+select sum(amount) as totalProductions
+insert into LogStream;</code></pre>
+
+<p>Change the <code class="codehilite">file.uri</code> parameter in the above Siddhi application to the file path to which you downloaded the <code class="codehilite">productions.csv</code> file in step 4.</p>
+</li>
+<li>
+<p>Save this file as <code class="codehilite">CountProductions.siddhi</code> in the <code class="codehilite">&lt;SI_HOME&gt;/wso2/server/deployment/siddhi-files</code> directory.   </p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>This Siddhi application tails the file <code class="codehilite">productions.csv</code> line by line. Each line is converted to an event in the <code class="codehilite">SweetProductionStream</code> stream. After that, a simple transformation is carried out for the sweet production runs. This transformation involves converting the value for the <code class="codehilite">name</code> attribute to upper case. Finally, the output is logged in the SI console.</p>
+</div>
+<p>Once the Siddhi application is successfully deployed, the following log appears in the SI console.</p>
+<pre class="codehilite"><code class="linenums">INFO {org.wso2.carbon.streaming.integrator.core.internal.StreamProcessorService} - Siddhi App CountProductions deployed successfully</code></pre>
+
+</li>
+<li>
+<p>Now the Siddhi application starts to process the <code class="codehilite">productions.csv</code> file. The file two entries as follows.</p>
+<pre class="codehilite"><code class="linenums">Almond cookie,100.0
+Baked alaska,20.0</code></pre>
+
+<p>As a result, the following log appears in the SI console.</p>
+<pre class="codehilite"><code class="linenums">INFO {io.siddhi.core.stream.output.sink.LogSink} - CountProductions : LogStream : Event{timestamp=1565097506866, data=[100.0], isExpired=false}
+INFO {io.siddhi.core.stream.output.sink.LogSink} - CountProductions : LogStream : Event{timestamp=1565097506866, data=[120.0], isExpired=false}</code></pre>
+
+<p>These logs print the sweet production count. Note that the current count of sweet productions is being printed as <code class="codehilite">120</code> in the second log. This is because the factory has so far produced <code class="codehilite">120</code> sweets: <code class="codehilite">100</code> Almond cookies and <code class="codehilite">20</code> Baked alaskas.</p>
+</li>
+<li>
+<p>Now wait for following log to appear in the SI console.</p>
+<pre class="codehilite"><code class="linenums">DEBUG {org.wso2.carbon.streaming.integrator.core.persistence.FileSystemPersistenceStore} - Periodic persistence of CountProductions persisted successfully</code></pre>
+
+<p>This log indicates that the current state of the Siddhi application is successfully persisted. The Siddhi application state is persisted every minute. Therefore, you can see this log appearing every minute.</p>
+<p>Next, let's append two sweet production entries into the <code class="codehilite">productions.csv</code> file and shutdown the SI server before the state persistence happens (i.e., before the above log appears).</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>It is better to start appending the records immediately after the state persistence log appears so that you have plenty of time to append the records and shutdown the server before next log appears.</p>
+</div>
+</li>
+<li>
+<p>Now append following content into the <code class="codehilite">productions.csv</code> file:</p>
+<pre class="codehilite"><code class="linenums">Croissant,100.0
+Croutons,100.0</code></pre>
+
+</li>
+<li>
+<p>Shutdown SI server. Here you are deliberately creating a scenario where the server crashes before the SI server could persist the latest production count.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Here, the SI server crashes before the state is persisted. Therefore, the Streaming Integrator server cannot persist the latest count (which includes the last two production runs that produced <code class="codehilite">100</code> Croissants and <code class="codehilite">100</code> Croutons). The good news is, the <code class="codehilite">File source</code> source replays the last two messages, allowing the Streaming Integrator to successfully recover from the server crash.</p>
+</div>
+</li>
+<li>
+<p>Restart the SI server and wait for about one minute.</p>
+<p>The following log appears in the SI console:</p>
+<pre class="codehilite"><code class="linenums">INFO {io.siddhi.core.stream.output.sink.LogSink} - CountProductions : LogStream : Event{timestamp=1565097846807, data=[220.0], isExpired=false}
+INFO {io.siddhi.core.stream.output.sink.LogSink} - CountProductions : LogStream : Event{timestamp=1565097846812, data=[320.0], isExpired=false}</code></pre>
+
+</li>
+</ol>
+<p>Note that the <code class="codehilite">File source</code> has replayed the last two messages. This indicates that the sweet productions count has been correctly restored.</p>
+                
+                  
+                
+              
+<a href="#" class="cd-top text--replace js-cd-top">Top</a>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TSWTP6" height="0" width="0"
+    style="display:none;visibility:hidden"></iframe></noscript>
+
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../performing-real-time-etl-with-mysql/" title="Performing Real-time ETL with MySQL" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Performing Real-time ETL with MySQL
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../working-with-kafka/" title="Working with Kafka" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Working with Kafka
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            WSO2 Enterprise Integrator - Documentation
+          </div>
+        
+        &copy;2019 <a href="https://wso2.com/">WSO2</a>
+      </div>
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.dc02f8ce.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../assets/lib/highlightjs/highlight.min.js"></script>
+      
+        <script src="../../assets/js/theme.js"></script>
+      
+        <script src="../../assets/lib/backtotop/js/util.js"></script>
+      
+        <script src="../../assets/lib/backtotop/js/main.js"></script>
+      
+    
+  </body>
+</html>

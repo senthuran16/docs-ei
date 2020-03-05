@@ -1,0 +1,4885 @@
+<!--
+ * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+-->
+
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="Documentation for WSO2 Enterprise Integrator">
+      
+      
+        <link rel="canonical" href="https://ei.docs.wso2.com/en/latest/admin/monitoring-the-streaming-integrator/">
+      
+      
+        <meta name="author" content="WSO2">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.1.1">
+    
+    
+      
+        <title>Monitoring the Streaming Integrator - WSO2 Enterprise Integrator Documentation</title>
+      
+    
+    
+
+      <link rel="stylesheet" href="../../assets/stylesheets/application.3020aac5.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.224b79ff.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ff7043">
+      
+    
+<link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
+
+    
+      <script src="../../assets/javascripts/modernizr.01ccdecf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../assets/lib/highlightjs/default.min.css">
+    
+      <link rel="stylesheet" href="../../assets/css/theme.css">
+    
+    
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-103065-9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'UA-103065-9');
+</script>
+
+<!-- Google Tag Manager -->
+<script>(function (w, d, s, l, i) {
+  w[l] = w[l] || []; w[l].push({
+    'gtm.start':
+      new Date().getTime(), event: 'gtm.js'
+  }); var f = d.getElementsByTagName(s)[0],
+    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+      'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+  })(window, document, 'script', 'dataLayer', 'GTM-TSWTP6');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Hotjar Tracking Code for https://ei.docs.wso2.com/ -->
+<script>
+  (function (h, o, t, j, a, r) {
+    h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments) };
+    h._hjSettings = { hjid: 1000689, hjsv: 6 };
+    a = o.getElementsByTagName('head')[0];
+    r = o.createElement('script'); r.async = 1;
+    r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+    a.appendChild(r);
+  })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+</script>
+<!-- End Google Tag Manager (noscript) -->
+
+
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#monitoring-the-streaming-integrator" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <!--
+ * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+-->
+
+<header class="md-header" data-md-component="header" id="page-header" data-url="" data-lang="en">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://ei.docs.wso2.com/en/latest/" title="WSO2 Enterprise Integrator Documentation" class="md-header-nav__button md-logo">
+          
+            <img src="../../images/logo.svg" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+               Enterprise Integrator Documentation
+            </span>
+            <span class="md-header-nav__topic">
+              Monitoring the Streaming Integrator
+            </span>
+          
+        </div>
+
+        <div class="md-flex__ellipsis md-header__version-select">
+          <div class="mb-tabs__dropdown version-select">
+            <a class="md-tabs__link md-tabs__dropdown-link" href="#!" data-target="version-select-dropdown">7.0.0</a>
+            <ul id="version-select-dropdown" class="mb-tabs__dropdown-content" tabindex="0">
+              <!-- Versions will added here dynamically -->
+              <li class="md-tabs__item mb-tabs__dropdown">
+                <a href="#" id="show-all-versions-link">Show all</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="md-flex__ellipsis md-header__distribution-select">
+          <div class="mb-tabs__dropdown version-select">
+            <a class="md-tabs__link md-tabs__dropdown-link" href="#!" data-target="distribution-select-dropdown">
+            Streaming Integrator</a>
+            <ul id="distribution-select-dropdown" class="mb-tabs__dropdown-content" tabindex="0">
+            </ul>
+          </div>
+        </div>
+        
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item home_icon">
+    
+      <a href="../.." title="Home" class="md-tabs__link">
+          <i class="fa fa-home"></i>
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../overview/overview/" title="Get Started" class="md-tabs__link">
+          Get Started
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    
+    
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../guides/consuming-messages/" title="Learn" class="md-tabs__link">
+          Learn
+        </a>
+      
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+    
+    
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../setup/installing-si-in-vm/" title="Setup and Install" class="md-tabs__link">
+          Setup and Install
+        </a>
+      
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../develop/developing-streaming-integration-solutions/" title="Develop" class="md-tabs__link">
+          Develop
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="./" title="Observability" class="md-tabs__link md-tabs__link--active">
+          Observability
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../ref/si-rest-api-guide/" title="References" class="md-tabs__link">
+          References
+        </a>
+      
+    </li>
+  
+
+      
+        
+      
+    </ul>
+    <div class="quick_links">
+        
+        <a href="https://github.com/wso2/docs-ei/edit/7.0.0/en/streaming-integrator/docs/admin/monitoring-the-streaming-integrator.md" target="blank" id="editIcon" title="Edit this page"
+           title="Edit this page" class="md-icon md-content__icon nav_link edit_link"></a>
+        
+    </div>
+    <a href="#" title="Report Issues" class="feedbackBtn" 
+        onclick=window.open("https://github.com/"+"wso2/docs-ei"+"/issues/new?title=Doc%20Feedback:&body=Location%20:%20"+window.location.href); >
+        Report Issues</a>
+  </div>
+</nav>
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+    <label class="md-nav__title md-nav__title--site" for="__drawer">
+      <a href="https://ei.docs.wso2.com/en/latest/" title="WSO2 Enterprise Integrator Documentation"
+         class="md-nav__button md-logo">
+        
+          <img src="../../images/logo.svg" width="48" height="48">
+        
+      </a>
+      WSO2 Enterprise Integrator Documentation
+    </label>
+    
+      <div class="md-nav__source">
+        
+
+
+  
+
+<a href="https://github.com/wso2/docs-ei/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    wso2/docs-ei
+  </div>
+</a>
+      </div>
+    
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        
+        
+        
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+        
+        
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Get Started
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Get Started
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../overview/overview/" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quick-start-guide/getting-started-with-si/" title="Quick Start Guide" class="md-nav__link">
+      Quick Start Guide
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quick-start-guide/quick-start-guide-101/" title="Streaming Integrator 101" class="md-nav__link">
+      Streaming Integrator 101
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../quick-start-guide/hello-world-with-mi/" title="Running the Streaming Integrator with Micro Integrator" class="md-nav__link">
+      Running the Streaming Integrator with Micro Integrator
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../overview/architecture/" title="Architecture" class="md-nav__link">
+      Architecture
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../concepts/concepts/" title="Key Concepts" class="md-nav__link">
+      Key Concepts
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+      
+        
+        
+        
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Learn
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Learn
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-1" type="checkbox" id="nav-3-1">
+    
+    <label class="md-nav__link" for="nav-3-1">
+      Use Cases
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-1">
+        Use Cases
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/consuming-messages/" title="Consuming Data" class="md-nav__link">
+      Consuming Data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/transforming-data/" title="Transforming Data" class="md-nav__link">
+      Transforming Data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/enriching-data/" title="Enriching Data" class="md-nav__link">
+      Enriching Data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/cleansing-data/" title="Cleansing Data" class="md-nav__link">
+      Cleansing Data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/correlating-events/" title="Correlating Data" class="md-nav__link">
+      Correlating Data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/summarizing-data/" title="Summarizing Data" class="md-nav__link">
+      Summarizing Data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/storage-Integration/" title="Integrating Stores" class="md-nav__link">
+      Integrating Stores
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/publishing-data/" title="Publishing Data" class="md-nav__link">
+      Publishing Data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/triggering-integration-flows/" title="Triggering Integration Flows" class="md-nav__link">
+      Triggering Integration Flows
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-2" type="checkbox" id="nav-3-2">
+    
+    <label class="md-nav__link" for="nav-3-2">
+      Tutorials
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-2">
+        Tutorials
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../examples/tutorials-overview/" title="Tutorials Overview" class="md-nav__link">
+      Tutorials Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../examples/performing-real-time-etl-with-mysql/" title="Performing Real-time ETL with MySQL" class="md-nav__link">
+      Performing Real-time ETL with MySQL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../examples/performing-real-time-etl-with-files/" title="Performing Real-time ETL with Files" class="md-nav__link">
+      Performing Real-time ETL with Files
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../examples/working-with-kafka/" title="Working with Kafka" class="md-nav__link">
+      Working with Kafka
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../examples/exposing-processed-data-as-api/" title="Exposing Processed Data as API" class="md-nav__link">
+      Exposing Processed Data as API
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../examples/triggering-integrations-via-micro-integrator/" title="Triggering Integrations via MI" class="md-nav__link">
+      Triggering Integrations via MI
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../examples/running-si-with-docker-and-kubernetes/" title="Running SI with Docker and Kubernetes" class="md-nav__link">
+      Running SI with Docker and Kubernetes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3" type="checkbox" id="nav-3-3">
+    
+    <label class="md-nav__link" for="nav-3-3">
+      Examples
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-3">
+        Examples
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3-1" type="checkbox" id="nav-3-3-1">
+    
+    <label class="md-nav__link" for="nav-3-3-1">
+      Consuming Data
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-3-3-1">
+        Consuming Data
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveTCPinJSONFormat/" title="Receiving JSON Events via TCP" class="md-nav__link">
+      Receiving JSON Events via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishGooglePubSubMessagesInTextFormat/" title="Publishing Events to a Google Pub/Sub Topic" class="md-nav__link">
+      Publishing Events to a Google Pub/Sub Topic
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/CSVDefaultMapping/" title="Publishing and Receiving CSV Events via Files" class="md-nav__link">
+      Publishing and Receiving CSV Events via Files
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/CDCWithListeningMode/" title="Capturing MySQL Inserts via CDC" class="md-nav__link">
+      Capturing MySQL Inserts via CDC
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveGooglePubSubMessagesInTextFormat/" title="Receiving Messages from a Google Pub/Sub Topic" class="md-nav__link">
+      Receiving Messages from a Google Pub/Sub Topic
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveMQTTInXMLFormat/" title="Receiving XML events via MQTT" class="md-nav__link">
+      Receiving XML events via MQTT
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveTCPinBinaryFormat/" title="Receiving Binary Events via TCP" class="md-nav__link">
+      Receiving Binary Events via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveKafkaInBinaryFormat/" title="Receiving Binary Events via Kafka" class="md-nav__link">
+      Receiving Binary Events via Kafka
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveHTTPInXMLFormatWithDefaultMapping/" title="Receiving XML Events via HTTP" class="md-nav__link">
+      Receiving XML Events via HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/store-influxdb/" title="Working with an influxDB Store" class="md-nav__link">
+      Working with an influxDB Store
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/CDCWithPollingMode/" title="Capturing MySQL Inserts and Updates via CDC Polling Mode" class="md-nav__link">
+      Capturing MySQL Inserts and Updates via CDC Polling Mode
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/TwitterPolling-sample/" title="Retrieving Historical Tweets for a Given Time Period" class="md-nav__link">
+      Retrieving Historical Tweets for a Given Time Period
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHttpOAuthRequestWithRefreshToken/" title="Publishing HTTP Events to an OAuth-protected Endpoint while Using a Refresh Token Grant Type" class="md-nav__link">
+      Publishing HTTP Events to an OAuth-protected Endpoint while Using a Refresh Token Grant Type
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHttpOAuthRequestResponse/" title="Publishing HTTP Events via an OAuth-protected Endpoint" class="md-nav__link">
+      Publishing HTTP Events via an OAuth-protected Endpoint
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/Store-solr/" title="Receiving Events via Simulator and Persisting in SOLR Store" class="md-nav__link">
+      Receiving Events via Simulator and Persisting in SOLR Store
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveAndCount/" title="Receiving Events via HTTP Transport" class="md-nav__link">
+      Receiving Events via HTTP Transport
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveEventsFromFile/" title="Receiving Events via File" class="md-nav__link">
+      Receiving Events via File
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveEmailInXmlFormat/" title="Receiving XML Events via Email" class="md-nav__link">
+      Receiving XML Events via Email
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveRabbitmqInJSONFormat/" title="Receiving JSON Events via RabbitMQ" class="md-nav__link">
+      Receiving JSON Events via RabbitMQ
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/Store-cassandra/" title="Receive Events via Simulator and Persist in Cassandra Store" class="md-nav__link">
+      Receive Events via Simulator and Persist in Cassandra Store
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3-2" type="checkbox" id="nav-3-3-2">
+    
+    <label class="md-nav__link" for="nav-3-3-2">
+      Transforming Data
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-3-3-2">
+        Transforming Data
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHttpOAuthRequest/" title="Publishing HTTP Events to to an OAuth-protected Endpoint" class="md-nav__link">
+      Publishing HTTP Events to to an OAuth-protected Endpoint
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHttpOAuthRequestWithoutAccessToken/" title="Publishing HTTP Events to to an OAuth-protected Endpoint without an Access Token" class="md-nav__link">
+      Publishing HTTP Events to to an OAuth-protected Endpoint without an Access Token
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveHl7InER7Format/" title="Receiving ER7 Events via HL7" class="md-nav__link">
+      Receiving ER7 Events via HL7
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/DataPreprocessing/" title="Preprocessing Data Received via TCP" class="md-nav__link">
+      Preprocessing Data Received via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHl7InER7Format/" title="Publishing ER7 Events via HL7" class="md-nav__link">
+      Publishing ER7 Events via HL7
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/SweetProductionDataPreprocessing/" title="Receiving Data via TCP and Preprocessing" class="md-nav__link">
+      Receiving Data via TCP and Preprocessing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/CSVCustomMapping/" title="Receiving and Publishing Events in Custom CSV Format" class="md-nav__link">
+      Receiving and Publishing Events in Custom CSV Format
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHTTPInJsonFormatWithCustomMapping/" title="Sending Custom JSON Events via HTTP" class="md-nav__link">
+      Sending Custom JSON Events via HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishEmailInTextFormat/" title="Publishing Text Events via Email" class="md-nav__link">
+      Publishing Text Events via Email
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveKafkaInTextFormatWithCustomMapping/" title="Receiving Custom Text Events via Kafka" class="md-nav__link">
+      Receiving Custom Text Events via Kafka
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/Script-js-sample/" title="Using Javascript Functions in Siddhi Applications" class="md-nav__link">
+      Using Javascript Functions in Siddhi Applications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishKafkaInCustomAvroFormat/" title="Publishing Custom Avro Events via Kafka" class="md-nav__link">
+      Publishing Custom Avro Events via Kafka
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveHl7InXmlFormat/" title="Receiving Custom XML Messages via HL7" class="md-nav__link">
+      Receiving Custom XML Messages via HL7
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveTCPInTextFormatWithCustomMapping/" title="Receiving Custom Text Events via TCP" class="md-nav__link">
+      Receiving Custom Text Events via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/RegexExecutionSample/" title="Identifying Sub-sequences in Input Sequences" class="md-nav__link">
+      Identifying Sub-sequences in Input Sequences
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHl7InXmlFormat/" title="Publishing XML messages via HL7" class="md-nav__link">
+      Publishing XML messages via HL7
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishKafkaInJsonFormat/" title="Publishing JSON Events via Kafka" class="md-nav__link">
+      Publishing JSON Events via Kafka
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishEventsToFile/" title="Publishing JSON Events to Files" class="md-nav__link">
+      Publishing JSON Events to Files
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveHTTPinXMLFormatWithCustomMapping/" title="Receiving Custom XML Events via HTTP" class="md-nav__link">
+      Receiving Custom XML Events via HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishRabbitmqInXmlFormat/" title="Publishing XML Events via RabbitMQ" class="md-nav__link">
+      Publishing XML Events via RabbitMQ
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/MathExtensionSample/" title="Rounding up Amounts via the Math Function" class="md-nav__link">
+      Rounding up Amounts via the Math Function
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveTCPinTextFormat/" title="Receiving Text Events via TCP" class="md-nav__link">
+      Receiving Text Events via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishEmailInXmlFormat/" title="Publishing Emails in XML Format" class="md-nav__link">
+      Publishing Emails in XML Format
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/TimeSeriesExtensionSample/" title="Processing data via the Timeseries Extension with the Regress Function" class="md-nav__link">
+      Processing data via the Timeseries Extension with the Regress Function
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/TwitterStreaming-sample/" title="Retrieving Real-time Tweets" class="md-nav__link">
+      Retrieving Real-time Tweets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/StringExtensionSample/" title="Converting String Values to Lowercase" class="md-nav__link">
+      Converting String Values to Lowercase
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/TextMappingWithInmemoryTransport/" title="Text Mapping with In-memory Transport" class="md-nav__link">
+      Text Mapping with In-memory Transport
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveHTTPInJsonFormatWithDefaultMapping/" title="Receiving JSON Events via HTTP" class="md-nav__link">
+      Receiving JSON Events via HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/HelloKafka/" title="Consuming Events from a Kafka Topic and Publishing to Another Kafka Topic" class="md-nav__link">
+      Consuming Events from a Kafka Topic and Publishing to Another Kafka Topic
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHttpInXmlFormatWithCustomMapping/" title="Publishing Custom XML Events via HTTP" class="md-nav__link">
+      Publishing Custom XML Events via HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/SNMPSetRequestApp/" title="Sending Custom Keyvalue Events via SNMP" class="md-nav__link">
+      Sending Custom Keyvalue Events via SNMP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishTcpInJsonFormat/" title="Publishing JSON Events via TCP" class="md-nav__link">
+      Publishing JSON Events via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHttpOAuthRequestWithOAuthUser/" title="Publishing HTTP Events to an OAuth-protected Endpoint" class="md-nav__link">
+      Publishing HTTP Events to an OAuth-protected Endpoint
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/MapExtensionSample/" title="Inserting and Accessing Data in a Map" class="md-nav__link">
+      Inserting and Accessing Data in a Map
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishJmsInXmlFormat/" title="Publishing XML Events via JMS" class="md-nav__link">
+      Publishing XML Events via JMS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveJMSInJsonFormat/" title="Receiving JSON Events via JMS" class="md-nav__link">
+      Receiving JSON Events via JMS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveHTTPInJsonFormatWithCustomMapping/" title="Receiving Custom JSON Events via HTTP" class="md-nav__link">
+      Receiving Custom JSON Events via HTTP
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3-3" type="checkbox" id="nav-3-3-3">
+    
+    <label class="md-nav__link" for="nav-3-3-3">
+      Enriching Data
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-3-3-3">
+        Enriching Data
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ExtremaBottomK/" title="Counting the Frequency of Values with BottomK" class="md-nav__link">
+      Counting the Frequency of Values with BottomK
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/GplNLPFindNameEntityType/" title="Extracting Values from a String" class="md-nav__link">
+      Extracting Values from a String
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/JoinWithStoredData/" title="Joining Streaming Data with Stored Data in RDBMS" class="md-nav__link">
+      Joining Streaming Data with Stored Data in RDBMS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/Script-js-sample/" title="Using Javascript Functions in Siddhi Applications" class="md-nav__link">
+      Using Javascript Functions in Siddhi Applications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/store-hbase/" title="Receiving Events via Simulator and Persisting in a Store" class="md-nav__link">
+      Receiving Events via Simulator and Persisting in a Store
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/HttpRequestResponseSample/" title="Publishing HTTP Requests, Receiving Responses, and Processing Them" class="md-nav__link">
+      Publishing HTTP Requests, Receiving Responses, and Processing Them
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/UnitConversionExtentionSample/" title="Converting Units" class="md-nav__link">
+      Converting Units
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/sentimentExtensionSample/" title="Calculating the Sentiment Value for a Given String" class="md-nav__link">
+      Calculating the Sentiment Value for a Given String
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/KalmanFilterExecutionSample/" title="Estimating Values Using Kalman Algorithms" class="md-nav__link">
+      Estimating Values Using Kalman Algorithms
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/execution-geo-sample/" title="Processing Geo Data" class="md-nav__link">
+      Processing Geo Data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ClusTreeTestApp/" title="Performing Streaming Learning Using a Clustree Model" class="md-nav__link">
+      Performing Streaming Learning Using a Clustree Model
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveWebSocketInXMLFormat/" title="Receiving XML Events via Websocket" class="md-nav__link">
+      Receiving XML Events via Websocket
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3-4" type="checkbox" id="nav-3-3-4">
+    
+    <label class="md-nav__link" for="nav-3-3-4">
+      Aggregating Data
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-3-3-4">
+        Aggregating Data
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/DataPreprocessing/" title="Preprocessing Data Received via TCP" class="md-nav__link">
+      Preprocessing Data Received via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/SweetProductionDataPreprocessing/" title="Receiving Data via TCP and Preprocessing" class="md-nav__link">
+      Receiving Data via TCP and Preprocessing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishEmailInTextFormat/" title="Publishing Text Events via Email" class="md-nav__link">
+      Publishing Text Events via Email
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/AggregateOverTime/" title="Calculating Aggregations Over Time" class="md-nav__link">
+      Calculating Aggregations Over Time
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/approximate-distinctCountEver-sample/" title="Calculating the Number of Distinct Events without a Siddhi Window" class="md-nav__link">
+      Calculating the Number of Distinct Events without a Siddhi Window
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/approximate-distinctCount-sample/" title="Calculating the Number of Distinct Events within a Siddhi Window" class="md-nav__link">
+      Calculating the Number of Distinct Events within a Siddhi Window
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveAndCount/" title="Receiving Events via HTTP Transport" class="md-nav__link">
+      Receiving Events via HTTP Transport
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/AggregateDataIncrementally/" title="Aggregating Data Incrementally" class="md-nav__link">
+      Aggregating Data Incrementally
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/Store-redis/" title="Receiving Events and Persisting Them in Redis Store" class="md-nav__link">
+      Receiving Events and Persisting Them in Redis Store
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/approximate-count-sample/" title="Calculating the Approximate Count of Events within a Siddhi Window" class="md-nav__link">
+      Calculating the Approximate Count of Events within a Siddhi Window
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/store-mongodb/" title="Receiving Events and Persisting in MongoDB Store" class="md-nav__link">
+      Receiving Events and Persisting in MongoDB Store
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3-5" type="checkbox" id="nav-3-3-5">
+    
+    <label class="md-nav__link" for="nav-3-3-5">
+      Correlating Data
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-3-3-5">
+        Correlating Data
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PmmlModelProcessor/" title="Making Predictions via PMML Model" class="md-nav__link">
+      Making Predictions via PMML Model
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/StreamingRegressor/" title="Making Predictions via a Regressor Model" class="md-nav__link">
+      Making Predictions via a Regressor Model
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/GplNLPFindNameEntityType/" title="Extracting Values from a String" class="md-nav__link">
+      Extracting Values from a String
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/TensorFlowTestApp/" title="Performing Regression Tasks via an Imported Tensorflow Model" class="md-nav__link">
+      Performing Regression Tasks via an Imported Tensorflow Model
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/MarkovChainSample/" title="Identifying Abnormal Patterns via a Markov Matrix" class="md-nav__link">
+      Identifying Abnormal Patterns via a Markov Matrix
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PriorityExtensionSample/" title="Observing the Priority of Events in a Stream" class="md-nav__link">
+      Observing the Priority of Events in a Stream
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/approximate-distinctCountEver-sample/" title="Calculating the Number of Distinct Events without a Siddhi Window" class="md-nav__link">
+      Calculating the Number of Distinct Events without a Siddhi Window
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/approximate-distinctCount-sample/" title="Calculating the Number of Distinct Events within a Siddhi Window" class="md-nav__link">
+      Calculating the Number of Distinct Events within a Siddhi Window
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/sentimentExtensionSample/" title="Calculating the Sentiment Value for a Given String" class="md-nav__link">
+      Calculating the Sentiment Value for a Given String
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishMqttInXmlFormat/" title="Publishing XML Events via MQTT" class="md-nav__link">
+      Publishing XML Events via MQTT
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PatternMatching/" title="Identifying Event Patterns Based On Order of Event Arrival" class="md-nav__link">
+      Identifying Event Patterns Based On Order of Event Arrival
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/StreamingKMeansSample/" title="Using StreamingML Kmeans for Clustering" class="md-nav__link">
+      Using StreamingML Kmeans for Clustering
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/KalmanFilterExecutionSample/" title="Estimating Values Using Kalman Algorithms" class="md-nav__link">
+      Estimating Values Using Kalman Algorithms
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/RScriptSample/" title="Processing Events and Producing Aggregated Outputs Using R Script" class="md-nav__link">
+      Processing Events and Producing Aggregated Outputs Using R Script
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceivePrometheusMetrics/" title="Receiving Prometheus Metrics" class="md-nav__link">
+      Receiving Prometheus Metrics
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/hoeffding-adaptive-tree-sample/" title="Making Predictions via Hoeffding Classifier Model" class="md-nav__link">
+      Making Predictions via Hoeffding Classifier Model
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/SNMPGetRequestApp/" title="Receiving Custom Key Value Events via SNMP" class="md-nav__link">
+      Receiving Custom Key Value Events via SNMP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveJMSInKeyvalueFormat/" title="Receiving Key Value Events via JMS" class="md-nav__link">
+      Receiving Key Value Events via JMS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/IBMMessageQueue/" title="Consuming Messages from IBM Message Queues" class="md-nav__link">
+      Consuming Messages from IBM Message Queues
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/AlertsAndThresholds/" title="Receiving Email Alerts" class="md-nav__link">
+      Receiving Email Alerts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/streaming-perceptron-sample/" title="Making Predictions via a Streaming Perceptron Model" class="md-nav__link">
+      Making Predictions via a Streaming Perceptron Model
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/GeoDistanceCalculation/" title="Calculating the Distance Between Two Locations" class="md-nav__link">
+      Calculating the Distance Between Two Locations
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-3-6" type="checkbox" id="nav-3-3-6">
+    
+    <label class="md-nav__link" for="nav-3-3-6">
+      Publishing Data
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-3-3-6">
+        Publishing Data
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishTcpInTextFormat/" title="Publishing Text Events via TCP" class="md-nav__link">
+      Publishing Text Events via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/ReceiveHl7InER7Format/" title="Receiving ER7 Events via HL7" class="md-nav__link">
+      Receiving ER7 Events via HL7
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishGooglePubSubMessagesInTextFormat/" title="Publishing Events to a Google Pub/Sub Topic" class="md-nav__link">
+      Publishing Events to a Google Pub/Sub Topic
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishTcpInBinaryFormat/" title="Publishing Binary Events via TCP" class="md-nav__link">
+      Publishing Binary Events via TCP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishWebSocketInXmlFormat/" title="Publishing XML Events via WebSocket" class="md-nav__link">
+      Publishing XML Events via WebSocket
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishPrometheusMetricsHTTPServer/" title="Publishing Consumed Events to Prometheus Metrics and Exposing then via HTTP" class="md-nav__link">
+      Publishing Consumed Events to Prometheus Metrics and Exposing then via HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/store-influxdb/" title="Working with an influxDB Store" class="md-nav__link">
+      Working with an influxDB Store
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishKafkaInBinaryFormat/" title="Publishing Binary Events via Kafka" class="md-nav__link">
+      Publishing Binary Events via Kafka
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishJmsInKeyvalueFormat/" title="Publishing Key-value events via JMS" class="md-nav__link">
+      Publishing Key-value events via JMS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHttpInXmlFormat/" title="Publishing XML Events via HTTP" class="md-nav__link">
+      Publishing XML Events via HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHttpOAuthRequestWithRefreshToken/" title="Publishing HTTP Events to an OAuth-protected Endpoint while Using a Refresh Token Grant Type" class="md-nav__link">
+      Publishing HTTP Events to an OAuth-protected Endpoint while Using a Refresh Token Grant Type
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHttpOAuthRequestResponse/" title="Publishing HTTP Events via an OAuth-protected Endpoint" class="md-nav__link">
+      Publishing HTTP Events via an OAuth-protected Endpoint
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/Store-solr/" title="Receiving Events via Simulator and Persisting in SOLR Store" class="md-nav__link">
+      Receiving Events via Simulator and Persisting in SOLR Store
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishHttpInJsonFormat/" title="Publishing JSON Events via HTTP" class="md-nav__link">
+      Publishing JSON Events via HTTP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/Store-rdbms/" title="Receiving Events via Simulator and Persisting in RDBMS Store" class="md-nav__link">
+      Receiving Events via Simulator and Persisting in RDBMS Store
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/Store-cassandra/" title="Receive Events via Simulator and Persist in Cassandra Store" class="md-nav__link">
+      Receive Events via Simulator and Persist in Cassandra Store
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/PublishKafkaInAvroFormatUsingSchemaRegistry/" title="Publishing Avro Events via Kafka" class="md-nav__link">
+      Publishing Avro Events via Kafka
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/AmazonS3SinkSample/" title="Publishing Aggregated Events to the Amazon AWS S3 Bucket" class="md-nav__link">
+      Publishing Aggregated Events to the Amazon AWS S3 Bucket
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../samples/GCSSinkSample/" title="Publishing Events to a GCS Bucket" class="md-nav__link">
+      Publishing Events to a GCS Bucket
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+      
+        
+        
+        
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Setup and Install
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Setup and Install
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-1" type="checkbox" id="nav-4-1">
+    
+    <label class="md-nav__link" for="nav-4-1">
+      Installing the Product
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-1">
+        Installing the Product
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/installing-si-in-vm/" title="Install in a VM" class="md-nav__link">
+      Install in a VM
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/installing-si-using-docker/" title="Installing in Docker" class="md-nav__link">
+      Installing in Docker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/installing-si-using-kubernetes/" title="Installing in Kubernetes" class="md-nav__link">
+      Installing in Kubernetes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/migrating-from-stream-processor/" title="Migrating from WSO2 SP" class="md-nav__link">
+      Migrating from WSO2 SP
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-2" type="checkbox" id="nav-4-2">
+    
+    <label class="md-nav__link" for="nav-4-2">
+      Deploying Streaming Integrator
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-2">
+        Deploying Streaming Integrator
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/deploying-si-as-a-single-deployment/" title="Single Deployment" class="md-nav__link">
+      Single Deployment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/deploying-si-as-minimum-ha-cluster/" title="Minimum HA Cluster" class="md-nav__link">
+      Minimum HA Cluster
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/deploying-si-as-an-active-active-cluster.md" title="Active-Active Cluster" class="md-nav__link">
+      Active-Active Cluster
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/deploying-si-as-a-scalable-cluster/" title="Scalable Cluster" class="md-nav__link">
+      Scalable Cluster
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-3" type="checkbox" id="nav-4-3">
+    
+    <label class="md-nav__link" for="nav-4-3">
+      Setting up Databases
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-3">
+        Setting up Databases
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../setup/configuring-data-sources/" title="Configuring Datasources" class="md-nav__link">
+      Configuring Datasources
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-4" type="checkbox" id="nav-4-4">
+    
+    <label class="md-nav__link" for="nav-4-4">
+      Working with Siddhi Connectors
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-4">
+        Working with Siddhi Connectors
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../downloading-and-Installing-Siddhi-Extensions/" title="Downloading and Installing Siddhi Connectors" class="md-nav__link">
+      Downloading and Installing Siddhi Connectors
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../writing-Custom-Siddhi-Extensions/" title="Writing Custom Siddhi Extensions" class="md-nav__link">
+      Writing Custom Siddhi Extensions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../configuring-System-Parameters-for-Siddhi-Extensions/" title="Configuring System Parameters for Siddhi Extensions" class="md-nav__link">
+      Configuring System Parameters for Siddhi Extensions
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../creating-business-rules-templates/" title="Working with Business Rules" class="md-nav__link">
+      Working with Business Rules
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../general-data-protection-regulations/" title="General Data Protection Regulations" class="md-nav__link">
+      General Data Protection Regulations
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../working-with-Keystores/" title="Working with Keystores" class="md-nav__link">
+      Working with Keystores
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../supporting-different-transports/" title="Supporting Different Transports" class="md-nav__link">
+      Supporting Different Transports
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../user-management/" title="User Management" class="md-nav__link">
+      User Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../configuring-Database-and-File-System-State-Persistence" title="Configuring State Persistence" class="md-nav__link">
+      Configuring State Persistence
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../protecting-sensitive-data-via-the-secure-vault/" title="Protecting Sensitive Data via the Secure Vault" class="md-nav__link">
+      Protecting Sensitive Data via the Secure Vault
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../adding-third-party-non-osgi-libraries/" title="Adding Third Party Non OSGi Library" class="md-nav__link">
+      Adding Third Party Non OSGi Library
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ref/configuring-default-ports/" title="Configuring Default Ports" class="md-nav__link">
+      Configuring Default Ports
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+      
+        
+        
+        
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Develop
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Develop
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/developing-streaming-integration-solutions/" title="Developing Streaming Integrator Solutions" class="md-nav__link">
+      Developing Streaming Integrator Solutions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5-2" type="checkbox" id="nav-5-2">
+    
+    <label class="md-nav__link" for="nav-5-2">
+      Streaming Integrator Tooling
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-5-2">
+        Streaming Integrator Tooling
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/streaming-integrator-studio-overview/" title="Streaming Integrator Tooling Overview" class="md-nav__link">
+      Streaming Integrator Tooling Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/working-with-the-Design-View/" title="Working with the Design View" class="md-nav__link">
+      Working with the Design View
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/creating-a-Siddhi-Application/" title="Creating Siddhi Applications" class="md-nav__link">
+      Creating Siddhi Applications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/installing-siddhi-extensions/" title="Installing Siddhi Extensions" class="md-nav__link">
+      Installing Siddhi Extensions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/testing-a-Siddhi-Application/" title="Testing Siddhi Applications" class="md-nav__link">
+      Testing Siddhi Applications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/debugging_siddhi_applications/" title="Debugging Siddhi Applications" class="md-nav__link">
+      Debugging Siddhi Applications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/deploying-Streaming-Applications/" title="Deploying Siddhi Applications" class="md-nav__link">
+      Deploying Siddhi Applications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../develop/exporting-Siddhi-Applications/" title="Exporting Siddhi Applications" class="md-nav__link">
+      Exporting Siddhi Applications
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+      
+        
+        
+        
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" checked>
+    
+    <label class="md-nav__link" for="nav-6">
+      Observability
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Observability
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Monitoring the Streaming Integrator
+      </label>
+    
+    <a href="./" title="Monitoring the Streaming Integrator" class="md-nav__link md-nav__link--active">
+      Monitoring the Streaming Integrator
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+    
+    
+    
+    
+    
+    <a href="#" title="On this page" class="nav_link md-icon md-content__icon toc_icon"
+       id="tocToggleBtn">keyboard_arrow_right</a>
+    <label class="md-nav__title" for="__toc">On this page</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+        
+        <li class="md-nav__item">
+  <a href="#configuring-the-status-dashboard" title="Configuring the Status Dashboard" class="md-nav__link">
+    Configuring the Status Dashboard
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#assigning-unique-carbon-ids-to-nodes" title="Assigning unique carbon IDs to nodes" class="md-nav__link">
+    Assigning unique carbon IDs to nodes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-the-database" title="Setting up the database" class="md-nav__link">
+    Setting up the database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-metrics" title="Configuring metrics" class="md-nav__link">
+    Configuring metrics
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-cluster-credentials" title="Configuring cluster credentials" class="md-nav__link">
+    Configuring cluster credentials
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-permissions" title="Configuring permissions" class="md-nav__link">
+    Configuring permissions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#downloading-and-accessing-the-status-dashboard" title="Downloading and accessing the Status Dashboard" class="md-nav__link">
+    Downloading and accessing the Status Dashboard
+  </a>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#node-overview" title="Node overview" class="md-nav__link">
+    Node overview
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adding-a-node-to-the-dashboard" title="Adding a node to the dashboard" class="md-nav__link">
+    Adding a node to the dashboard
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#viewing-status-details" title="Viewing status details" class="md-nav__link">
+    Viewing status details
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#viewing-node-specific-pages" title="Viewing node-specific pages" class="md-nav__link">
+    Viewing node-specific pages
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#status-indicators" title="Status indicators" class="md-nav__link">
+    Status indicators
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#viewing-worker-history" title="Viewing worker history" class="md-nav__link">
+    Viewing worker history
+  </a>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#viewing-statistics-for-siddhi-applications" title="Viewing statistics for Siddhi applications" class="md-nav__link">
+    Viewing statistics for Siddhi applications
+  </a>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#viewing-statistics-for-parent-siddhi-applications" title="Viewing statistics for parent Siddhi applications" class="md-nav__link">
+    Viewing statistics for parent Siddhi applications
+  </a>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#application-overview" title="Application overview" class="md-nav__link">
+    Application overview
+  </a>
+  
+</li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+      
+        
+        
+        
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      References
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        References
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ref/si-rest-api-guide/" title="Streaming Integration REST API Guide" class="md-nav__link">
+      Streaming Integration REST API Guide
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ref/performance-analysis-results/" title="Performance Analysis Results" class="md-nav__link">
+      Performance Analysis Results
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+      
+        
+        
+        
+
+
+  <li class="md-nav__item">
+    <a href="../../page-not-found/" title="" class="md-nav__link">
+      
+    </a>
+  </li>
+
+      
+    </ul>
+  </nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+    
+    
+    
+    
+    
+    <a href="#" title="On this page" class="nav_link md-icon md-content__icon toc_icon"
+       id="tocToggleBtn">keyboard_arrow_right</a>
+    <label class="md-nav__title" for="__toc">On this page</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+        
+        <li class="md-nav__item">
+  <a href="#configuring-the-status-dashboard" title="Configuring the Status Dashboard" class="md-nav__link">
+    Configuring the Status Dashboard
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#assigning-unique-carbon-ids-to-nodes" title="Assigning unique carbon IDs to nodes" class="md-nav__link">
+    Assigning unique carbon IDs to nodes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-the-database" title="Setting up the database" class="md-nav__link">
+    Setting up the database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-metrics" title="Configuring metrics" class="md-nav__link">
+    Configuring metrics
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-cluster-credentials" title="Configuring cluster credentials" class="md-nav__link">
+    Configuring cluster credentials
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-permissions" title="Configuring permissions" class="md-nav__link">
+    Configuring permissions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#downloading-and-accessing-the-status-dashboard" title="Downloading and accessing the Status Dashboard" class="md-nav__link">
+    Downloading and accessing the Status Dashboard
+  </a>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#node-overview" title="Node overview" class="md-nav__link">
+    Node overview
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adding-a-node-to-the-dashboard" title="Adding a node to the dashboard" class="md-nav__link">
+    Adding a node to the dashboard
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#viewing-status-details" title="Viewing status details" class="md-nav__link">
+    Viewing status details
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#viewing-node-specific-pages" title="Viewing node-specific pages" class="md-nav__link">
+    Viewing node-specific pages
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#status-indicators" title="Status indicators" class="md-nav__link">
+    Status indicators
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#viewing-worker-history" title="Viewing worker history" class="md-nav__link">
+    Viewing worker history
+  </a>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#viewing-statistics-for-siddhi-applications" title="Viewing statistics for Siddhi applications" class="md-nav__link">
+    Viewing statistics for Siddhi applications
+  </a>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#viewing-statistics-for-parent-siddhi-applications" title="Viewing statistics for parent Siddhi applications" class="md-nav__link">
+    Viewing statistics for parent Siddhi applications
+  </a>
+  
+</li>
+        
+        <li class="md-nav__item">
+  <a href="#application-overview" title="Application overview" class="md-nav__link">
+    Application overview
+  </a>
+  
+</li>
+        
+        
+        
+        
+        
+    </ul>
+    
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+
+                
+                  <a href="https://github.com/wso2/docs-ei/edit/7.0.0/en/streaming-integrator/docs/admin/monitoring-the-streaming-integrator.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="monitoring-the-streaming-integrator">Monitoring the Streaming Integrator<a class="headerlink" href="#monitoring-the-streaming-integrator" title="Permanent link">&para;</a></h1>
+<p>The Status Dashboard allows you to monitor the metrics of a stand-alone Streaming Integrator instance or a Streaming Integrator cluster. This involves
+monitoring whether all processes of the Streaming Integrator setup are working in a healthy manner, monitoring the current status of a Streaming Integrator node, and viewing
+metrics relating to the history of a node or the cluster. Both JVM level metrics or Siddhi application level metrics can be viewed from the Status Dashboard.</p>
+<p>The following sections cover how to configure the Status Dashboard and analyze statistics relating to your Streaming Integrator deployment in it.</p>
+<h2 id="configuring-the-status-dashboard">Configuring the Status Dashboard<a class="headerlink" href="#configuring-the-status-dashboard" title="Permanent link">&para;</a></h2>
+<p>The following sections cover the configurations that need to be done in
+order to view statistics relating to the performance of your Streaming Integrator
+deployment in the Status Dashboard.</p>
+<h3 id="assigning-unique-carbon-ids-to-nodes">Assigning unique carbon IDs to nodes<a class="headerlink" href="#assigning-unique-carbon-ids-to-nodes" title="Permanent link">&para;</a></h3>
+<p>Carbon metrics uses the carbon ID as the source ID for metrics.
+Therefore, all the worker nodes are required to have a <strong>unique carbon
+ID</strong> defined in the <code class="codehilite">wso2.carbon:</code> section of the
+<code class="codehilite">&lt;SI_HOME&gt;/conf/server/deployment.yaml</code> file as shown
+in the extract below.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>You need to ensure that the carbon ID of each node is unique because it is required for the Status dashboard to identify the worker nodes and display their statistics accordingly.</p>
+</div>
+<pre class="codehilite"><code class="language-xml linenums">    wso2.carbon:
+        # value to uniquely identify a server
+      id: wso2-sp
+        # server name
+      name: WSO2 Stream Processor
+        # ports used by this server</code></pre>
+
+<h3 id="setting-up-the-database">Setting up the database<a class="headerlink" href="#setting-up-the-database" title="Permanent link">&para;</a></h3>
+<p>To monitor statistics in the Status Dashboard, you need a shared metrics database that stores the metrics of all the nodes.</p>
+<p>Set up a database of the required type by following the steps below. In this section, a MySQL database is created as an example.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>The Status Dashboard is only supported with H2, MySQL, MSSQL and Oracle database types. It is configured with the H2 database type by default. If you want to continue to use H2, skip this step.</p>
+</div>
+<ol>
+<li>
+<p>Download and install the required database type. For this example, let's download and install <a href="http://dev.mysql.com/downloads/">MySQL Server</a>.</p>
+</li>
+<li>
+<p>Download the required database driver. For this example, download the <a href="http://dev.mysql.com/downloads/connector/j/">MySQL JDBC driver</a>.</p>
+</li>
+<li>
+<p>Unzip the database driver you downloaded, copy its JAR file (<code class="codehilite">mysql-connector-java-x.x.xx-bin.jar</code> in this example), and place it in the <code class="codehilite">&lt;DASHBOARD_HOME&gt;/lib</code> directory.</p>
+</li>
+<li>
+<p>Enter the following command in a terminal/command window, where <code class="codehilite">username</code> is the username you want to use to access the databases.</p>
+<p><code class="codehilite">mysql -u username -p</code></p>
+</li>
+<li>
+<p>When prompted, specify the password you are using to access the databases with the username you specified.</p>
+</li>
+<li>
+<p>Create two databases named <code class="codehilite">WSO2_METRICS_DB</code> (to store metrics data) and <code class="codehilite">WSO2_STATUS_DASHBOARD_DB</code> (to store statistics) with tables. To create MySQL databases and tables for this example, run the following commands.</p>
+<pre class="codehilite"><code class="language-java linenums">    mysql&gt; create database WSO2_METRICS_DB;
+    mysql&gt; use WSO2_METRICS_DB;
+    mysql&gt; source &lt;SI_TOOLING_HOME&gt;/wso2/server/dbscripts/metrics/mysql.sql;
+    mysql&gt; grant all on WSO2_METRICS_DB.* TO username@localhost identified by "password";</code></pre>
+
+<pre class="codehilite"><code class="language-java linenums">        mysql&gt; create database WSO2_STATUS_DASHBOARD_DB;
+        mysql&gt; use WSO2_STATUS_DASHBOARD_DB;
+        mysql&gt; source &lt;SI_TOOLING_HOME&gt;/wso2/server/dbscripts/metrics/mysql.sql;
+        mysql&gt; grant all on WSO2_STATUS_DASHBOARD_DB.* TO username@localhost identified by "password";</code></pre>
+
+</li>
+<li>
+<p>Create two datasources named <code class="codehilite">WSO2_METRICS_DB</code> and <code class="codehilite">WSO2_STATUS_DASHBOARD_DB</code> by adding the following datasource configurations under the <code class="codehilite">wso2.datasources:</code> section of the <code class="codehilite">&lt;SI_HOME&gt;/conf/server/deployment.yaml</code> file.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>The names of the data sources must be the same as the names of the database tables you created for metrics and statistics. You need to change the values for the <code class="codehilite">username</code> and <code class="codehilite">password</code> parameters to the username and password that you are using to access the MySQL database.</p>
+<p>For detailed information about datasources, see <a href="https://github.com/wso2/carbon-datasources/">carbon-datasources</a>.</p>
+</div>
+<ul>
+<li>
+<p><code class="codehilite">WSO2_METRICS_DB</code></p>
+<pre class="codehilite"><code class="language-xml linenums">           - name: WSO2_METRICS_DB
+              description: The datasource used for dashboard feature
+              jndiConfig:
+                name: jdbc/WSO2MetricsDB
+              definition:
+                type: RDBMS
+                configuration:
+                  jdbcUrl: 'jdbc:mysql://localhost/WSO2_METRICS_DB?useSSL=false'
+                  username: root
+                  password: root
+                  driverClassName: com.mysql.jdbc.Driver
+                  maxPoolSize: 50
+                  idleTimeout: 60000
+                  connectionTestQuery: SELECT 1
+                  validationTimeout: 30000
+                  isAutoCommit: false</code></pre>
+
+</li>
+<li>
+<p><code class="codehilite">WSO2_STATUS_DASHBOARD_DB</code></p>
+<pre class="codehilite"><code class="language-xml linenums">                - name: WSO2_STATUS_DASHBOARD_DB
+                  description: The datasource used for dashboard feature
+                  jndiConfig:
+                    name: jdbc/wso2_status_dashboard
+                    useJndiReference: true
+                  definition:
+                    type: RDBMS
+                    configuration:
+                      jdbcUrl: 'jdbc:mysql://localhost/WSO2_STATUS_DASHBOARD_DB?useSSL=false'
+                      username: root
+                      password: root
+                      driverClassName: com.mysql.jdbc.Driver
+                      maxPoolSize: 50
+                      idleTimeout: 60000
+                      connectionTestQuery: SELECT 1
+                      validationTimeout: 30000
+                      isAutoCommit: false</code></pre>
+
+</li>
+</ul>
+<p>The following are sample configurations for database tables when you use other database types supported.</p>
+<details class="info"><summary>Click here to view the sample data source configurations.</summary><p><table>
+<thead>
+<tr class="header">
+<th>Database Type</th>
+<th>Metrics Datasource</th>
+<th>Dashboard Datasource</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>MSSQL</td>
+<td><div class="content-wrapper">
+<div class="code panel pdl" style="border-width: 1px;">
+<div class="codeContent panelContent pdl">
+<div class="sourceCode" id="cb1" data-syntaxhighlighter-params="brush: xml; gutter: false; theme: Confluence" data-theme="Confluence" style="brush: xml; gutter: false; theme: Confluence"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb1-1"><a href="#cb1-1"></a>name: WSO2_METRICS_DB</span>
+<span id="cb1-2"><a href="#cb1-2"></a>  description: The datasource used for dashboard feature</span>
+<span id="cb1-3"><a href="#cb1-3"></a>  jndiConfig:</span>
+<span id="cb1-4"><a href="#cb1-4"></a> </span>
+<span id="cb1-5"><a href="#cb1-5"></a>               name: jdbc/WSO2MetricsDB</span>
+<span id="cb1-6"><a href="#cb1-6"></a>  definition:</span>
+<span id="cb1-7"><a href="#cb1-7"></a> </span>
+<span id="cb1-8"><a href="#cb1-8"></a>               type: RDBMS</span>
+<span id="cb1-9"><a href="#cb1-9"></a>    configuration:</span>
+<span id="cb1-10"><a href="#cb1-10"></a> </span>
+<span id="cb1-11"><a href="#cb1-11"></a>               jdbcUrl: </span>
+<span id="cb1-12"><a href="#cb1-12"></a>              &#39;jdbc:sqlserver://localhost;databaseName=wso2_metrics&#39;</span>
+<span id="cb1-13"><a href="#cb1-13"></a> </span>
+<span id="cb1-14"><a href="#cb1-14"></a>               </span>
+<span id="cb1-15"><a href="#cb1-15"></a>              username: root</span>
+<span id="cb1-16"><a href="#cb1-16"></a>      password: root</span>
+<span id="cb1-17"><a href="#cb1-17"></a>      driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver</span>
+<span id="cb1-18"><a href="#cb1-18"></a>      maxPoolSize: 50</span>
+<span id="cb1-19"><a href="#cb1-19"></a>      idleTimeout: 60000</span>
+<span id="cb1-20"><a href="#cb1-20"></a>      connectionTestQuery: SELECT 1</span>
+<span id="cb1-21"><a href="#cb1-21"></a>      validationTimeout: 30000</span>
+<span id="cb1-22"><a href="#cb1-22"></a>      isAutoCommit: false</span></code></pre></div>
+</div>
+</div>
+</div></td>
+<td><div class="content-wrapper">
+<div class="code panel pdl" style="border-width: 1px;">
+<div class="codeContent panelContent pdl">
+<div class="sourceCode" id="cb2" data-syntaxhighlighter-params="brush: xml; gutter: false; theme: Confluence" data-theme="Confluence" style="brush: xml; gutter: false; theme: Confluence"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb2-1"><a href="#cb2-1"></a>name: WSO2_STATUS_DASHBOARD_DB</span>
+<span id="cb2-2"><a href="#cb2-2"></a>  description: The datasource used for dashboard feature</span>
+<span id="cb2-3"><a href="#cb2-3"></a>  jndiConfig:</span>
+<span id="cb2-4"><a href="#cb2-4"></a> </span>
+<span id="cb2-5"><a href="#cb2-5"></a>               name: jdbc/wso2_status_dashboard</span>
+<span id="cb2-6"><a href="#cb2-6"></a>    useJndiReference: true</span>
+<span id="cb2-7"><a href="#cb2-7"></a>  definition:</span>
+<span id="cb2-8"><a href="#cb2-8"></a> </span>
+<span id="cb2-9"><a href="#cb2-9"></a>               type: RDBMS</span>
+<span id="cb2-10"><a href="#cb2-10"></a>    configuration:</span>
+<span id="cb2-11"><a href="#cb2-11"></a> </span>
+<span id="cb2-12"><a href="#cb2-12"></a>               jdbcUrl: </span>
+<span id="cb2-13"><a href="#cb2-13"></a>              &#39;jdbc:sqlserver://localhost;databaseName=monitoring&#39;</span>
+<span id="cb2-14"><a href="#cb2-14"></a> </span>
+<span id="cb2-15"><a href="#cb2-15"></a>               </span>
+<span id="cb2-16"><a href="#cb2-16"></a>              username: root</span>
+<span id="cb2-17"><a href="#cb2-17"></a>      password: root</span>
+<span id="cb2-18"><a href="#cb2-18"></a>      driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver</span>
+<span id="cb2-19"><a href="#cb2-19"></a>      maxPoolSize: 50</span>
+<span id="cb2-20"><a href="#cb2-20"></a>      idleTimeout: 60000</span>
+<span id="cb2-21"><a href="#cb2-21"></a>      connectionTestQuery: SELECT 1</span>
+<span id="cb2-22"><a href="#cb2-22"></a>      validationTimeout: 30000</span>
+<span id="cb2-23"><a href="#cb2-23"></a>      isAutoCommit: false</span></code></pre></div>
+</div>
+</div>
+</div></td>
+</tr>
+<tr class="even">
+<td>Oracle</td>
+<td><div class="content-wrapper">
+<div class="code panel pdl" style="border-width: 1px;">
+<div class="codeContent panelContent pdl">
+<div class="sourceCode" id="cb3" data-syntaxhighlighter-params="brush: xml; gutter: false; theme: Confluence" data-theme="Confluence" style="brush: xml; gutter: false; theme: Confluence"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb3-1"><a href="#cb3-1"></a>name: WSO2_METRICS_DB</span>
+<span id="cb3-2"><a href="#cb3-2"></a>  description: The datasource used for dashboard feature</span>
+<span id="cb3-3"><a href="#cb3-3"></a>  jndiConfig:</span>
+<span id="cb3-4"><a href="#cb3-4"></a> </span>
+<span id="cb3-5"><a href="#cb3-5"></a>               name: jdbc/WSO2MetricsDB</span>
+<span id="cb3-6"><a href="#cb3-6"></a>  definition:</span>
+<span id="cb3-7"><a href="#cb3-7"></a> </span>
+<span id="cb3-8"><a href="#cb3-8"></a>               type: RDBMS</span>
+<span id="cb3-9"><a href="#cb3-9"></a>    configuration:</span>
+<span id="cb3-10"><a href="#cb3-10"></a> </span>
+<span id="cb3-11"><a href="#cb3-11"></a>               jdbcUrl: </span>
+<span id="cb3-12"><a href="#cb3-12"></a>              &#39;jdbc:oracle:thin:@localhost:1521/xe&#39;</span>
+<span id="cb3-13"><a href="#cb3-13"></a> </span>
+<span id="cb3-14"><a href="#cb3-14"></a>               </span>
+<span id="cb3-15"><a href="#cb3-15"></a>              username: root</span>
+<span id="cb3-16"><a href="#cb3-16"></a>      password: root</span>
+<span id="cb3-17"><a href="#cb3-17"></a>      driverClassName: oracle.jdbc.driver.OracleDriver</span>
+<span id="cb3-18"><a href="#cb3-18"></a>      maxPoolSize: 50</span>
+<span id="cb3-19"><a href="#cb3-19"></a>      idleTimeout: 60000</span>
+<span id="cb3-20"><a href="#cb3-20"></a>      connectionTestQuery: SELECT 1</span>
+<span id="cb3-21"><a href="#cb3-21"></a>      validationTimeout: 30000</span>
+<span id="cb3-22"><a href="#cb3-22"></a>      isAutoCommit: false</span></code></pre></div>
+</div>
+</div>
+</div></td>
+<td><div class="content-wrapper">
+<div class="code panel pdl" style="border-width: 1px;">
+<div class="codeContent panelContent pdl">
+<div class="sourceCode" id="cb4" data-syntaxhighlighter-params="brush: xml; gutter: false; theme: Confluence" data-theme="Confluence" style="brush: xml; gutter: false; theme: Confluence"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb4-1"><a href="#cb4-1"></a>name: WSO2_STATUS_DASHBOARD_DB</span>
+<span id="cb4-2"><a href="#cb4-2"></a>  description: The datasource used for dashboard feature</span>
+<span id="cb4-3"><a href="#cb4-3"></a>  jndiConfig:</span>
+<span id="cb4-4"><a href="#cb4-4"></a> </span>
+<span id="cb4-5"><a href="#cb4-5"></a>               name: jdbc/wso2_status_dashboard</span>
+<span id="cb4-6"><a href="#cb4-6"></a>    useJndiReference: true</span>
+<span id="cb4-7"><a href="#cb4-7"></a>  definition:</span>
+<span id="cb4-8"><a href="#cb4-8"></a> </span>
+<span id="cb4-9"><a href="#cb4-9"></a>               type: RDBMS</span>
+<span id="cb4-10"><a href="#cb4-10"></a>    configuration:</span>
+<span id="cb4-11"><a href="#cb4-11"></a> </span>
+<span id="cb4-12"><a href="#cb4-12"></a>               jdbcUrl: </span>
+<span id="cb4-13"><a href="#cb4-13"></a>              &#39;jdbc:oracle:thin:@localhost:1521/xe&#39;</span>
+<span id="cb4-14"><a href="#cb4-14"></a> </span>
+<span id="cb4-15"><a href="#cb4-15"></a>               </span>
+<span id="cb4-16"><a href="#cb4-16"></a>              username: root</span>
+<span id="cb4-17"><a href="#cb4-17"></a>      password: root</span>
+<span id="cb4-18"><a href="#cb4-18"></a>      driverClassName: oracle.jdbc.driver.OracleDriver</span>
+<span id="cb4-19"><a href="#cb4-19"></a>      maxPoolSize: 50</span>
+<span id="cb4-20"><a href="#cb4-20"></a>      idleTimeout: 60000</span>
+<span id="cb4-21"><a href="#cb4-21"></a>      connectionTestQuery: SELECT 1</span>
+<span id="cb4-22"><a href="#cb4-22"></a>      validationTimeout: 30000</span>
+<span id="cb4-23"><a href="#cb4-23"></a>      isAutoCommit: false</span></code></pre></div>
+</div>
+</div>
+</div></td>
+</tr>
+</tbody>
+</table></p>
+</details>
+</li>
+</ol>
+<h3 id="configuring-metrics">Configuring metrics<a class="headerlink" href="#configuring-metrics" title="Permanent link">&para;</a></h3>
+<p>This section explains how to configure metrics for your status dashboard.</p>
+<p><strong>Configuring worker metrics</strong></p>
+<p>To enable metrics and to configure metric-related properties, do the
+following configurations in the \&lt;
+<code class="codehilite">SI_HOME&gt;/conf/server/deployment.yaml</code> file for the
+required nodes.</p>
+<ol>
+<li>
+<p>To enable Carbon metrics, set the <code class="codehilite">enabled</code>
+    property to <code class="codehilite">true</code> under
+    <code class="codehilite">wso2.metrics</code> as shown below.</p>
+<pre class="codehilite"><code class="language-xml linenums">        wso2.metrics:
+          enabled: true</code></pre>
+
+</li>
+<li>
+<p>To enable JDBC reporting, set the
+    <code class="codehilite">Enable JDBC parameter</code> to
+    <code class="codehilite">true</code> in the
+    <code class="codehilite">wso2.metrics.jdbc:</code> =>
+    <code class="codehilite">reporting:</code> subsection as shown below. If JDBC
+    reporting is not enabled, only real-time metrics are displayed in
+    the first page of the Status dashboard, and information relating to
+    metrics history is not displayed in the other pages of the
+    dashboard. To render the first entry of the graph, you need to wait
+    for the time duration specified as the
+    <code class="codehilite">pollingPeriod</code> .</p>
+<pre class="codehilite"><code class="language-xml linenums">        # Enable JDBC Reporter
+         name: JDBC
+         enabled: true
+         pollingPeriod: 60</code></pre>
+
+</li>
+<li>
+<p>Under <code class="codehilite">wso2.metrics.jdbc</code> , configure the
+    following properties to clean up the database entries.</p>
+<pre class="codehilite"><code class="language-xml linenums">        wso2.metrics.jdbc:
+          # Data Source Configurations for JDBC Reporters
+          dataSource:
+            # Default Data Source Configuration
+            - &amp;JDBC01
+              # JNDI name of the data source to be used by the JDBC Reporter.
+              # This data source should be defined in a *-datasources.xml file in conf/datasources directory.
+              dataSourceName: java:comp/env/jdbc/WSO2MetricsDB
+              # Schedule regular deletion of metrics data older than a set number of days.
+              # It is recommended that you enable this job to ensure your metrics tables do not get extremely large.
+              # Deleting data older than seven days should be sufficient.
+              scheduledCleanup:
+                # Enable scheduled cleanup to delete Metrics data in the database.
+                enabled: false
+
+                # The scheduled job will cleanup all data older than the specified days
+                daysToKeep: 7
+
+                # This is the period for each cleanup operation in seconds.
+                scheduledCleanupPeriod: 86400</code></pre>
+
+<p><table>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Default Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>               dataSource              </code></td>
+<td><code>               &amp;JDBC01              </code></td>
+<td><br />
+</td>
+</tr>
+<tr class="even">
+<td><code>               dataSource &gt; dataSourceName              </code></td>
+<td><code>               java:comp/env/jdbc/WSO2MetricsDB              </code></td>
+<td>The name of the datasource used to store metric data.</td>
+</tr>
+<tr class="odd">
+<td><code>               dataSource &gt; scheduledCleanup &gt; enabled              </code></td>
+<td><code>               false              </code></td>
+<td>If this is set to <code>               true              </code> , metrics data stored in the database is cleared at a specific time interval as scheduled.</td>
+</tr>
+<tr class="even">
+<td><code>               dataSource &gt; scheduledCleanup &gt; daysToKeep              </code></td>
+<td><code>               3              </code></td>
+<td>If scheduled clean-up of metric data is enabled, all metric data in the database that are older than the number of days specified in this parameter are deleted.</td>
+</tr>
+<tr class="odd">
+<td><code>               dataSource &gt; scheduledCleanup &gt; scheduledCleanupPeriod              </code></td>
+<td><code>               86400              </code></td>
+<td>This parameter specifies the time interval in seconds at which all metric data stored in the database must be cleared.</td>
+</tr>
+</tbody>
+</table></p>
+</li>
+<li>
+<p>JVM metrics of which the log level is set to
+    <code class="codehilite">OFF</code> are not measured by default. If you need
+    to monitor one or more of them, add the relevant metric name(s)
+    under the <code class="codehilite">wso2.metrics:</code> =>
+    <code class="codehilite">levels</code> subsection as shown in the extract
+    below. As shown below, you also need to mention log4j mode in which
+    the metrics need to be monitored (i.e., <code class="codehilite">OFF</code> ,
+    <code class="codehilite">INFO</code> , <code class="codehilite">DEBUG</code> ,
+    <code class="codehilite">TRACE</code> , or <code class="codehilite">ALL</code> ).</p>
+<pre class="codehilite"><code class="language-xml linenums">        wso2.metrics:
+         # Enable Metrics
+           enabled: true
+            jmx:
+              # Register MBean when initializing Metrics
+            registerMBean: true
+              # MBean Name
+            name: org.wso2.carbon:type=Metrics
+            # Metrics Levels are organized from most specific to least:
+            # OFF (most specific, no metrics)
+            # INFO
+            # DEBUG
+            # TRACE (least specific, a lot of data)
+            # ALL (least specific, all data)
+         levels:
+              # The root level configured for Metrics
+            rootLevel: INFO
+              # Metric Levels
+            levels:
+                 jvm.buffers: 'OFF'
+                 jvm.class-loading: INFO
+                 jvm.gc: DEBUG
+                 jvm.memory: INFO</code></pre>
+
+<details class="info"><summary>Click here to view the default metric levels supported...</summary><ul>
+<li><strong>Class loading</strong></li>
+</ul>
+<pre class="codehilite"><code class="linenums">Property</code></pre>
+
+
+<ul>
+<li><strong>Garbage collector</strong></li>
+</ul>
+<pre class="codehilite"><code class="linenums">Property</code></pre>
+
+
+<ul>
+<li><strong>Memory</strong></li>
+</ul>
+<pre class="codehilite"><code class="linenums">Property</code></pre>
+
+
+<ul>
+<li><strong>Operating system load</strong></li>
+</ul>
+<pre class="codehilite"><code class="linenums">Property</code></pre>
+
+
+<ul>
+<li><strong>Threads</strong></li>
+</ul>
+<pre class="codehilite"><code class="linenums">| Property                                                               | Default Level                                | Description                                                                                                                                                                                                     |
+|------------------------------------------------------------------------|----------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `                   jvm.threads.count                  `               | `                   Debug                  ` | The gauge for showing the number of active and idle threads currently available in the JVM thread pool.                                                                                                         |
+| `                   jvm.threads.daemon.count                  `        | `                   Debug                  ` | The gauge for showing the number of active daemon threads currently available in the JVM thread pool.                                                                                                           |
+| `                   jvm.threads.blocked.count                  `       | `                   OFF                  `   | The gauge for showing the number of threads that are currently blocked in the JVM thread pool.                                                                                                                  |
+| `                   jvm.threads.deadlock.count                  `      | `                   OFF                  `   | The gauge for showing the number of threads that are currently deadlocked in the JVM thread pool.                                                                                                               |
+| `                   jvm.threads.new.count                  `           | `                   OFF                  `   | The gauge for showing the number of new threads generated in the JVM thread pool.                                                                                                                               |
+| `                   jvm.threads.runnable.count                  `      | `                   OFF                  `   | The gauge for showing the number of runnable threads currently available in the JVM thread pool.                                                                                                                |
+| `                   jvm.threads.terminated.count                  `    | `                   OFF                  `   | The gauge for showing the number of threads terminated from the JVM thread pool since user started running the WSO2 API Manager instance.                                                                       |
+| `                   jvm.threads.timed_waiting.count                  ` | `                   OFF                  `   | The gauge for showing the number of threads in the Timed\_Waiting state.                                                                                                                                        |
+| `                   jvm.threads.waiting.count                  `       | `                   OFF                  `   | The gauge for showing the number of threads in the Waiting state in the JVM thread pool. One or more other threads are required to perform certain actions before these threads can proceed with their actions. |</code></pre>
+
+
+<ul>
+<li><strong>File descriptor details</strong></li>
+</ul>
+<pre class="codehilite"><code class="linenums">Property</code></pre>
+
+
+<ul>
+<li><strong>Swap space</strong></li>
+</ul>
+<pre class="codehilite"><code class="linenums">Property</code></pre>
+
+
+</details>
+</li>
+</ol>
+<p><strong>Configuring Siddhi application metrics</strong></p>
+<p>To enable Siddhi application level metrics for a Siddhi application, you
+need to add the <code class="codehilite">@app:statistics</code> annotation bellow the
+Siddhi application name in the Siddhi file as shown in the example
+below.</p>
+<pre class="codehilite"><code class="language-sql linenums">    @App:name('TestMetrics')
+    @app:statistics(reporter = 'jdbc')
+    define stream TestStream (message string);</code></pre>
+
+<p>The following are the metrics measured for a Siddhi application.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>The default level after enabling metrics is <code class="codehilite">INFO</code> for
+all the meytrics listed in the following table.</p>
+<p><table>
+<thead>
+<tr class="header">
+<th>Metric</th>
+<th>Components to which the metric is applied</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Latency</td>
+<td><ul>
+<li>Windows (per window.find and window.add)</li>
+<li>Mappers (per sink mapper, source mapper)</li>
+<li>Queries (per query)</li>
+<li>Tables (per table insert, find, update, updateOrInsert, delete, contains)</li>
+</ul></td>
+</tr>
+<tr class="even">
+<td>Throughput</td>
+<td><ul>
+<li>Windows (per window.find and window.add)</li>
+<li>Mappers (per sink mapper, source mapper)</li>
+<li>Queries (per query)</li>
+<li>Tables (per table insert, find, update, updateOrInsert, delete, contains )</li>
+</ul></td>
+</tr>
+<tr class="odd">
+<td>Memory</td>
+<td>Queries (per query)</td>
+</tr>
+<tr class="even">
+<td>Buffered Events Count</td>
+<td><br />
+</td>
+</tr>
+<tr class="odd">
+<td>Number of events at disruptor</td>
+<td>Streams (per stream)</td>
+</tr>
+<tr class="even">
+<td>Number of events produced/received after restart</td>
+<td><ul>
+<li>Sources (per source)</li>
+<li>Sinks (per sink)</li>
+</ul></td>
+</tr>
+</tbody>
+</table></p>
+</div>
+<h3 id="configuring-cluster-credentials">Configuring cluster credentials<a class="headerlink" href="#configuring-cluster-credentials" title="Permanent link">&para;</a></h3>
+<p>In order to access the nodes in a cluster and derive statistics, you
+need to maintain and share a user name and a password for each node in a
+SI cluster. This user name and password must be specified in the
+<code class="codehilite">&lt;DASHBOARD_HOME&gt;/conf/server/deployment.yaml</code> file. If you
+want to secure sensitive information such as the user name and the
+password, you can encrypt them via WSO2 Secure Vault.</p>
+<ol>
+<li>
+<p>To specify the user name and the password to access a node, define
+    them under the <code class="codehilite">wso2.status.dashboard</code> section
+    as shown in the following example.</p>
+<pre class="codehilite"><code class="language-xml linenums">    wso2.status.dashboard:
+        workerAccessCredentials:
+            username: 'admin'
+            password: 'admin'</code></pre>
+
+</li>
+<li>
+<p>To encrypt the user name and the password you defined, define aliases for them as described in <a href="../protecting-sensitive-data-via-the-secure-vault/">Protecting Sensitive Data via the Secure Vault</a>.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>This functionality is currently supported only for single tenant environments.</p>
+</div>
+</li>
+</ol>
+<h3 id="configuring-permissions">Configuring permissions<a class="headerlink" href="#configuring-permissions" title="Permanent link">&para;</a></h3>
+<p>The following are the three levels of permissions that can be granted
+for the users of the Status Dashboard.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Permission Level</th>
+<th>Granted permissions</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>             SysAdmin            </code></td>
+<td><ul>
+<li>Enabling/disabling metrics</li>
+<li>Adding workers</li>
+<li>Deleting workers</li>
+<li>Viewing workers</li>
+</ul></td>
+</tr>
+<tr class="even">
+<td><code>             Developers            </code></td>
+<td><ul>
+<li>Adding workers</li>
+<li>Deleting workers</li>
+<li>Viewing workers</li>
+</ul></td>
+</tr>
+<tr class="odd">
+<td><code>             Viewers            </code></td>
+<td>Viewing workers</td>
+</tr>
+</tbody>
+</table>
+
+<p>The <code class="codehilite">admin user</code> in the userstore is assigned the
+<code class="codehilite">SysAdmin</code> permission level by default.</p>
+<p>To assign different permission levels to different roles, you can list
+the required roles under the relevant permission level in the
+<code class="codehilite">wso2.status.dashboard</code> section of the
+<code class="codehilite">DASHBOARD_HOME&gt;/conf/dashboard/deployment.yaml</code> file as shown
+in the extract below.</p>
+<pre class="codehilite"><code class="language-xml linenums">    wso2.status.dashboard:
+      sysAdminRoles:
+        - role_1
+      developerRoles:
+        - role_2
+      viewerRoles:
+        - role_3</code></pre>
+
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>The display name of the roles given in the configuration must be present in the user store. To configure user store check, <a href="../user-management/">User Management</a>.</p>
+</div>
+<h2 id="downloading-and-accessing-the-status-dashboard">Downloading and accessing the Status Dashboard<a class="headerlink" href="#downloading-and-accessing-the-status-dashboard" title="Permanent link">&para;</a></h2>
+<p>To download and access the Status Dashboard, follow the procedure below:</p>
+<ol>
+<li>
+<p>Download the Status Dashboard from TODO.</p>
+</li>
+<li>
+<p>Unzip the downloaded fine. The unzipped directory is referred to as <code class="codehilite">&lt;DASHBOARD_HOME&gt;</code> for the rest iof this section.</p>
+</li>
+<li>
+<p>In the terminal, navigate to the <code class="codehilite">&lt;DASHBOARD_HOME&gt;/bin</code> directory and issue the following command.</p>
+<ul>
+<li>For Windows: <code class="codehilite">dashboard.bat</code></li>
+<li>For Linux : <code class="codehilite">./dashboard.sh</code></li>
+</ul>
+</li>
+<li>
+<p>Access the Status Dashboard via the following URL format.</p>
+<p><code class="codehilite">https://localhost:&lt;DASHBOARD_PORT&gt;/si-status-dashboard</code></p>
+<p>e.g., <code class="codehilite">https://0.0.0.0:9643/si-status-dashboard</code></p>
+</li>
+</ol>
+<p>After login this opens  the Status Dashboard with the nodes that you have already added as shown in the example below.</p>
+<p><img alt="Status Dashboard Overview" src="../../images/monitoring-the-streaming-integrator/status_dashboard_overview.png" /></p>
+<p>If no nodes are displayed, add the nodes for which you wnt to view statistics by following the steps in <a href="#adding-a-node-to-the-dashboard">Adding a node to the dashboard</a>.</p>
+<h2 id="node-overview">Node overview<a class="headerlink" href="#node-overview" title="Permanent link">&para;</a></h2>
+<p>Once you login to the status dashboard, the nodes that are already added
+to the Status Dashboard are displayed as shown in the following example:</p>
+<h3 id="adding-a-node-to-the-dashboard">Adding a node to the dashboard<a class="headerlink" href="#adding-a-node-to-the-dashboard" title="Permanent link">&para;</a></h3>
+<p>If no nodes are displayed, you can add the nodes for which you want to
+view the status by following the procedure below:</p>
+<ol>
+<li>
+<p>Click <strong>ADD NEW NODE</strong>.</p>
+<p><img alt="Add New Node" src="../../images/monitoring-the-streaming-integrator/add-new-node-button.png" /></p>
+<p>This opens the following dialog box.</p>
+<p><img alt="Add New Node dialog box" src="../../images/monitoring-the-streaming-integrator/add-new-node.png" /></p>
+</li>
+<li>
+<p>Enter the following information in the dialog box and click <strong>ADD  NODE</strong> to add a gadget for the required node in the <strong>Node Overview</strong> page.</p>
+<ol>
+<li>
+<p>In the <strong>Host</strong> parameter, enter the host ID of the node you want to add.</p>
+</li>
+<li>
+<p>In the <strong>Port</strong> parameter, enter the port number of the node you want to add.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>If the node you added is currently unreachable, the following dialog box is displayed.</p>
+<p><img alt="Unreachable Node" src="../../images/monitoring-the-streaming-integrator/unreachable-node.png" /></p>
+<p>Click either <strong>WORKER</strong> or <strong>MANAGER.</strong> If you click <strong>WORKER</strong>, the node is displayed under <strong>Never Reached</strong>. If you click <strong>Manager</strong> , the node is displayed under <strong>Distributed Deployments</strong> as shown below.</p>
+<p><img alt="Unreachable nodes" src="../../images/monitoring-the-streaming-integrator/distributed-deployment-with-unreachable-manager.png" /></p>
+</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>The following basic details are displayed for each node.</p>
+<ul>
+<li><strong>CPU Usage</strong> : The CPU resources consumed by the Streaming Integrator node out of the
+    available CPU resources in the machine in which it is deployed is
+    expressed as a percentage.</li>
+<li><strong>Memory Usage</strong> : The memory consumed by the node as a percentage
+    of the total memory available in the system.</li>
+<li><strong>Load Average</strong> :</li>
+<li><strong>Siddhi Apps</strong> : The total number of Siddhi applications deployed
+    in the node.</li>
+</ul>
+</div>
+<h3 id="viewing-status-details">Viewing status details<a class="headerlink" href="#viewing-status-details" title="Permanent link">&para;</a></h3>
+<p>The following is a list of sections displayed in the <strong>Node Overview</strong>
+page to provide information relating to the status of the nodes.</p>
+<p><strong>Distributed Deployments</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>View (Example)</td>
+<td><div class="content-wrapper">
+<p><img src="../../images/monitoring-the-streaming-integrator/distributed-deployment-overview.png" /></p>
+</div></td>
+</tr>
+<tr class="even">
+<td>Description</td>
+<td><div class="content-wrapper">
+<p>The nodes that are connected in the distributed deployment are displayed under the relevant group ID in the status dashboard (e.g., <code>               sp              </code> in the above example). Both managers and workers are displayed under separate labels.</p>
+<p><strong>Managers</strong> : The active manager node in the cluster is indicated by a green dot that is displayed with the host name and the port of the node. Similarly, a grey dot is displayed for passive manager nodes in the cluster.</p>
+<p><strong>Workers</strong> : When you add an active manager node, it automatically retrieves the worker node details that are connected with that particular deployment. If the worker node is already registered in the Status Dashboard, you can view the metrics of that node as follows:<br />
+<img src="../../images/monitoring-the-streaming-integrator/worker-metrics.png" /></p>
+</div></td>
+</tr>
+<tr class="odd">
+<td>Purpose</td>
+<td><ul>
+<li>To determine whether the request load is efficiently allocated between the nodes of a cluster.</li>
+<li>To determine whether the cluster has sufficient resources to handle the load of requests.</li>
+<li>To identify the nodes connected with the particular deployment.</li>
+</ul></td>
+</tr>
+<tr class="even">
+<td>Recommended Action</td>
+<td><ul>
+<li>If there is a disparity in the CPU usage and the memory consumption of the nodes, redeploy the Siddhi applications between the nodes to balance out the workload.</li>
+<li>If the CPU and memory are fully used and and the request load is increasing, allocate more resources (e.g., more memory, more nodes, etc.).</li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Clustered nodes</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>View (Example)</td>
+<td><div class="content-wrapper">
+<p><img src="../../images/monitoring-the-streaming-integrator/ha-active-passive-nodes.png" /></p>
+</div></td>
+</tr>
+<tr class="even">
+<td>Description</td>
+<td><p>The nodes that are clustered together in a high-availability deployment are displayed under the relevant cluster ID in the Status Dashboard (e.g., under <code>              WSO2_A_1             </code> in the above example). The active node in the cluster (i.e., the active worker in a minimum HA cluster or the active manager in a fully distributed cluster) are indicated by a green dot that is displayed with the hostname and the port of the node. Similarly, a grey dot is displayed for passive nodes in the cluster.</p></td>
+</tr>
+<tr class="odd">
+<td>Purpose</td>
+<td><p>This allows you to determine the following:</p>
+<ul>
+<li>Whether the request load is efficiently allocated between the nodes of a cluster.</li>
+<li>Whether the cluster has sufficient resources to handle the load of requests.</li>
+</ul></td>
+</tr>
+<tr class="even">
+<td>Recommended Action</td>
+<td><ul>
+<li>If there is a disparity in the CPU usage and the memory consumption of the nodes, redeploy the Siddhi applications between the nodes to balance out the workload.</li>
+<li>If the CPU and memory are fully used and and the request load is increasing, allocate more resources (e.g., more memory, more nodes, etc.).</li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Single nodes</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>View (Example)</td>
+<td><div class="content-wrapper">
+<p><img src="../../images/monitoring-the-streaming-integrator/single-nodes.png" /></p>
+</div></td>
+</tr>
+<tr class="even">
+<td>Description</td>
+<td>This section displays statistics for Streaming Integrator servers that operate as single node setups.</td>
+</tr>
+<tr class="odd">
+<td>Purpose</td>
+<td>This allows you to compare the performance of single nodes agaisnt each other.</td>
+</tr>
+<tr class="even">
+<td>Recommended Action</td>
+<td><ul>
+<li>If the CPU usage of a node is too high, investigate the causes for it and take corrective action (e.g., undeploy unnecessary Siddhi applications).</li>
+<li>If any underutilized single nodes are identified, you can either deploy more Siddhi applications thatare currrently deployed in other nodes with a high request load. Alternatively, you can redeploy the Siddhi applications of the underutilized node to other nodes, and then shut it down.</li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Nodes that cannot be reached</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>View (Example)</td>
+<td><div class="content-wrapper">
+<p><img src="../../images/monitoring-the-streaming-integrator/unreachable-nodes.png" /></p>
+</div></td>
+</tr>
+<tr class="even">
+<td>Description</td>
+<td>When a node is newly added to the Status dashboard and it is unavailable, it is displayed as shown in the above examples.</td>
+</tr>
+<tr class="odd">
+<td>Purpose</td>
+<td>This allows you to identify nodes that cannot be reached at specific hosts and ports.</td>
+</tr>
+<tr class="even">
+<td>Recommended Action</td>
+<td><ul>
+<li>Check whether the host and port of the node you added is correct.</li>
+<li>Check whether any authentication errors have occured for the node.</li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Nodes that are currently unavailable</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>View (Example)</td>
+<td><div class="content-wrapper">
+<p><img src="../../images/monitoring-the-streaming-integrator/currently-unreachable-nodes.png" /></p>
+</div></td>
+</tr>
+<tr class="even">
+<td>Description</td>
+<td>When a node that could be viewed previously is no longer available, its status is displayed in red as shown in the example above. The status displayed for such nodes is applicable for the last time at which the node had been reachable.</td>
+</tr>
+<tr class="odd">
+<td>Purpose</td>
+<td>This allows you to identify previously available nodes that have become unreachable.</td>
+</tr>
+<tr class="even">
+<td>Recommended Action</td>
+<td><ul>
+<li>Check whether the node is inactive.</li>
+<li>Check whether any authentication errors have occured for the node.</li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Nodes for which metrics is disabled</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>View (Example)</td>
+<td><div class="content-wrapper">
+<p><img src="../../images/monitoring-the-streaming-integrator/nodes-with-metrics-disabled.png" /></p>
+</div></td>
+</tr>
+<tr class="even">
+<td>Description</td>
+<td>When a node for which metrics is disabled is added to the Status dashboard, you can view the number of active and inactive Siddhi applications deployed in it. However, you cannot view the CPU usage, memory usage and the load average.</td>
+</tr>
+<tr class="odd">
+<td>Purpose</td>
+<td>This allows you to identify nodes for which metrics is not enabled.</td>
+</tr>
+<tr class="even">
+<td>Recommended Action</td>
+<td>Enable metrics for the required nodes to view statistics about their status in the Status Dashboard. For instructions to enable metrics, see <a href="Monitoring-Stream-Processor_112391023.html#MonitoringStreamProcessor-Confi">Monitoring the Stream Processor - Configuring the Status Dashboard</a> .</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Nodes with JMX reporting disabled</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>View (Example)</td>
+<td><div class="content-wrapper">
+<p><img src="../../images/monitoring-the-streaming-integrator/jmx-reporter-disabled.png" /></p>
+</div></td>
+</tr>
+<tr class="even">
+<td>Description</td>
+<td>When a node with JMX reporting disabled is added to the Status dashboard, you can view the number of active and inactive Siddhi applications deployed in it. However, you cannot view the CPU usage, memory usage and the load average.</td>
+</tr>
+<tr class="odd">
+<td>Purpose</td>
+<td>This allows you to identify nodes for which JMX reporting is disabled</td>
+</tr>
+<tr class="even">
+<td>Recommended Action</td>
+<td>Enable JMX reporting for the required nodes to view statistics about their status in the Status Dashboard. For instructions to enable JMX reporting, see <a href="Monitoring-Stream-Processor_112391023.html#MonitoringStreamProcessor-Confi">Monitoring the Stream Processor - Configuring the Status Dashboard</a> .</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Statistics trends</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>View (Example)</td>
+<td><div class="content-wrapper">
+<p><img src="../../images/monitoring-the-streaming-integrator/statistics-trends.png" /></p>
+</div></td>
+</tr>
+<tr class="even">
+<td>Description</td>
+<td>This dispalys the change that has taken taken place in the CPU usage, memory usage and the load average of nodes since the status was last viewed in the status dashboard. Positive changes are indicated in green (e.g., a decrease in the CPU usage in the above example), and egative changes are indicated in red (an increase in the memory usage and the load average in the above example).</td>
+</tr>
+<tr class="odd">
+<td>Purpose</td>
+<td>This allows you to view a summary of the performance trends of your Streaming Integrator clusters and single nodes.</td>
+</tr>
+<tr class="even">
+<td>Recommended Action</td>
+<td>Based on the performance trend observed, add more resources to your Streaming Integrator clusters/single nodes to handle more events, or shutdown one or more nodes if there is excess resources.</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="viewing-node-specific-pages">Viewing node-specific pages<a class="headerlink" href="#viewing-node-specific-pages" title="Permanent link">&para;</a></h2>
+<p>When you open the Status Dashboard, the <a href="#node-overview">Node Overview</a> page is displayed by default. To view information specific to a selected worker node, click on the relevant
+widget. This opens a separate page for the worker node as shown in the example below.</p>
+<p><img alt="Worker-specific Details" src="../../images/monitoring-the-streaming-integrator/worker-specific-details.png" /></p>
+<h3 id="status-indicators">Status indicators<a class="headerlink" href="#status-indicators" title="Permanent link">&para;</a></h3>
+<p>The following gadgets can be viewed for the selected worker.</p>
+<p><strong>Server General Details</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>View (Example)</td>
+<td><div class="content-wrapper">
+<p><img src="../../images/monitoring-the-streaming-integrator/server-general-details.png" /></p>
+</div></td>
+</tr>
+<tr class="even">
+<td>Description</td>
+<td>This gadget displays general information relating to the selected worker node.</td>
+</tr>
+<tr class="odd">
+<td>Purpose</td>
+<td>This allows you to understand the distribution of nodes in terms of the location, the time zone, operating system used etc., and to locate them.</td>
+</tr>
+<tr class="even">
+<td>Recommended Action</td>
+<td>In a distributed set up, you can use this information to evaluate the clustered setup and make changes to optimize the benefits of deploying the Streaming Integrator as a cluster (e.g., making them physically available in different locations to minimize the risk of all the nodes failing at the same time etc.).</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>CPU Usage</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>View (Example)</td>
+<td><div class="content-wrapper">
+<p><img src="../../images/monitoring-the-streaming-integrator/cpu-usage.png" /></p>
+<p><br />
+</p>
+</div></td>
+</tr>
+<tr class="even">
+<td>Description</td>
+<td>This displays the CPU usage of the selected node.</td>
+</tr>
+<tr class="odd">
+<td>Purpose</td>
+<td>This allows you to observe the CPU usage of a selected node over time.</td>
+</tr>
+<tr class="even">
+<td>Recommended Action</td>
+<td><ul>
+<li>Identify sudden slumps in the CPU usage, and investigate the reasons (e.g., such as authentication errors that result in requests not reaching the Streaming Integrator server).</li>
+<li>Identify continuous increases in the CPU usage and check whether the node is overloaded. If so, reallocate some of the Siddhi applications deployed in the node.</li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Memory Used</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>View (Example)</td>
+<td><div class="content-wrapper">
+<p><br />
+</p>
+<p><img src="../../images/monitoring-the-streaming-integrator/memory-used.png" /></p>
+</div></td>
+</tr>
+<tr class="even">
+<td>Description</td>
+<td>This displays the memory usage of the selected node.</td>
+</tr>
+<tr class="odd">
+<td>Purpose</td>
+<td>This allows you to observe the memory usage of a selected node over time.</td>
+</tr>
+<tr class="even">
+<td>Recommended Action</td>
+<td><ul>
+<li>Identify sudden slumps in the memory usage, and investigate the reasons (e.g., a reduction in the requests recived due to system failure).</li>
+<li>If there are continous increases in the memory usage, check whether there is an increase in the requests handled, and whether you have enough memory resources to handle the increased demand. If not, add more memory to the node or reallocate some of the Siddhi applications deployed in the node to other nodes.</li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>System Load Average</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>View (Example)</td>
+<td><div class="content-wrapper">
+<p><br />
+</p>
+<p><img src="../../images/monitoring-the-streaming-integrator/system-load-average.png" /></p>
+</div></td>
+</tr>
+<tr class="even">
+<td>Description</td>
+<td>This displays the system load average for the selected node.</td>
+</tr>
+<tr class="odd">
+<td>Purpose</td>
+<td>This allows you to observe the system load of the node over time.</td>
+</tr>
+<tr class="even">
+<td>Recommended Action</td>
+<td><p>Observe the trends of the node's system load, and adjust the allocation of resources (e.g., memory) and work load (i.e., the number of Siddhi applications deployed) accordingly.</p></td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Overall Throughput</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>View (Example)</td>
+<td><div class="content-wrapper">
+<p><br />
+</p>
+<p><img src="../../images/monitoring-the-streaming-integrator/overall-throughput.png" /></p>
+</div></td>
+</tr>
+<tr class="even">
+<td>Description</td>
+<td>This displays the overall throughput of the selected node.</td>
+</tr>
+<tr class="odd">
+<td>Purpose</td>
+<td>This allows you to assess the performance of the selected node in terms of the throughput over time.</td>
+</tr>
+<tr class="even">
+<td>Recommended Action</td>
+<td><ul>
+<li>Compare the throughput of the node against that of other nodes with the same amount of CPU and memory resources. If there are significant variations, investigate the causes (e.g., the differences in the number of requests received by different Siddhi applications deployed in the nodes).</li>
+<li>Observe changes in the throughput over time. If there are significant variances, investigate the causes (e.g., whether the node has been unavaialable to receive requests during a given time).</li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Siddhi Applications</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>View (Example)</td>
+<td><div class="content-wrapper">
+<p><br />
+</p>
+<p><img src="../../images/monitoring-the-streaming-integrator/siddhi-applications.png" /></p>
+</div></td>
+</tr>
+<tr class="even">
+<td>Description</td>
+<td><p>This table displays the complete list of Siddhi applications deployed in the selected node. The status is displayed in green for active Siddhi applications, and in red for inactive Siddhi applications. In addition, the following is displayed for each Siddhi application:</p>
+<ul>
+<li><strong>Age</strong> : The age of the Siddhi application in milliseconds.</li>
+<li><strong>Latency</strong> : The time (in milliseconds) taken by the Siddhi application to process one request.</li>
+<li><strong>Throughput:</strong> The number of requests processed by the Siddhi application since it has been active.</li>
+<li><strong>Memory</strong> : The amount of memory consumed by the Siddhi application during its current active session, expressed in milliseconds.</li>
+</ul></td>
+</tr>
+<tr class="odd">
+<td>Purpose</td>
+<td>This allows you to assess the performance of each Siddhi application deployed in the selected node.</td>
+</tr>
+<tr class="even">
+<td>Recommended Action</td>
+<td><ul>
+<li>Identify the inactive Siddhi applications that are required to be active and take the appropriate corrective action.</li>
+<li>Identify Siddhi applications that consume too much memory, and identify ways in which the memory usage can be optimized (e.g., use incremental processing).</li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="viewing-worker-history">Viewing worker history<a class="headerlink" href="#viewing-worker-history" title="Permanent link">&para;</a></h2>
+<p>This section explains how to view statistics relating to the performance of a selected node for a specific time interval.</p>
+<ol>
+<li>
+<p>Log in to the Status Dashboard.</p>
+</li>
+<li>
+<p>In the <strong>Node Overview</strong> page, click on the required node to view information specific to that node.</p>
+</li>
+<li>
+<p>In the page displayed with node-specific information, click one of the following gadgets to open the <strong>Metrics</strong> page.</p>
+<ul>
+<li>
+<p><strong>CPU Usage</strong></p>
+</li>
+<li>
+<p><strong>Memory Used</strong></p>
+</li>
+<li>
+<p><strong>System Load Average</strong></p>
+</li>
+<li>
+<p><strong>Overall Throughput</strong></p>
+</li>
+</ul>
+</li>
+<li>
+<p>In the <strong>Metrics</strong> page, click the required time interval. Then the page displays statistics relating to the performance of the selected node applicable to that time period.</p>
+<p><img alt="Select Time Interval" src="../../images/monitoring-the-streaming-integrator/select-time-interval.png" /></p>
+</li>
+<li>
+<p>If you want to view more details, click <strong>More Details</strong>.</p>
+<p><img alt="More Details About Node Performance" src="../../images/monitoring-the-streaming-integrator/more-details-node-performance.png" /></p>
+<p>As a result, the following additional information is displayed for the node for the selected time period.</p>
+<ul>
+<li>
+<p><strong>CPU Usage</strong></p>
+<p><img alt="CPU Usage" src="../../images/monitoring-the-streaming-integrator/worker-cpu-usage.png" /></p>
+</li>
+<li>
+<p><strong>JVM OS as CPU</strong></p>
+<p><img alt="JVM OS as CPU" src="../../images/monitoring-the-streaming-integrator/jvm-os-cpu.png" /></p>
+</li>
+<li>
+<p><strong>JVM Physical Memory</strong></p>
+<p><img alt="JVM Physical Memory" src="../../images/monitoring-the-streaming-integrator/jvm-physical-memory.png" /></p>
+</li>
+<li>
+<p><strong>JVM Threads</strong></p>
+<p><img alt="JVM Threads" src="../../images/monitoring-the-streaming-integrator/jvm-threads.png" /></p>
+</li>
+<li>
+<p><strong>JVM Swap Space</strong></p>
+<p><img alt="JVM Swap Space" src="../../images/monitoring-the-streaming-integrator/jvm-swap-space.png" /></p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="viewing-statistics-for-siddhi-applications">Viewing statistics for Siddhi applications<a class="headerlink" href="#viewing-statistics-for-siddhi-applications" title="Permanent link">&para;</a></h2>
+<p>When you open the WSO2 Status Dashboard, the <a href="#node-overview">Node Overview</a> page is displayed by default.</p>
+<ol>
+<li>
+<p>To view information specific to a selected worker node, click on the relevant gadget. This opens the <a href="#viewing-node-specific-pages">page specific to the worker</a>.</p>
+</li>
+<li>
+<p>To view information specific to a Siddhi application deployed in the Siddhi node, click on the relevant Siddhi application in the Siddhi Applications table. This opens a page with information specific to the selected Siddhi application as shown in the example below.</p>
+<p><img alt="Siddhi Application Statistics" src="../../images/monitoring-the-streaming-integrator/siddhi-application-statistics.png" /></p>
+</li>
+</ol>
+<p>The following statistics can be viewed for an individual Siddhi Application.</p>
+<p><strong>Latency</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>View (Example)</td>
+<td><div class="content-wrapper">
+<p><img src="../../images/monitoring-the-streaming-integrator/latency.png" /></p>
+</div></td>
+</tr>
+<tr class="even">
+<td>Description</td>
+<td>This displays the latency of the selected Siddhi application. Latency is the time taken to complete processing a single event in the event flow.</td>
+</tr>
+<tr class="odd">
+<td>Purpose</td>
+<td>This allows you to assess the performance of the selected Siddhi application.</td>
+</tr>
+<tr class="even">
+<td>Recommended Action</td>
+<td>If the latency of the Siddhi application is too high, check the Siddhi queries and rewrite them to optimise performance.</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Overall Throughput</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>View (Example)</td>
+<td><div class="content-wrapper">
+<p><img src="../../images/monitoring-the-streaming-integrator/siddhi-application-overall-throughput.png" /></p>
+</div></td>
+</tr>
+<tr class="even">
+<td>Description</td>
+<td>This shows the overall throughput of a selected Siddhi application over time.</td>
+</tr>
+<tr class="odd">
+<td>Purpose</td>
+<td>This allows you to assess the performance of the selected Siddhi application.</td>
+</tr>
+<tr class="even">
+<td>Recommended Action</td>
+<td><ul>
+<li>If the throughput of a Siddhi application varies greatly overtime, investigate reasons for any slumps in the throughput (e.g., errors in the deployment of the application).</li>
+<li>If the throughput of the Siddhi application is lower than expected, investigate reasons, and take corrective action to improve the throughput (e.g., check the Siddhi queries in the application and rewrite them with best practices to achieve greater efficiency in the processing of events.</li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Memory Used</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>View (Example)</td>
+<td><div class="content-wrapper">
+<p><img src="../../images/monitoring-the-streaming-integrator/siddhi-application-memory-used.png" /></p>
+</div></td>
+</tr>
+<tr class="even">
+<td>Description</td>
+<td>This displays the memory usage (In MB) of a selected Siddhi application over time.</td>
+</tr>
+<tr class="odd">
+<td>Purpose</td>
+<td>This allows you to monitor the memory consumption of individual Siddhi applications.</td>
+</tr>
+<tr class="even">
+<td>Recommended Action</td>
+<td><p>If there are major fluctuations in the memory consumption of a Siddhi application, investigate the reasons (e.g., Whether the Siddhi application has been inactive at any point of time).</p></td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Code View</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>View (Example)</td>
+<td><div class="content-wrapper">
+<p><img src="../../images/monitoring-the-streaming-integrator/siddhi-application-code-view.png" /></p>
+</div></td>
+</tr>
+<tr class="even">
+<td>Description</td>
+<td>This displays the queries defined in the Siddhi file of the application.</td>
+</tr>
+<tr class="odd">
+<td>Purpose</td>
+<td>This allows you to check the queries of the Siddhi application if any further investigations are needed based on the observations of its latency, throughput and the memory consumption.</td>
+</tr>
+<tr class="even">
+<td>Recommended Action</td>
+<td><p>Edit the Siddhi file if any changes that can improve the performance of the Siddhi application are identified.<br />
+For detailed instructions to write a Siddhi application, see <a href="../develop/creating-a-Siddhi-Application.md">Creating a Siddhi Application</a>.<br />
+For detailed information about the Siddhi logic, see the <a href="https://siddhi-io.github.io/siddhi/documentation/siddhi-4.x/query-guide-4.x/">Siddhi Query Guide</a>.</p>
+<p><br />
+</p></td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Design View</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>View (Example)</td>
+<td><div class="content-wrapper">
+<p><img src="../../images/monitoring-the-streaming-integrator/design-view.png" /></p>
+</div></td>
+</tr>
+<tr class="even">
+<td>Description</td>
+<td>This displays the graphical view for queries defined in the Siddhi file of the application.</td>
+</tr>
+<tr class="odd">
+<td>Purpose</td>
+<td>This allows you to check the flow of the queries of the Siddhi application in the graphical way.</td>
+</tr>
+<tr class="even">
+<td>Recommended Action</td>
+<td>Edit the Siddhi file if any changes that can improve the performance of the Siddhi application are identified.</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Siddhi App Component Statistics</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>View (Example)</td>
+<td><div class="content-wrapper">
+<p><img src="../../images/monitoring-the-streaming-integrator/siddhi-application-component-statistics.png" /></p>
+</div></td>
+</tr>
+<tr class="even">
+<td>Description</td>
+<td><p>This table displays performance statistics related to dfferent components within a selected Siddhi application (e.g., queries). The columns displayed are as follows:</p>
+<ul>
+<li><strong>Type</strong> : The type of the Siddhi application component to which the information displayed in the row applies. The component type can be queries, streams, tables, windows and aggregations. For more information, see <a href="https://docs.wso2.com/display/SP440/Siddhi+Application+Overview#SiddhiApplicationOverview-Components">Siddhi Application Overview - Common components of a Siddhi application</a> .</li>
+<li><strong>Name</strong> : The name of the Siddhi component within the application to which the information displayed in the row apply.</li>
+<li><strong>Metric Type</strong> : The metric type for which the statistics are displayed. This can be either the latency (in milliseconds), throughput the number of events per second), or the amount of memory consumed (in bytes). The metric types based on which the performance of a Siddhi component is measured depends on the component type.</li>
+<li><strong>Attribute</strong> : The attribute to which the given value applies.</li>
+<li><strong>Value</strong> : The value for the metric type given in the row.</li>
+</ul></td>
+</tr>
+<tr class="odd">
+<td>Purpose</td>
+<td>This allows you to carry out a detailed analysis of the performance of a selected Siddhi application and identify components that have a negative impact on the overall performance of the Siddhi application.</td>
+</tr>
+<tr class="even">
+<td>Recommended Action</td>
+<td>Identify the componets in a Siddhi application that have a negative impact on the performance, and rewrite them to improve performance. To understand Siddhi concepts in order to rewrite the components, see the <a href="https://siddhi-io.github.io/siddhi/documentation/siddhi-4.x/query-guide-4.x/">Siddhi Query Guide</a> .</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="viewing-statistics-for-parent-siddhi-applications">Viewing statistics for parent Siddhi applications<a class="headerlink" href="#viewing-statistics-for-parent-siddhi-applications" title="Permanent link">&para;</a></h2>
+<p>When you open the WSO2 Status Dashboard, the <a href="#node-overview">Node Overview</a> page is displayed by default. To view information specific to an active manager, click on the required active manager node in the <strong>Distributed Deployments</strong> section. This opens a page with parent Siddhi applications deployed in that manager node as shown in the example below.</p>
+<p><img alt="Parent Siddhi Applications" src="../../images/monitoring-the-streaming-integrator/parent-siddhi-applications.png" /></p>
+<p>This page provides a summary of information relating to each parent Siddhi application as described in the table below. If a parent Siddhi application is active, it is indicated with a green dot that appears before the name of the Siddhi application. Similarly, an orange dot is displayed for inactive parent Siddhi applications.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Detail</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Groups</strong></td>
+<td>This indicates the number of execution groups of the parent Siddhi application. In the above example, the <code>             Testing            </code> Siddhi application has only one execution group.</td>
+</tr>
+<tr class="even">
+<td><strong>Child Apps</strong></td>
+<td>This indicates the number of child applications of the parent Siddhi application. The number of active child applications is displayed in green, and the number of inactive child applications are displayed in red.</td>
+</tr>
+<tr class="odd">
+<td><strong>Worker Nodes</strong></td>
+<td><p>The number displayed in yellow indicates the total number of worker nodes in the resource cluster. In the above example, there are two worker nodes in the cluster.</p>
+<p>The number displayed in green indicates the number of worker nodes in which the Siddhi application is deployed. In the above example, the <code>              Testing             </code> parent Siddhi application is deployed only in one worker node although there are two worker nodes in the resource cluster.</p></td>
+</tr>
+</tbody>
+</table>
+
+<p>If you click on a parent Siddhi application, detailed information is
+displayed as shown below.</p>
+<p><img alt="Parent Siddhi Application Details" src="../../images/monitoring-the-streaming-integrator/parent-siddhi-application-details.png" /></p>
+<p>The following are the widgets displayed.</p>
+<p><strong>Code View</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>View (Example)</td>
+<td><div class="content-wrapper">
+<p><img src="../../images/monitoring-the-streaming-integrator/parent-application-code-view.png" /></p>
+</div></td>
+</tr>
+<tr class="even">
+<td>Description</td>
+<td><p>This displays the queries defined in the Parent Siddhi file of the application.</p>
+<p>This allows you to check the queries of the Siddhi application if any further investigations are needed based on the kafka diagrams and performance.<br />
+For detailed instructions to write a Siddhi application, see <a href="https://docs.wso2.com/display/SP440/Converting+to+a+Distributed+Streaming+Application">Converting to a Distributed Streaming Application</a> .</p>
+<p>For detailed information about the Siddhi logic, see the <a href="https://siddhi-io.github.io/siddhi/documentation/siddhi-4.x/query-guide-4.x/">Siddhi Query Guide</a> .</p></td>
+</tr>
+<tr class="odd">
+<td>Purpose</td>
+<td>This allows you to check the queries of the Siddhi application if any further investigations are needed based on the observations of the performance of the distributed cluster to which it belongs.</td>
+</tr>
+<tr class="even">
+<td>Recommended Action</td>
+<td><p>Edit the Siddhi file if any changes that can improve the performance of the Siddhi application are identified.<br />
+For detailed instructions to write a Siddhi application, see <a href="https://docs.wso2.com/display/SP440/Converting+to+a+Distributed+Streaming+Application">Converting to a Distributed Streaming Application</a> .<br />
+For detailed information about the Siddhi logic, see the <a href="https://siddhi-io.github.io/siddhi/documentation/siddhi-4.x/query-guide-4.x/">Siddhi Query Guide</a> .</p></td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Distributed Siddhi App Deployment</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>View (Example)</td>
+<td><div class="content-wrapper">
+<p><img src="../../images/monitoring-the-streaming-integrator/distributed-siddhi-application-deployment.png" /></p>
+</div></td>
+</tr>
+<tr class="even">
+<td>Description</td>
+<td>This is a graphical representation of how Kafka topics are connected to the child Siddhi applications of the selected parent Siddhi application. Kafka topics are represented by boxes with red margins, and the child applications are represented by boxes with blue margins.</td>
+</tr>
+<tr class="odd">
+<td>Purpose</td>
+<td>This is displayed for you to understand how the flow of information takes place.</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Child App Details</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td>View (Example)</td>
+<td><div class="content-wrapper">
+<p><img src="../../images/monitoring-the-streaming-integrator/child-application-details.png" /></p>
+</div></td>
+</tr>
+<tr class="even">
+<td>Description</td>
+<td><p>This table displays the complete list of child Siddhi applications of the selected parent Siddhi application. The status is displayed in green for active Siddhi applications, and in red for inactive Siddhi applications. In addition, the following is displayed for each Siddhi application:</p>
+<ul>
+<li><strong>Group Name</strong> : The name of the execution group to which the child application belongs.</li>
+<li><strong>Child App Status</strong> : This indicates whether the child application is currently active or not.</li>
+<li><strong>Worker Node</strong> : The HTTPS host and The HTTPS port of the worker node in which the child siddhi application is deployed.</li>
+</ul></td>
+</tr>
+<tr class="odd">
+<td>Purpose</td>
+<td>To identify the currently active child applications.</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="application-overview">Application overview<a class="headerlink" href="#application-overview" title="Permanent link">&para;</a></h2>
+<p>When you open the WSO2 Status Dashboard, the <a href="#node-overview">Node Overview</a> page is displayed by default. If you want to view all the Siddhi applications deployed in your Streaming Integrator setup, click on the <strong>App View</strong> tab (marked in the image below). The <strong>App Overview</strong> tab opens and all the Siddhi applications that are currently deployed are displayed as shown in the image below.</p>
+<p><img alt="Application Overview" src="../../images/monitoring-the-streaming-integrator/app-overview.png" /></p>
+<p>The status is displayed in green for active Siddhi applications, and in red for inactive Siddhi applications.</p>
+<p>If no Siddhi applications are deployed in your Streaming Integrator setup, the following message is displayed.</p>
+<p><img alt="No Siddhi Applications Deployed" src="../../images/monitoring-the-streaming-integrator/no-siddhi-applications-deployed.png" /></p>
+<p>The Siddhi applications are listed under the deployment mode in which they are deployed (i.e., <strong>Single Node Deployment</strong>, <strong>HA Deployment</strong>, and <strong>Scalable Deployment</strong>).</p>
+<p>The following information is displayed for each Siddhi application.</p>
+<ul>
+<li>
+<p><strong>Siddhi Application</strong>: The name of the Siddhi application.</p>
+</li>
+<li>
+<p><strong>Status</strong>: This indicates whether the Siddhi application is currently active or inactive.</p>
+</li>
+<li>
+<p><strong>Deployed Time</strong>: The time duration that has elapsed since the Siddhi application was deployed in the Streaming Integrator setup.</p>
+</li>
+<li>
+<p><strong>Deployed Node</strong>: The host and the port of the Streaming Integrator node in which the Siddhi application is displayed.</p>
+</li>
+</ul>
+<p>The purpose of this tab is to check the status of all the Siddhi applications that are currently deployed in the Streaming Integrator setup.</p>
+<p>If you click on a Siddhi Application under <strong>Single Node Deployment</strong> or <strong>HA Deployment</strong>, information specific to that Siddhi application is displayed as explained in <a href="#viewing-statistics-for-siddhi-applications">Viewing Statistics for Siddhi Applications</a>.</p>
+<p>If you click on the parent Siddhi application under <strong>Distributed Deployment</strong>, information specific to that parent Siddhi application is
+displayed as explained in <a href="#viewing-statistics-for-parent-siddhi-applications">Viewing Statistics for Parent Siddhi Applications</a>.</p>
+<p>If you click on a deployed node, information specific to that node is displayed as explained in <a href="#viewing-node-specific-pages">Viewing Node-specific Pages</a>.</p>
+                
+                  
+                
+              
+<a href="#" class="cd-top text--replace js-cd-top">Top</a>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TSWTP6" height="0" width="0"
+    style="display:none;visibility:hidden"></iframe></noscript>
+
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../../develop/exporting-Siddhi-Applications/" title="Exporting Siddhi Applications" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Exporting Siddhi Applications
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../../ref/si-rest-api-guide/" title="Streaming Integration REST API Guide" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Streaming Integration REST API Guide
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            WSO2 Enterprise Integrator - Documentation
+          </div>
+        
+        &copy;2019 <a href="https://wso2.com/">WSO2</a>
+      </div>
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.dc02f8ce.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../assets/lib/highlightjs/highlight.min.js"></script>
+      
+        <script src="../../assets/js/theme.js"></script>
+      
+        <script src="../../assets/lib/backtotop/js/util.js"></script>
+      
+        <script src="../../assets/lib/backtotop/js/main.js"></script>
+      
+    
+  </body>
+</html>
