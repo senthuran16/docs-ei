@@ -1,7 +1,7 @@
 !!! note
     **This page is still a work in progress!**
     
-# Viewing Server Statistics
+# Viewing Server Performance Statistics
 
 Siddhi Server Statistics Dashboard represents a detailed view of the active server instances. It also includes the JVM metrics related to the active servers.
 
